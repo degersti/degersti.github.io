@@ -1,0 +1,1122 @@
+---
+import { Image } from 'astro:assets';
+import GitHeroImage from '../../assets/git-hero.jpg';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout>
+	<main>
+		<section>
+			<h1>Versionsverwaltung</h1>
+		</section>	
+		<div class="hero">
+			<Image
+				src={GitHeroImage}
+				alt="Git Hero Image"
+				widths={[800, 1200, 1600]}
+				sizes="100vw"
+				loading="eager"
+			/>
+		</div>
+		<section>
+			<h2 id="was-ist-versionsverwaltung">Was ist Versionsverwaltung?</h2>
+
+			<p>
+				Bei der Entwicklung von Software werden Dateien ständig verändert.
+				Neue Funktionen kommen hinzu, Fehler werden behoben und bestehender
+				Code wird überarbeitet. Dabei stellt sich schnell die Frage:
+				Wie lassen sich diese Änderungen nachvollziehen und bei Bedarf
+				wieder rückgängig machen?
+			</p>
+
+			<p>
+				Genau hier kommt die <strong>Versionsverwaltung</strong> ins Spiel.
+				Sie speichert Änderungen an Dateien nachvollziehbar und ermöglicht es,
+				verschiedene Entwicklungsstände eines Projekts zu verwalten.
+				Eines der am weitesten verbreiteten Werkzeuge hierfür ist&nbsp;
+				<strong>Git</strong>.
+			</p>
+		</section>
+		<section>
+			<h2 id="wie-funktioniert-git">Wie funktioniert Git?</h2>
+
+			<p>
+				Git verwaltet die verschiedenen Entwicklungsstände eines Projekts
+				in einem sogenannten <strong>Repository</strong>. Dabei werden
+				Änderungen nicht einfach automatisch gespeichert. Stattdessen
+				entscheidest du selbst, welche Änderungen in einen neuen
+				Projektstand übernommen werden sollen.
+			</p>
+
+			<p>
+				Der grundlegende Ablauf besteht dabei aus drei Bereichen:&nbsp;
+				<strong>Working Directory</strong>, <strong>Staging Area </strong>
+				und <strong>Repository</strong>.
+			</p>
+
+			<ul>
+				<li>
+					<strong>Working Directory: </strong>
+					Hier befinden sich die Dateien, an denen du aktuell arbeitest.
+				</li>
+				<li>
+					<strong>Staging Area: </strong>
+					Hier werden die Änderungen gesammelt, die in den nächsten
+					Projektstand übernommen werden sollen.
+				</li>
+				<li>
+					<strong>Repository: </strong>
+					Hier speichert Git die bestätigten Projektstände dauerhaft
+					als sogenannte <strong>Commits</strong>.
+				</li>
+			</ul>
+
+			<p>
+				Der typische Git-Workflow lässt sich daher vereinfacht so darstellen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>	Working Directory  →  Staging Area  →  Repository</code></pre>
+			</div>
+
+			<p>
+				Ein <strong>Commit</strong> stellt dabei einen gespeicherten
+				Projektstand dar. Zusätzlich enthält er Informationen über den Autor,
+				den Zeitpunkt der Änderung sowie eine kurze Beschreibung in Form
+				einer Commit-Nachricht.
+			</p>
+		</section>
+		<section>
+			<h2 id="git-installieren-und-einrichten">Git installieren und einrichten</h2>
+
+			<p>
+				Bevor Git verwendet werden kann, muss es zunächst auf dem eigenen
+				System installiert werden. Git kann über die offizielle&nbsp;
+				<a
+					href="https://git-scm.com/install/"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					Git-Webseite
+				</a>
+				&nbsp;heruntergeladen und installiert werden. Dort finden sich
+				Installationsmöglichkeiten für <strong>Windows</strong>,&nbsp;
+				<strong>macOS</strong> und <strong>Linux</strong>.
+			</p>
+
+			<h3>Git über das Terminal verwenden</h3>
+
+			<p>
+				Git wird hauptsächlich über die Kommandozeile bedient. Unter Windows
+				kann dafür beispielsweise <strong>PowerShell</strong>,
+				die <strong>Eingabeaufforderung</strong> oder das zusammen mit Git
+				installierte <strong>Git Bash</strong> verwendet werden.
+			</p>
+
+			<p>
+				Öffne zunächst eines dieser Terminals und gib folgenden Befehl ein:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git --version</code></pre>
+			</div>
+
+			<p>
+				Wurde Git erfolgreich installiert, wird anschließend die installierte
+				Git-Version angezeigt.
+			</p>
+
+			<h3>Benutzer konfigurieren</h3>
+
+			<p>
+				Nach der Installation sollten Name und E-Mail-Adresse konfiguriert
+				werden. Diese Informationen werden von Git später den erstellten
+				Commits zugeordnet.
+			</p>
+
+			<div class="code-container">
+				<pre><code>git config --global user.name "Max Mustermann"
+		git config --global user.email "max@example.com"</code></pre>
+			</div>
+
+			<p>
+				Die Option <code>--global</code> sorgt dafür, dass diese Einstellungen
+				für alle Git-Repositories des aktuellen Benutzers gelten.
+			</p>
+
+			<p>
+				Die aktuelle Konfiguration kann mit folgendem Befehl überprüft werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git config --list</code></pre>
+			</div>
+		</section>
+		<!--==================================================
+			Kapitel: Ein lokales Git-Repository erstellen
+			==================================================-->
+		<section>
+			<h2 id="ein-lokales-git-repository-erstellen">Ein lokales Git-Repository erstellen</h2>
+
+			<p>
+				Nachdem Git auf dem Computer installiert wurde, kann es für beliebige
+				Projektordner verwendet werden. Git muss dabei nicht für jedes Projekt
+				erneut installiert werden. Stattdessen wird innerhalb des gewünschten
+				Projektordners ein <strong>Git-Repository initialisiert</strong>.
+			</p>
+
+			<p>
+				Dazu öffnet man zunächst ein Terminal und wechselt mit
+				<code>cd</code> in den Ordner, der mit Git verwaltet werden soll.
+				Unter Windows könnte sich ein Projekt beispielsweise unter folgendem
+				Pfad befinden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>C:\Projekte\mein-projekt</code></pre>
+			</div>
+
+			<p>
+				Im Terminal wechselt man zunächst in diesen Ordner:
+			</p>
+
+			<div class="code-container">
+				<pre><code>cd C:\Projekte\mein-projekt</code></pre>
+			</div>
+
+			<p>
+				Anschließend wird dort mit folgendem Befehl ein Git-Repository
+				initialisiert:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git init</code></pre>
+			</div>
+
+			<p>
+				Der Projektordner wird dadurch weder verschoben noch kopiert.
+				Git legt lediglich innerhalb dieses Ordners einen versteckten
+				Unterordner mit dem Namen <code>.git</code> an. Darin speichert
+				Git die Informationen, die für die Versionsverwaltung benötigt werden.
+			</p>
+
+			<div class="code-container">
+				<pre><code>mein-projekt/
+		├── .git/
+		├── datei1.txt
+		├── datei2.txt
+		└── unterordner/</code></pre>
+			</div>
+
+			<p>
+				Der Projektordner selbst wird als <strong>Working Directory</strong>
+				bezeichnet. Hier befinden sich weiterhin die normalen Dateien und
+				Unterordner des Projekts und können wie gewohnt mit einem Editor
+				oder einer Entwicklungsumgebung bearbeitet werden.
+			</p>
+		</section>
+		<!--==================================================
+			Kapitel: Speichern und Commiten
+			==================================================-->
+		<section>
+			<h2 id="speichern-und-commiten">Speichern und Commiten</h2>
+
+			<p>
+				Nachdem das Repository initialisiert wurde, kann Git Änderungen
+				innerhalb des Working Directory erkennen und verwalten. Welche Dateien
+				neu erstellt, verändert oder gelöscht wurden, lässt sich jederzeit
+				mit folgendem Befehl überprüfen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git status</code></pre>
+			</div>
+
+			<p>
+				Änderungen werden von Git jedoch nicht automatisch in die
+				Versionshistorie übernommen. Zunächst wird festgelegt, welche
+				Änderungen im nächsten Commit enthalten sein sollen.
+			</p>
+
+			<h3>Änderungen zur Staging Area hinzufügen</h3>
+
+			<p>
+				Dafür verwendet Git die sogenannte <strong>Staging Area</strong>.
+				Sie ist kein zusätzlicher Ordner auf dem Computer, sondern ein von
+				Git verwalteter Zwischenbereich. Dort wird festgehalten, welche
+				Änderungen für den nächsten Commit vorgesehen sind.
+			</p>
+
+			<p>
+				Eine bestimmte Datei kann mit <code>git add</code> zur Staging Area
+				hinzugefügt werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git add datei1.txt</code></pre>
+			</div>
+
+			<p>
+				Sollen alle aktuellen Änderungen berücksichtigt werden, kann
+				stattdessen folgender Befehl verwendet werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git add .</code></pre>
+			</div>
+
+			<p>
+				Die Dateien selbst werden dabei nicht verschoben. Sie bleiben im
+				Working Directory. Git merkt sich lediglich den Stand der ausgewählten
+				Änderungen für den nächsten Commit.
+			</p>
+
+			<h3>Änderungen als Commit speichern</h3>
+
+			<p>
+				Die vorbereiteten Änderungen können anschließend mit einem
+				<strong>Commit</strong> in der Versionshistorie des lokalen
+				Repositories gespeichert werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git commit -m "Beschreibung der Änderung"</code></pre>
+			</div>
+
+			<p>
+				Die Option <code>-m</code> ermöglicht es, direkt eine kurze
+				Beschreibung der vorgenommenen Änderungen anzugeben.
+			</p>
+
+			<p>
+				Der grundlegende Ablauf beim Arbeiten mit Git sieht damit wie folgt aus:
+			</p>
+
+			<div class="code-container">
+				<pre><code>Working Directory
+				↓
+			git add
+				↓
+		Staging Area
+				↓
+			git commit
+				↓
+		Local Repository</code></pre>
+			</div>
+
+			<h3>Commit-Historie anzeigen</h3>
+
+			<p>
+				Die bisher gespeicherten Commits können mit folgendem Befehl
+				angezeigt werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git log</code></pre>
+			</div>
+
+			<p>
+				Die Ausgabe zeigt unter anderem die eindeutige ID eines Commits,
+				den Autor, den Zeitpunkt und die zugehörige Commit-Nachricht.
+			</p>
+		</section>
+		<!--==================================================
+			Kapitel: Conventional Commits
+			==================================================-->
+		<section>			
+			<h2 id="conventional-commits">Conventional Commits</h2>
+	
+			<p>
+				Für Git-Commit-Nachrichten gibt es mit <strong>Conventional Commits</strong>
+				eine weit verbreitete Konvention. Sie sorgt dafür, dass Änderungen in der
+				Git-Historie schnell eingeordnet werden können und Commit-Nachrichten
+				einheitlich aufgebaut sind.
+			</p>
+
+			<p>Das grundlegende Schema lautet:</p>
+			<div class="code-container">
+				<pre><code>&lt;type&gt;[optional scope]: &lt;description&gt;
+			[optional body]
+			[optional footer(s)]</code></pre>
+			</div>
+
+			<p>Ein Beispiel:</p>
+			<div class="code-container">
+				<pre><code>feat(measurement-buffer): add separate record counts</code></pre>
+			</div>
+
+			<h3>Die wichtigsten Typen (Types)</h3>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Bedeutung</th>
+						<th>Wann verwenden?</th>
+						<th>Beispiel</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>feat</code></td>
+						<td>Feature</td>
+						<td>Neue Funktionalität</td>
+						<td><code>feat(measurement-buffer): add separate record counts</code></td>
+					</tr>
+					<tr>
+						<td><code>fix</code></td>
+						<td>Bugfix</td>
+						<td>Fehlerhaftes Verhalten korrigiert</td>
+						<td><code>fix(measurement-buffer): preserve absolute records on restart</code></td>
+					</tr>
+					<tr>
+						<td><code>refactor</code></td>
+						<td>Refactoring</td>
+						<td>Code umgebaut, Verhalten bleibt gleich</td>
+						<td><code>refactor(sd-manager): simplify directory handling</code></td>
+					</tr>
+					<tr>
+						<td><code>test</code></td>
+						<td>Tests</td>
+						<td>Tests ergänzt oder geändert</td>
+						<td><code>test(measurement-buffer): add absolute record deletion test</code></td>
+					</tr>
+					<tr>
+						<td><code>docs</code></td>
+						<td>Dokumentation</td>
+						<td>Nur Dokumentation geändert</td>
+						<td><code>docs(adr): update SD buffer architecture</code></td>
+					</tr>
+					<tr>
+						<td><code>perf</code></td>
+						<td>Performance</td>
+						<td>Performance gezielt verbessert</td>
+						<td><code>perf(measurement-buffer): reduce directory scans</code></td>
+					</tr>
+					<tr>
+						<td><code>build</code></td>
+						<td>Build-System</td>
+						<td>Build, Compiler oder Dependencies geändert</td>
+						<td><code>build: update Arduino dependencies</code></td>
+					</tr>
+					<tr>
+						<td><code>ci</code></td>
+						<td>CI/CD</td>
+						<td>Pipeline oder Actions geändert</td>
+						<td><code>ci: add PlatformIO build workflow</code></td>
+					</tr>
+					<tr>
+						<td><code>chore</code></td>
+						<td>Wartung</td>
+						<td>Sonstige technische Arbeiten</td>
+						<td><code>chore: remove unused configuration constants</code></td>
+					</tr>
+					<tr>
+						<td><code>style</code></td>
+						<td>Code-Stil</td>
+						<td>Nur Formatierung oder Whitespace geändert</td>
+						<td><code>style: format measurement buffer source</code></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h3>Wichtige Zusatzregeln</h3>
+
+			<ul>
+				<li>
+					<strong>Breaking Changes (!): </strong>
+					Ein <code>!</code> vor dem Doppelpunkt signalisiert eine inkompatible
+					Änderung, zum Beispiel
+					<code>feat(api)!: remove old endpoint</code>.
+					Das führt bei Semantic Versioning typischerweise zu einer neuen
+					Hauptversion (Major Release).
+				</li>
+
+				<li>
+					<strong>Der Body (das Warum): </strong>
+					Nutze die optionale Leerzeile unter dem Commit-Header, um bei komplexeren
+					Änderungen den Grund für die Änderung zu erklären und nicht jedes Detail
+					der Implementierung.
+				</li>
+
+				<li>
+					<strong>Gegenwartsform: </strong>
+					Schreibe die Kurzbeschreibung im Imperativ beziehungsweise Präsens,
+					zum Beispiel <code>add</code> statt <code>added</code>.
+				</li>
+			</ul>
+
+			<p>
+				Weitere Details und die vollständige Spezifikation findest du hier:<br><br>
+				<a
+					href="https://www.conventionalcommits.org/"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<strong>Conventional Commits – offizielle Spezifikation</strong>
+				</a>
+			</p>
+		</section>
+		<!--==================================================
+			Kapitel: Prüfen und Wiederherstellen
+		 	==================================================-->
+		<section>
+			<h2 id="pruefen-und-wiederherstellen">Prüfen und Wiederherstellen</h2>
+
+			<p>
+				Beim Arbeiten an einem Projekt kommt es häufig vor, dass Änderungen
+				überprüft, korrigiert oder wieder verworfen werden sollen. Git stellt
+				dafür verschiedene Befehle bereit, mit denen sich Änderungen gezielt
+				anzeigen und verwalten lassen.
+			</p>
+
+			<h3>Änderungen anzeigen</h3>
+
+			<p>
+				Mit <code>git diff</code> lässt sich anzeigen, welche Änderungen seit
+				dem letzten gespeicherten Stand an den Dateien vorgenommen wurden.
+			</p>
+
+			<div class="code-container">
+				<pre><code>git diff</code></pre>
+			</div>
+
+			<p>
+				Git zeigt dabei zeilenweise an, welche Inhalte entfernt und welche
+				hinzugefügt wurden. Dadurch können Änderungen überprüft werden, bevor
+				sie zur Staging Area hinzugefügt und anschließend committed werden.
+			</p>
+
+			<p>
+				Sollen nur die Änderungen einer bestimmten Datei angezeigt werden,
+				kann zusätzlich der Dateiname angegeben werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git diff datei1.txt</code></pre>
+			</div>
+
+			<h3>Änderungen aus der Staging Area entfernen</h3>
+
+			<p>
+				Wurde eine Änderung versehentlich mit <code>git add</code> zur
+				Staging Area hinzugefügt, kann sie wieder daraus entfernt werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git restore --staged datei1.txt</code></pre>
+			</div>
+
+			<p>
+				Die Änderungen an der Datei gehen dabei nicht verloren. Die Datei
+				bleibt im Working Directory verändert, ist aber nicht mehr für den
+				nächsten Commit vorgemerkt.
+			</p>
+
+			<p>
+				Der Ablauf lässt sich vereinfacht folgendermaßen darstellen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>Working Directory
+				↓
+			git add
+				↓
+			Staging Area
+				↓
+			git restore --staged
+				↓
+			Working Directory</code></pre>
+			</div>
+
+			<h3>Lokale Änderungen verwerfen</h3>
+
+			<p>
+				Sollen die Änderungen an einer bereits von Git verwalteten Datei
+				vollständig verworfen werden, kann <code>git restore</code> verwendet
+				werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git restore datei1.txt</code></pre>
+			</div>
+
+			<p>
+				Git stellt damit den zuletzt gespeicherten Stand der Datei wieder her.
+				Die seitdem vorgenommenen lokalen Änderungen werden verworfen.
+			</p>
+
+			<p>
+				<strong>Vorsicht: </strong> Im Gegensatz zu
+				<code> git restore --staged</code> können dabei nicht gespeicherte
+				Änderungen verloren gehen.
+			</p>
+
+			<h3>Änderungen nach einem Commit vergleichen</h3>
+
+			<p>
+				Auch bereits gespeicherte Projektstände können miteinander verglichen
+				werden. Jeder Commit besitzt dafür eine eindeutige Commit-ID, die unter
+				anderem mit <code>git log</code> angezeigt werden kann.
+			</p>
+
+			<div class="code-container">
+				<pre><code>git log --oneline</code></pre>
+			</div>
+
+			<p>
+				Die kompakte Ausgabe könnte beispielsweise folgendermaßen aussehen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>a4c821f add shopping list
+		7b291ad create project structure</code></pre>
+			</div>
+
+			<p>
+				Mithilfe dieser IDs können zwei Commits miteinander verglichen werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git diff 7b291ad a4c821f</code></pre>
+			</div>
+
+			<p>
+				Damit lässt sich nachvollziehen, welche Änderungen zwischen zwei
+				gespeicherten Projektständen vorgenommen wurden.
+			</p>
+		</section>
+		<!-- ==================================================
+			Kapitel: Mit Verzweigungen (Branches) artbeiten
+		 	===================================================-->
+		<section>
+			<h2 id="mit-verzweigungen-arbeiten">
+				Mit Verzweigungen (Branches) arbeiten
+			</h2>
+
+			<p>
+				Bisher wurden alle Änderungen innerhalb einer einzigen Entwicklungslinie
+				vorgenommen. Git ermöglicht es jedoch, mehrere Entwicklungszweige parallel
+				zu führen. Diese werden als <strong>Branches</strong> bezeichnet.
+			</p>
+
+			<p>
+				Ein Branch kann beispielsweise verwendet werden, um eine neue Funktion
+				zu entwickeln oder Änderungen auszuprobieren, ohne dabei den aktuellen
+				Stand des Hauptzweigs zu verändern.
+			</p>
+
+			<p>
+				Ein Repository könnte dadurch beispielsweise folgende Struktur besitzen:
+			</p>
+
+			<div class="code-container">
+				
+					<pre><code>A ── B ── C    main
+      						&nbsp\
+       						&nbsp&nbspD ── E&nbsp&nbsp&nbsp  feature</code></pre>
+			</div>
+
+			<p>
+				Der Branch <code>main</code> stellt dabei die Hauptentwicklungslinie dar.
+				Der Branch <code>feature</code> wurde davon abgezweigt und kann unabhängig
+				weiterentwickelt werden.
+			</p>
+
+
+			<h3>Vorhandene Branches anzeigen</h3>
+
+			<p>
+				Welche Branches innerhalb eines Repositorys vorhanden sind, lässt sich
+				mit folgendem Befehl anzeigen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git branch</code></pre>
+			</div>
+
+			<p>
+				Der aktuell verwendete Branch wird in der Ausgabe mit einem Sternchen
+				gekennzeichnet:
+			</p>
+
+			<div class="code-container">
+				<pre><code>* main
+		feature</code></pre>
+			</div>
+
+
+			<h3>Einen neuen Branch erstellen</h3>
+
+			<p>
+				Ein neuer Branch kann mit <code>git branch</code> erstellt werden.
+				Als Beispiel wird ein Branch mit dem Namen <code>feature</code> angelegt:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git branch feature</code></pre>
+			</div>
+
+			<p>
+				Der neue Branch basiert auf dem aktuellen Stand des Repositorys.
+				Nach dem Erstellen befindet man sich jedoch weiterhin auf dem bisherigen
+				Branch.
+			</p>
+
+
+			<h3>Zwischen Branches wechseln</h3>
+
+			<p>
+				Um auf den neu erstellten Branch zu wechseln, wird
+				<code> git switch</code> verwendet:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git switch feature</code></pre>
+			</div>
+
+			<p>
+				Neue Commits werden nun dem Branch <code>feature</code> zugeordnet,
+				während der Branch <code>main</code> zunächst unverändert bleibt.
+			</p>
+
+			<p>
+				Ein neuer Branch kann auch direkt erstellt und anschließend aktiviert
+				werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git switch -c feature</code></pre>
+			</div>
+
+
+			<h3>Änderungen in einem Branch speichern</h3>
+
+			<p>
+				Innerhalb eines Branches wird genauso gearbeitet wie zuvor. Änderungen
+				werden zunächst zur Staging Area hinzugefügt und anschließend mit einem
+				Commit gespeichert:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git add .
+		git commit -m "feat: add new feature"</code></pre>
+			</div>
+
+			<p>
+				Der neue Commit befindet sich jetzt zunächst nur innerhalb des
+				Branches <code>feature</code>.
+			</p>
+
+
+			<h3>Branches zusammenführen</h3>
+
+			<p>
+				Ist die Arbeit an einem Branch abgeschlossen, können dessen Änderungen
+				wieder in einen anderen Branch übernommen werden. Dieser Vorgang wird
+				als <strong>Merge</strong> bezeichnet.
+			</p>
+
+			<p>
+				Zunächst wird auf den Branch gewechselt, in den die Änderungen übernommen
+				werden sollen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git switch main</code></pre>
+			</div>
+
+			<p>
+				Anschließend wird der Branch <code>feature</code> mit
+				<code> main</code> zusammengeführt:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git merge feature</code></pre>
+			</div>
+
+			<p>
+				Die Änderungen des Feature-Branches sind damit Bestandteil des
+				Hauptzweigs.
+			</p>
+
+			<div class="code-container">
+				
+					<pre><code>A ── B ── C    main
+      						&nbsp\ &nbsp&nbsp&nbsp&nbsp /
+       						&nbsp&nbspD ── E&nbsp&nbsp&nbsp </code></pre>
+			</div>
+
+
+			<h3>Merge-Konflikte</h3>
+
+			<p>
+				Werden in verschiedenen Branches dieselben Bereiche einer Datei
+				unterschiedlich verändert, kann Git die Änderungen möglicherweise nicht
+				automatisch zusammenführen. In diesem Fall entsteht ein
+				<strong> Merge-Konflikt</strong>.
+			</p>
+
+			<p>
+				Die betroffenen Stellen müssen dann manuell überprüft werden. 
+				Anschließend können die korrigierten Dateien wieder mit
+				<code> git add</code> vorgemerkt und der Merge abgeschlossen werden.
+			</p>
+
+
+			<h3>Einen Branch löschen</h3>
+
+			<p>
+				Wird ein Branch nach dem erfolgreichen Zusammenführen nicht mehr
+				benötigt, kann er gelöscht werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git branch -d feature</code></pre>
+			</div>
+
+			<p>
+				Dadurch wird lediglich der Branch entfernt. Die zuvor in
+				<code> main</code> übernommenen Änderungen bleiben erhalten.
+			</p>
+
+			<p>
+				Branches ermöglichen es damit, verschiedene Änderungen unabhängig
+				voneinander zu entwickeln und erst dann zusammenzuführen, wenn sie
+				fertiggestellt sind. Dieses Prinzip bildet eine wichtige Grundlage
+				für die Zusammenarbeit an größeren Softwareprojekten.
+			</p>
+		</section>
+		<!-- ==================================================
+			Kapitel: Was ist GitHub
+		 	===================================================-->
+		<section>
+			<h2 id="was-ist-github">Was ist GitHub?</h2>
+
+			<p>
+				<strong>GitHub</strong> ist eine Online-Plattform zur Speicherung und
+				Verwaltung von Git-Repositories. Während Git lokal auf dem eigenen
+				Computer arbeitet, ermöglicht GitHub, ein Repository auf einem
+				entfernten Server zu speichern und über das Internet darauf zuzugreifen.
+			</p>
+
+			<p>
+				Ein Repository kann dadurch sowohl lokal auf dem eigenen Computer als
+				auch als sogenanntes <strong>Remote Repository</strong> auf GitHub
+				existieren. Änderungen können zwischen beiden Repositories übertragen
+				und synchronisiert werden.
+			</p>
+
+			<div class="code-container preserve-whitespace">
+				<pre><code>Lokales Repository                 GitHub -
+	auf dem Computer                   Remote Repository
+
+	┌───────────────────┐             ┌───────────────────┐
+	│                   │  git push   │                   │
+	│   Git Repository  │ ──────────► │   Git Repository  │
+	│                   │ ◄────────── │                   │
+	└───────────────────┘  git pull   └───────────────────┘</code></pre>
+			</div>
+
+			<p>
+				GitHub erweitert Git außerdem um Funktionen für die Zusammenarbeit und
+				die Verwaltung von Softwareprojekten. Dazu gehören beispielsweise
+				<strong> Issues</strong>, <strong>Pull Requests</strong> und
+				<strong>GitHub Actions</strong>.
+			</p>
+
+			<p>
+				Repositories können auf GitHub <strong>öffentlich (public) </strong>
+				oder <strong>privat (private)</strong> angelegt werden. Öffentliche
+				Repositories können von jedem eingesehen werden, während private
+				Repositories nur für berechtigte Benutzer zugänglich sind.
+			</p>
+
+			<p>
+				GitHub kann darüber hinaus mit <strong>GitHub Pages</strong> statische
+				Webseiten direkt aus einem Repository veröffentlichen. 
+				Mit <strong>GitHub Actions</strong> lassen sich zusätzlich automatisierte
+				Abläufe erstellen, beispielsweise um eine Webseite nach einer Änderung
+				automatisch zu bauen und zu veröffentlichen.
+			</p>
+
+			<p>
+				<strong>Git und GitHub sind somit nicht dasselbe: </strong>
+				Git ist das eigentliche Versionsverwaltungssystem, während GitHub eine
+				Plattform ist, auf der Git-Repositories gespeichert, geteilt und für
+				gemeinsame Projekte verwendet werden können.
+			</p>
+		</section>
+		<!-- ==================================================
+			Kapitel: Git und GitHub verbinden
+			===================================================-->
+		<section>
+			<h2 id="git-und-github-verbinden">Git und GitHub verbinden</h2>
+
+			<p>
+				Ein lokales Git-Repository und ein Repository auf GitHub können auf
+				unterschiedliche Weise miteinander verbunden werden. Dabei gibt es
+				typischerweise zwei Ausgangssituationen:
+			</p>
+
+			<ul>
+				<li>
+					Ein Projekt existiert bereits lokal und soll mit GitHub verbunden
+					werden.
+				</li>
+				<li>
+					Ein Repository existiert bereits auf GitHub und soll auf den eigenen
+					Computer übernommen werden.
+				</li>
+			</ul>
+
+			<h3 id="lokales-repository-mit-github-verbinden">
+				Lokales Repository mit GitHub verbinden
+			</h3>
+
+			<p>
+				Nachdem ein lokales Git-Repository erstellt wurde, kann es mit einem
+				Repository auf GitHub verbunden werden. Das lokale Repository bleibt
+				dabei weiterhin auf dem eigenen Computer bestehen. GitHub dient als
+				<strong> Remote Repository</strong>, mit dem Änderungen ausgetauscht
+				werden können.
+			</p>
+
+			<p>
+				Dazu wird zunächst auf GitHub ein neues Repository erstellt. GitHub
+				stellt anschließend eine Adresse bereit, über die das Repository
+				erreichbar ist. Für die Verbindung kann beispielsweise HTTPS verwendet
+				werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>https://github.com/USERNAME/REPOSITORY.git</code></pre>
+			</div>
+
+			<p>
+				Im lokalen Repository wird diese Adresse anschließend als
+				<strong> Remote</strong> hinterlegt:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git remote add origin https://github.com/USERNAME/REPOSITORY.git</code></pre>
+			</div>
+
+			<p>
+				<code>git remote add</code> fügt dabei ein neues Remote Repository hinzu.
+				Der Name <code>origin</code> ist die übliche Bezeichnung für das
+				Remote Repository, mit dem das lokale Repository hauptsächlich verbunden
+				ist.
+			</p>
+
+			<p>
+				Mit folgendem Befehl kann überprüft werden, welche Remote Repositories
+				eingerichtet sind:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git remote -v</code></pre>
+			</div>
+
+			<p>
+				Die Ausgabe zeigt die hinterlegte Adresse beispielsweise so an:
+			</p>
+
+			<div class="code-container">
+				<pre><code>origin  https://github.com/USERNAME/REPOSITORY.git (fetch)
+		origin  https://github.com/USERNAME/REPOSITORY.git (push)</code></pre>
+			</div>
+
+			<p>
+				Bevor der lokale Stand erstmals zu GitHub übertragen wird, sollte
+				außerdem sichergestellt werden, dass der verwendete Branch den
+				gewünschten Namen besitzt. Häufig wird der Hauptbranch
+				<code> main</code> genannt:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git branch -M main</code></pre>
+			</div>
+
+			<p>
+				Anschließend kann der lokale Stand erstmals zu GitHub übertragen werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git push -u origin main</code></pre>
+			</div>
+
+			<p>
+				<code>git push</code> überträgt die lokalen Commits zum Remote
+				Repository. <code>origin</code> bezeichnet dabei das zuvor eingerichtete
+				Remote Repository und <code>main</code> den Branch, der übertragen
+				werden soll.
+			</p>
+
+			<p>
+				Die Option <code>-u</code> verknüpft den lokalen Branch
+				<code> main</code> zusätzlich mit dem entsprechenden Branch auf GitHub.
+				Bei späteren Änderungen genügt deshalb in der Regel:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git push</code></pre>
+			</div>
+
+			<p>
+				Damit existiert das Projekt nun sowohl als lokales Git-Repository auf
+				dem eigenen Computer als auch als Remote Repository auf GitHub.
+				Neue Commits entstehen weiterhin zunächst lokal und werden anschließend
+				mit <code>git push</code> zu GitHub übertragen.
+			</p>
+
+			<div class="code-container preserve-whitespace">
+<pre><code>Lokales Repository                    
+        │
+     git add
+        │
+    git commit
+        │
+     git push
+        │
+        └──────────────────────────────► Remote Repository (GitHub)</code></pre>
+			</div>
+
+			<h3 id="github-repository-lokal-klonen">
+				GitHub-Repository auf den Computer übernehmen
+			</h3>
+
+			<p>
+				Existiert ein Repository bereits auf GitHub, muss nicht zuerst manuell
+				ein lokales Repository angelegt werden. Stattdessen kann das vorhandene
+				Repository direkt mit <code>git clone</code> auf den eigenen Computer
+				kopiert werden.
+			</p>
+
+			<p>
+				Dazu wird ebenfalls die Adresse des GitHub-Repositories verwendet:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git clone https://github.com/USERNAME/REPOSITORY.git</code></pre>
+			</div>
+
+			<p>
+				Git erstellt dabei automatisch einen neuen Projektordner. In diesem
+				befinden sich sowohl die Dateien des Projekts als auch die vollständige
+				Git-Historie des Repositories.
+			</p>
+
+			<p>
+				Die Verbindung zum GitHub-Repository wird beim Klonen automatisch
+				eingerichtet. Das Remote Repository erhält dabei standardmäßig den Namen:
+				<code> origin</code>.
+			</p>
+
+			<p>
+				Anschließend kann in den neu erstellten Projektordner gewechselt werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>cd REPOSITORY</code></pre>
+			</div>
+
+			<p>
+				Die eingerichtete Verbindung kann auch hier mit folgendem Befehl
+				überprüft werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git remote -v</code></pre>
+			</div>
+
+			<p>
+				Das lokale Repository ist damit bereits vollständig mit GitHub verbunden.
+				Änderungen können nun lokal durchgeführt, mit Git gespeichert und
+				anschließend wieder zu GitHub übertragen werden.
+			</p>
+
+			<div class="code-container preserve-whitespace">
+<pre><code>Remote Repository (GitHub)
+      │
+   git clone
+      └──────────────────────────► Lokales Repository (Projektordner)
+                                        │
+                                        └── .git/</code></pre>
+			</div>
+		</section>
+		<!-- ==================================================
+			Kapitel: Beispielprojekt
+			===================================================-->
+		<h2 id="git-beispielprojekt">Beispielprojekt</h2>
+
+		<div class="topic-grid">
+			<a class="topic-card" href="/devops/git/praxisbeispiel/">
+				<h3>Einkaufsliste</h3>
+
+				<p>
+					Das Gelernte direkt anwenden: Eine einfache Einkaufsliste mit
+					<strong> Git</strong> versionieren, Änderungen nachvollziehen und
+					das Projekt anschließend auf <strong>GitHub</strong> veröffentlichen.
+				</p>
+
+				<span>LOS →</span>
+			</a>
+		</div>
+		<!-- ==================================================
+			Kapitel: Zum Nachschlagen
+			===================================================-->
+			<section>
+			<br>	
+			<h2 id="git-quellen">Zum Nachschlagen</h2>
+
+			<p>
+				Wer sich ausführlicher mit Git und GitHub beschäftigen möchte, findet
+				in den folgenden Quellen weiterführende Informationen und die
+				offizielle Dokumentation:
+			</p>
+
+			<ul>
+				<li>
+					<a
+						href="https://git-scm.com/book/de/v2"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Pro Git – Das offizielle Git-Buch
+					</a>
+				</li>
+
+				<li>
+					<a
+						href="https://git-scm.com/docs"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Git – Offizielle Dokumentation
+					</a>
+				</li>
+
+				<li>
+					<a
+						href="https://docs.github.com/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						GitHub – Offizielle Dokumentation
+					</a>
+				</li>
+
+				<li>
+					<a
+						href="https://www.conventionalcommits.org/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Conventional Commits
+					</a>
+				</li>
+			</ul>
+		</section>
+	</main>
+</BaseLayout>

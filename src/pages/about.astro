@@ -1,63 +1,168 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import { Image } from 'astro:assets';
+import AboutHeroImage from '../assets/about-hero.jpg';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<BaseLayout>
+	<main>
+		<section>
+			<h1>About</h1>
+		</section>
+		<div class="hero">
+			<Image
+				src={AboutHeroImage}
+				alt="About the Author and the Website"
+				widths={[800, 1200, 1600]}
+				sizes="100vw"
+				loading="eager"
+			/>
+		</div>
+		<section>
+			<p>
+				Schon als Kind habe ich versucht zu verstehen,
+				wie die Welt funktioniert. Technik hat mich dabei
+				genauso fasziniert wie Naturwissenschaften,
+				Geografie oder die Reisen großer Entdecker.
+				Ich verschlang Bücher und Dokumentationen,
+				studierte Karten und war am liebsten draußen
+				unterwegs. Heute weiß ich, dass mich dabei
+				weniger die einzelnen Themen begeistert haben
+				als vielmehr die Frage, wie alles miteinander
+				zusammenhängt.
+			</p>
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+			<p>
+				<strong>
+					Diese Neugier treibt mich bis heute an und 
+					hat meinen gesamten beruflichen Weg geprägt.
+				</strong>
+			</p>
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+			<p>
+				Dieser begann zunächst am Technischen Gymnasium.
+				Obwohl meine Stärken schon damals eher in der
+				Elektrotechnik lagen, führte mich mein Weg zunächst
+				zum Maschinenbaustudium. Die Studieninhalte waren
+				zwar interessant, doch ich habe schnell gemerkt,
+				dass meine eigentliche Leidenschaft in der
+				Steuerungs- und Regelungstechnik liegt.
+			</p>
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+			<p>
+				Einen entscheidenden Einfluss hatte dabei auch
+				die damals aufkommende Maker-Bewegung. Mit
+				Arduino und Co. war es plötzlich möglich,
+				eigene Ideen mit Sensoren, Mikrocontrollern und
+				etwas Code zum Leben zu erwecken. Diese
+				Erfahrungen weckten zunehmend mein Interesse,
+				insbesondere an der Softwareentwicklung, und
+				führten schließlich zu einem Masterstudium der
+				Mechatronik mit dem Schwerpunkt Embedded Systems.
+			</p>
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+			<p>
+				Nach dem Studium arbeitete ich mehrere Jahre als
+				Automatisierungsingenieur. Hier hatte ich erstmals
+				die Möglichkeit, an der Entwicklung
+				sicherheitskritischer Steuerungen, industrieller
+				Kommunikationssysteme und der Inbetriebnahme
+				komplexer technischer Anlagen mitzuwirken.
+				Gerade diese Arbeit hat mein Systemverständnis
+				stark geprägt. Ich lernte, wie Mechanik,
+				Elektronik und Software zusammenspielen und wie
+				aus vielen einzelnen Komponenten ein
+				zuverlässiges Gesamtsystem entsteht.
+			</p>
+
+			<p>
+				Heute gilt mein Interesse zunehmend einer anderen
+				Ebene. Nachdem ich einige Jahre an der
+				Schnittstelle zwischen Hardware und Software
+				gearbeitet habe, interessieren mich inzwischen
+				verstärkt Softwareentwicklung, Netzwerke, Server
+				und Cloud-Technologien. Nicht, weil ich die Welt
+				der Automatisierung komplett hinter mir lassen
+				möchte, sondern weil ich verstehen möchte, wie
+				moderne IoT-Systeme funktionieren und wie die
+				einzelnen Technologien miteinander verknüpft sind.
+			</p>
+
+			<p>
+				Dieselbe Begeisterung begleitet mich auch in
+				meiner Freizeit. Besonders das Segeln verbindet
+				für mich viele der Themen, die mich schon immer
+				fasziniert haben. Ein Boot ist eine Spielwiese
+				für unterschiedlichste technische Disziplinen -
+				von Aerodynamik und Mechanik über Elektrik und
+				Werkstoffkunde bis hin zu Navigation,
+				Wetterkunde und Kommunikation. Kaum ein anderer
+				Ort bietet die Möglichkeit, ein so breites
+				Spektrum technischer Disziplinen gleichzeitig
+				anzuwenden.
+			</p>
+
+			<p>
+				Außerdem bietet das Leben an Bord einen idealen
+				Anwendungsfall für moderne IoT-Technologien.
+				Gerade wenn das Boot über längere Zeit
+				unbeaufsichtigt im Hafen liegt, kann es hilfreich
+				sein, wichtige Systeme aus der Ferne überwachen
+				zu können. Genau daraus entstand schließlich die
+				Idee für ein eigenes IoT-Gateway.
+			</p>
+
+			<p>
+				Was als praktische Lösung für ein konkretes
+				Problem an Bord begann, entwickelte sich schnell
+				zu einem deutlich größeren Projekt. Aufbauend auf
+				einem ESP32 entwickelte ich die Hardware, die
+				Firmware und schließlich die Idee für ein
+				komplettes IoT-System, das die gesamte Kette von
+				der Datenerfassung über die Datenübertragung bis
+				hin zur Visualisierung abdeckt. Das Projekt ist
+				inzwischen zu einer Art Lernplattform geworden,
+				auf der ich neue Technologien ausprobiere und
+				miteinander verknüpfe. Gleichzeitig dient es als
+				praktischer Anwendungsfall, um die Funktionsweise
+				verschiedener Technologien besser zu verstehen.
+			</p>
+
+			<p>
+				Zur gleichen Zeit befinde ich mich auch beruflich
+				auf der Suche nach einer neuen Herausforderung.
+				Dabei rücken Themen wie Linux,
+				Containerisierung, Cloud-Technologien und DevOps
+				immer stärker in meinen Fokus. Schnell wurde mir
+				klar, dass diese Themen nicht nur spannende
+				berufliche Perspektiven eröffnen, sondern sich
+				auch ideal mit meinem Gateway-Projekt verbinden
+				lassen.
+			</p>
+
+			<p>
+				Ich glaube, dass meine Projekte und die dabei
+				gewonnenen Erkenntnisse auch für andere
+				interessant sein können. Deshalb entstand
+				schließlich <strong>degersti</strong>. Hier
+				dokumentiere ich meine Projekte und teile meine
+				Gedanken, mein Wissen und interessante Quellen.
+			</p>
+
+			<p>
+				Der Schwerpunkt liegt aktuell auf meinem
+				Gateway-Projekt sowie meiner Weiterbildung im
+				Bereich DevOps. Gleichzeitig soll diese Seite
+				aber auch Raum für andere Themen bieten, die mich
+				begeistern, denn ...
+			</p>
+
+			<p>
+				<strong>
+					<em>„Wahre Erkenntnis entsteht, wenn Zusammenhänge sichtbar werden.“</em>
+				</strong>
+			</p>
+
+		</section>
+	</main>
+</BaseLayout>

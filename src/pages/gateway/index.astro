@@ -1,0 +1,225 @@
+---
+import { Image } from 'astro:assets';
+import GatewayHeroImage from '../../assets/gateway-hero.jpg';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout>
+	<main>
+		<section>
+			<h1>IoT Gateway</h1>
+		</section>	
+		<div class="hero">
+			<Image
+				src={GatewayHeroImage}
+				alt="Gateway Hero Image"
+				widths={[800, 1200, 1600]}
+				sizes="100vw"
+				loading="eager"
+			/>
+		</div>
+		<section>
+			<h2>
+				Ein modulares IoT-Gateway zum Verstehen, Nachbauen und
+				selbst Ausprobieren
+			</h2>
+
+			<p>
+				Willkommen auf der Dokumentation meines IoT-Gateway-Projekts.
+			</p>
+
+			<p>
+				Auf dieser Website zeige ich, wie ein vollständiges IoT-System
+				entsteht - von der Hard- und Software bis zur
+				Datenübertragung, Speicherung und Visualisierung.
+			</p>
+
+			<p>
+				Das Projekt soll nicht nur ein fertiges System präsentieren,
+				sondern einen verständlichen und praxisnahen Einstieg in die
+				IoT-Entwicklung ermöglichen. Die einzelnen Bestandteile können
+				nachgebaut, selbst ausprobiert und für eigene Projekte angepasst
+				werden.
+			</p>
+		</section>
+
+		<section>
+			<h2>Über das Projekt</h2>
+
+			<p>
+				Das IoT Gateway ist ein modular aufgebautes System zur Erfassung,
+				Verarbeitung und Übertragung von Sensordaten.
+			</p>
+
+			<p>
+				Es verbindet Sensoren und technische Geräte mit einem zentralen
+				Backend. Dadurch können Messwerte und Systemzustände aus der Ferne
+				abgerufen, gespeichert und visualisiert werden.
+			</p>
+
+			<p>
+				Entwickelt wird das Gateway zunächst für den Einsatz auf Booten
+				und in Wohnmobilen. Der Aufbau ist jedoch bewusst allgemein
+				gehalten, sodass das System auch für andere mobile oder stationäre
+				Anwendungen verwendet werden kann.
+			</p>
+		</section>
+
+		<section>
+			<h2>Warum ein eigenes Gateway?</h2>
+
+			<p>
+				Die Idee entstand aus dem Wunsch, wichtige Zustände meines
+				Segelbootes auch aus der Ferne überwachen zu können.
+			</p>
+
+			<p>
+				Anstatt eine fertige Lösung zu verwenden, wollte ich ein System
+				entwickeln, das sich vollständig verstehen, anpassen und erweitern
+				lässt. Daraus entstand eine praktische Lernplattform, die
+				Elektronik, Embedded Software, Kommunikationstechnik, Backend-
+				Entwicklung und Datenvisualisierung miteinander verbindet.
+			</p>
+
+			<p>
+				Gerade diese Verbindung verschiedener Technologien macht das
+				Projekt zu einem guten Einstieg in die IoT-Entwicklung. Viele
+				Grundlagen lassen sich direkt ausprobieren und anschließend in
+				eigenen Projekten weiterverwenden.
+			</p>
+		</section>
+
+		<section>
+			<h2>Was kann das Gateway?</h2>
+
+			<p>
+				Das Gateway verfügt über zwei Eingänge zur Spannungsüberwachung,
+				zwei digitale Eingänge zur Auswertung von Schaltzuständen sowie über
+				einen fest verbauten Sensor zur Messung von Temperatur und
+				Luftfeuchtigkeit.
+			</p>
+
+			<p>
+				Im aktuellen Anwendungsfall werden damit die Spannungen von Starter-
+				und Bordbatterie sowie die Zustände eines Rauchmelders und eines
+				Bilgeschalters überwacht.
+			</p>
+
+			<p>
+				Die Kommunikation erfolgt je nach Verfügbarkeit über WLAN oder LTE.
+				Steht vorübergehend keine Verbindung zur Verfügung, werden die
+				Messwerte lokal gespeichert und automatisch übertragen, sobald die
+				Verbindung wiederhergestellt ist.
+			</p>
+
+			<p>
+				Ein energieeffizienter Betrieb wird durch die Nutzung eines
+				Deep-Sleep-Modus ermöglicht. Zusätzlich kommt eine SD-Karte zum
+				Einsatz, auf der Messdaten und Fehlermeldungen gespeichert werden
+				können. Die Konfiguration des Gateways erfolgt über eine
+				Bluetooth-Verbindung.
+			</p>
+
+			<p>
+				Zum Projekt gehört außerdem ein Backend, das die übertragenen Daten
+				in einer Datenbank speichert. Über eine Benutzeroberfläche lassen
+				sich sowohl die zuletzt empfangenen Messwerte als auch historische
+				Daten anzeigen und auswerten.
+			</p>
+		</section>
+
+		<section>
+			<h2>Zum Nachbauen und Ausprobieren</h2>
+
+			<p>
+				Diese Dokumentation richtet sich an alle, die IoT nicht nur
+				theoretisch kennenlernen, sondern praktisch ausprobieren möchten.
+			</p>
+
+			<p>
+				Die einzelnen Bereiche des Systems werden schrittweise vorgestellt.
+				Dadurch kann das vollständige Gateway nachgebaut oder zunächst nur
+				ein einzelner Teil umgesetzt werden - beispielsweise die
+				Sensorerfassung, eine MQTT-Verbindung oder ein einfaches
+				Web-Dashboard.
+			</p>
+
+			<p>
+				Die Inhalte können außerdem als Ausgangspunkt für eigene Ideen
+				dienen. Das System lässt sich an andere Sensoren, Fahrzeuge,
+				Maschinen oder Anwendungsfälle anpassen.
+			</p>
+		</section>
+
+		<section>
+			<h2>Projektbereich</h2>
+
+			<p>
+				Die Dokumentation ist in mehrere Themenbereiche gegliedert. Jeder
+				Bereich behandelt einen wichtigen Baustein des gesamten
+				IoT-Systems.
+			</p>
+		</section>
+
+		<section>
+		<div class="topic-grid">
+
+			<a class="topic-card" href="/gateway/beschreibung/">
+				<h3>Beschreibung & Funktionen</h3>
+
+				<p>
+					Was das Gateway macht, welche Funktionen es bietet und 
+					wie die einzelnen Komponenten im Gesamtsystem zusammenspielen.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>	
+
+			<a class="topic-card" href="/gateway/hardware/">
+				<h3>Hardware</h3>
+
+				<p>
+					Controller, Sensoren, Spannungsversorgung, Schnittstellen und
+					der Aufbau der einzelnen Prototypen.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>	
+
+			<a class="topic-card" href="/gateway/firmware/">
+				<h3>Firmware</h3>
+
+				<p>
+					Firmwareentwicklung auf dem Mikrocontroller, Programmstruktur,
+					Zustandssteuerung und energieeffizienter Betrieb.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/gateway/datentransfer/">
+				<h3>Datentransfer</h3>
+
+				<p>
+					WLAN, Mobilfunk, MQTT und die zuverlässige Übertragung von
+					Messwerten zwischen Gateway und Backend.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>	
+
+			<a class="topic-card" href="/gateway/backend/">
+				<h3>Backend und Dashboard</h3>
+
+				<p>
+					Empfang, Speicherung, Verarbeitung und Visualisierung der
+					übertragenen Daten.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>	
+			</div>
+		</section>
+	</main>
+</BaseLayout>
+

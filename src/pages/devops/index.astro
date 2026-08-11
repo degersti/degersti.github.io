@@ -1,0 +1,433 @@
+---
+import { Image } from 'astro:assets';
+import DevOpsHeroImage from '../../assets/devops-hero.jpg';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout>
+	<main>
+		<section>
+			<h1>DevOps</h1>
+		</section>	
+		<div class="hero">
+			<Image
+				src={DevOpsHeroImage}
+				alt="DevOps Hero Image"
+				widths={[800, 1200, 1600]}
+				sizes="100vw"
+				loading="eager"
+			/>
+		</div>
+		<section>
+			<h2>Warum DevOps lernen?</h2>
+			<p>
+				Bei der Suche nach Stellen im Bereich Softwareentwicklung bin ich 
+				immer wieder auf Begriffe wie <b>CI/CD, Docker, Kubernetes, Terraform </b> 
+				oder direkt auf Stellen als <b>DevOps Engineer</b> gestoßen. Dabei wurde 
+				mir bewusst, dass DevOps heute zu den gefragtesten Kompetenzen der 
+				modernen Softwareentwicklung zählt und fundierte Kenntnisse in 
+				diesem Bereich einen entscheidenden Wettbewerbsvorteil bieten.
+			</p>
+
+			<p>
+				Zunächst wirken diese Begriffe wie ein undurchschaubarer Dschungel 
+				aus IT-Fachbegriffen, der nur für absolute Experten verständlich 
+				erscheint. Bei genauerer Betrachtung stellt sich jedoch schnell 
+				heraus, dass sich dahinter meist etablierte Werkzeuge und Technologien 
+				verbergen, deren Grundlagen sich Schritt für Schritt erlernen lassen.
+			</p>
+
+			<p>
+				Zudem bietet DevOps die Möglichkeit, die Grundlagen moderner 
+				Softwareentwicklung kennenzulernen und besser zu verstehen. 
+				Wer sich mit diesem Themengebiet beschäftigt, gewinnt nicht nur 
+				wertvolle Fähigkeiten für die eigene Karriere, sondern auch ein 
+				tieferes Verständnis dafür, wie moderne Software entwickelt, 
+				bereitgestellt und betrieben wird.
+			</p>
+		</section>
+		<section>
+			<h2>Was ist DevOps?</h2>
+
+			<p>
+				Der Begriff <strong>DevOps</strong> setzt sich aus den englischen Begriffen
+				<strong>Development</strong> (Softwareentwicklung) und
+				<strong>Operations</strong> (IT-Betrieb) zusammen. Ziel ist es,
+				den gesamten Lebenszyklus einer Anwendung zu betrachten – von der
+				Entwicklung über Tests und Bereitstellung bis hin zum Betrieb,
+				Monitoring und der kontinuierlichen Weiterentwicklung.
+			</p>
+
+			<p>
+				Im Mittelpunkt stehen dabei nicht einzelne Werkzeuge oder Prozesse,
+				sondern deren Zusammenspiel. Wiederkehrende Aufgaben werden
+				automatisiert, Änderungen nachvollziehbar dokumentiert und neue
+				Versionen können schneller sowie zuverlässiger ausgeliefert werden.
+				DevOps schafft damit eine durchgängige Entwicklungskette vom ersten
+				Code bis zur produktiven Anwendung.
+			</p>
+
+			<p>
+				Um dieses Ziel zu erreichen, kommen verschiedene Technologien und
+				Werkzeuge zum Einsatz. Linux, Git, Docker, Kubernetes, CI/CD,
+				Terraform oder Cloud-Plattformen bilden dabei die technische
+				Grundlage. Jedes dieser Themen löst einen bestimmten Teil des
+				Gesamtprozesses - erst ihr Zusammenspiel macht den DevOps-Gedanken
+				aus.
+			</p>
+
+		</section>
+
+		<section>
+			<h2>Was erwartet dich?</h2>
+
+			<p>
+				Diese Seite ist in erster Linie mein persönliches DevOps-Notizbuch.
+				Ich sammle hier hilfreiche Quellen, fasse wichtige Erkenntnisse
+				zusammen und ergänze sie durch eigene Erfahrungen und Beispiele.
+				Der Schwerpunkt liegt dabei nicht auf einer vollständigen und
+				detaillierten Behandlung jedes einzelnen Themas, sondern darauf,
+				einen verständlichen und praxisnahen Einstieg in die Welt von
+				DevOps zu schaffen.
+			</p>
+
+			<p>
+				Die einzelnen Kapitel bauen Schritt für Schritt aufeinander auf
+				und vermitteln die wichtigsten Grundlagen moderner
+				DevOps-Praktiken. Nach der Bearbeitung der Themen solltest du in
+				der Lage sein,
+			</p>
+
+			<ul>
+				<li>Linux-Systeme sicher zu administrieren.</li>
+				<li>Git und GitHub für die Versionsverwaltung einzusetzen.</li>
+				<li>Anwendungen mit Docker zu containerisieren.</li>
+				<li>Einfache Kubernetes-Deployments zu verstehen.</li>
+				<li>CI/CD-Pipelines aufzubauen.</li>
+				<li>Infrastruktur mit Terraform bereitzustellen.</li>
+				<li>Server mit Ansible zu konfigurieren.</li>
+				<li>Anwendungen in einer Cloud-Umgebung zu betreiben.</li>
+				<li>Monitoring und Logging einzurichten.</li>
+				<li>Den Weg einer Anwendung vom lokalen Entwicklungsrechner bis in eine produktive Umgebung nachzuvollziehen.</li>
+			</ul>
+
+			<p>
+				Ziel dieser Dokumentation ist es, ein solides DevOps-Grundverständnis
+				zu vermitteln und die wichtigsten Werkzeuge und Konzepte moderner
+				Softwareentwicklung verständlich und anhand einfacher Beispiele
+				nachvollziehbar zu machen.
+			</p>
+		</section>
+
+		<div class="topic-grid">
+
+			<a class="topic-card" href="/devops/git/">
+				<h3>Versionsverwaltung</h3>
+
+				<p>
+					Grundlagen der Versionsverwaltung mit <strong>Git</strong> und <strong>GitHub</strong>.
+					Änderungen nachvollziehen, Branches erstellen, Merges
+					durchführen und typische Workflows kennenlernen.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/linux/">
+				<h3>Linux</h3>
+
+				<p>
+					Navigation im Dateisystem, Benutzer und Berechtigungen,
+					Prozesse, Systemdienste, Logs und die grundlegende
+					Administration eines Linux-Systems.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/terminal/">
+				<h3>Terminal und Bash</h3>
+
+				<p>
+					Arbeiten mit der Kommandozeile, wichtige Bash-Befehle
+					und erste kleine Skripte zur Automatisierung
+					wiederkehrender Aufgaben.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/ssh/">
+				<h3>SSH</h3>
+
+				<p>
+					Sichere Verbindung zu entfernten Linux-Systemen,
+					Anmeldung mit Benutzername und Passwort sowie
+					Authentifizierung mit SSH-Schlüsseln.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/netzwerkgrundlagen/">
+				<h3>Netzwerkgrundlagen</h3>
+
+				<p>
+					IP-Adressen, Ports, DNS und grundlegende Netzwerkbefehle
+					verstehen, um Verbindungen zwischen Anwendungen und
+					Servern nachvollziehen zu können.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/http/">
+				<h3>HTTP und APIs</h3>
+
+				<p>
+					Verstehen, wie Anwendungen über HTTP kommunizieren,
+					welche Bedeutung Requests und Responses haben und
+					wie einfache APIs angesprochen werden.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/docker/">
+				<h3>Docker</h3>
+
+				<p>
+					Anwendungen in Containern ausführen, Images erstellen
+					und verstehen, warum Container auf verschiedenen
+					Systemen gleich funktionieren.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/docker-compose/">
+				<h3>Docker Compose</h3>
+
+				<p>
+					Mehrere Container gemeinsam starten und konfigurieren,
+					beispielsweise eine Anwendung zusammen mit einer
+					Datenbank.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/container-registry/">
+				<h3>Container Registry</h3>
+
+				<p>
+					Docker-Images speichern, herunterladen und zwischen
+					Entwicklungsrechnern, Servern und automatisierten
+					Pipelines austauschen.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/cicd/">
+				<h3>CI/CD</h3>
+
+				<p>
+					Verstehen, wie Quellcode automatisch gebaut, getestet
+					und anschließend in einer Zielumgebung bereitgestellt
+					werden kann.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/github-actions/">
+				<h3>GitHub Actions</h3>
+
+				<p>
+					Einen einfachen automatisierten Workflow erstellen,
+					der bei Änderungen am Repository gestartet wird und
+					beispielsweise Tests ausführt.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/umgebungsvariablen/">
+				<h3>Umgebungsvariablen</h3>
+
+				<p>
+					Konfigurationen wie Ports, Zugangsdaten oder Betriebsmodi
+					außerhalb des Programmcodes speichern und je nach
+					Umgebung anpassen.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/secrets/">
+				<h3>Secrets</h3>
+
+				<p>
+					Passwörter, Tokens und andere sensible Informationen
+					sicher verwalten, ohne sie direkt im Quellcode oder
+					Repository abzulegen.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/terraform/">
+				<h3>Terraform</h3>
+
+				<p>
+					Infrastruktur als Code beschreiben und erste Ressourcen
+					reproduzierbar erstellen, verändern und wieder entfernen.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/ansible/">
+				<h3>Ansible</h3>
+
+				<p>
+					Software installieren, Konfigurationen verteilen und
+					wiederkehrende Aufgaben auf einem oder mehreren
+					Linux-Systemen automatisieren.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/kubernetes/">
+				<h3>Kubernetes</h3>
+
+				<p>
+					Grundlegend verstehen, wie mehrere Container verwaltet,
+					gestartet und bei Bedarf automatisch neu bereitgestellt
+					werden.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/logging/">
+				<h3>Logging</h3>
+
+				<p>
+					Protokollausgaben von Anwendungen lesen, strukturieren
+					und nutzen, um Fehler und ungewöhnliches Verhalten
+					nachvollziehen zu können.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/monitoring/">
+				<h3>Monitoring</h3>
+
+				<p>
+					Systemzustände und Messwerte überwachen, einfache
+					Dashboards erstellen und erkennen, wenn eine Anwendung
+					nicht mehr wie erwartet funktioniert.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/prometheus/">
+				<h3>Prometheus</h3>
+
+				<p>
+					Metriken einer Anwendung oder eines Servers erfassen
+					und für die spätere Auswertung speichern.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/grafana/">
+				<h3>Grafana</h3>
+
+				<p>
+					Gesammelte Messwerte in übersichtlichen Diagrammen
+					und Dashboards darstellen.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/cloud-grundlagen/">
+				<h3>Cloud-Grundlagen</h3>
+
+				<p>
+					Verstehen, was Cloud Computing bedeutet und wie virtuelle
+					Server, Speicher, Netzwerke und weitere Dienste genutzt
+					werden können.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/aws-ec2/">
+				<h3>AWS EC2</h3>
+
+				<p>
+					Einen virtuellen Server in der AWS Cloud erstellen,
+					per SSH verbinden und eine einfache Anwendung darauf
+					ausführen.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/deployment/">
+				<h3>Deployment</h3>
+
+				<p>
+					Eine Anwendung vom lokalen Entwicklungsrechner auf
+					einen Server übertragen, starten und für andere
+					Nutzer erreichbar machen.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/reverse-proxy/">
+				<h3>Reverse Proxy</h3>
+
+				<p>
+					Verstehen, wie beispielsweise Nginx Anfragen entgegennimmt
+					und an eine dahinterliegende Anwendung weiterleitet.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/https/">
+				<h3>HTTPS und Zertifikate</h3>
+
+				<p>
+					Eine Webanwendung verschlüsselt erreichbar machen und
+					die grundlegende Aufgabe von TLS-Zertifikaten verstehen.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+			<a class="topic-card" href="/devops/backups/">
+				<h3>Backups</h3>
+
+				<p>
+					Daten und Konfigurationen sichern und verstehen, warum
+					ein Backup erst dann zuverlässig ist, wenn es auch
+					wiederhergestellt werden kann.
+				</p>
+
+				<span>Mehr erfahren →</span>
+			</a>
+
+		</div>
+	</main>
+</BaseLayout>

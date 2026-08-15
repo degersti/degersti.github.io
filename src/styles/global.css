@@ -320,7 +320,17 @@ img {
 	border-radius: 8px;
 }
 
+.content-image {
+	display: flex;
+	justify-content: center;
+	margin: 1.5rem 0;
+}
 
+.content-image img {
+	max-height: 100%;
+	max-width: 100%;
+	height: auto;
+}
 /* --------------------------------------------------
    Inline-Code
 -------------------------------------------------- */

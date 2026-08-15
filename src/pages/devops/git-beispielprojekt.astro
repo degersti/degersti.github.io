@@ -1,0 +1,552 @@
+---
+import { Image } from "astro:assets";
+import GitBashHere from "../../assets/devops/git/git-bash-here.jpg";
+import GitFirstCommitImage from "../../assets/devops/git/git-first-commit.jpg";
+import GitCreateRepositoryImage from "../../assets/devops/git/git-create-repository.jpg";
+import GitPushRepositoryImage from "../../assets/devops/git/git-push-repository.jpg";
+import GitShoppingListDevicesImage from "../../assets/devops/git/git-shopping-list-devices.jpg";
+import GitSyncRepositoryImage from "../../assets/devops/git/git-sync-repository.jpg";
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+	<main>
+		<!-- ==================================================
+			Titel
+			===================================================-->
+		<section>
+			<h1>Git im Alltag - persönliche Organisation</h1>
+
+			<p>
+				Git und GitHub eignen sich nicht nur für Softwareprojekte.
+				Auch einfache Textdateien können damit versioniert und über
+				mehrere Geräte hinweg verwaltet werden.
+			</p>
+
+			<p>
+				In diesem Beispiel erstellen wir deshalb ein kleines Repository
+				für die <strong>persönliche Organisation</strong>. Darin können
+				später beispielsweise Einkaufszettel, Notizen oder Terminlisten
+				abgelegt werden.
+			</p>
+
+			<p>
+				Als erstes Beispiel legen wir einen einfachen
+				<strong>Einkaufszettel als Markdown-Datei</strong> an und
+				übertragen ihn anschließend zu GitHub. Dadurch steht das
+				Repository über das Internet zur Verfügung und kann beispielsweise
+				über einen anderen Computer oder die GitHub-App aufgerufen werden.
+			</p>
+		</section>
+
+		<!-- ==================================================
+			Schritt 1: Projektordner anlegen
+			===================================================-->
+			<section>
+			<h2 id="projektordner-anlegen">1. Projektordner anlegen</h2>
+
+			<p>
+				Bevor wir beginnen, muss <strong>Git auf dem Computer installiert</strong> sein.
+				Wie Git installiert und eingerichtet wird, wurde im vorherigen
+				Kapitel beschrieben.
+			</p>
+
+			<p>
+				Als Erstes erstellen wir an einem beliebigen Ort auf dem Computer
+				einen neuen Ordner mit dem Namen <code>organisation</code>. Dieser
+				Ordner wird später unser Git-Projekt enthalten.
+			</p>
+
+			<div class="code-container">
+				<pre><code>organisation</code></pre>
+			</div>
+
+			<p>
+				Anschließend öffnen wir den Ordner im Windows Explorer.
+				Mit einem <strong>Rechtsklick innerhalb des Ordners</strong> und
+				der Auswahl von <strong>Open Git Bash here</strong> öffnen wir
+				Git Bash direkt an dieser Stelle.
+			</p>
+
+			<div class="content-image">
+				<Image
+					src={GitBashHere}
+					alt="Git Bash öffnen"
+					width={334}
+					loading="lazy"
+				/>
+			</div>
+
+			<p>
+				Im geöffneten Terminal sollte der Pfad nun auf unseren neu
+				erstellten Ordner <code>organisation</code> zeigen.
+				Beispielsweise:
+			</p>
+
+			<div class="code-container">
+				<pre><code>~/Documents/organisation</code></pre>
+			</div>
+
+			<p>
+				Damit befinden wir uns im richtigen Ordner und können im nächsten
+				Schritt unser Git-Repository erstellen.
+			</p>
+		</section>
+
+		<!-- ==================================================
+			Schritt 2: Git initialisieren
+			===================================================-->
+		<section>
+			<h2 id="git-initialisieren">2. Git initialisieren</h2>
+
+			<p>
+				Damit Git die Dateien und deren Änderungen innerhalb des Ordners
+				verwalten kann, wird nun ein lokales Git-Repository initialisiert:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git init</code></pre>
+			</div>
+
+			<p>
+				Git legt dabei innerhalb des Projektordners den versteckten
+				Ordner <code>.git</code> an. Ab diesem Zeitpunkt können
+				Änderungen innerhalb unseres Ordners mit Git verfolgt werden.
+			</p>
+
+			<p>
+				Mit folgendem Befehl lässt sich der aktuelle Zustand des
+				Repositories überprüfen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git status</code></pre>
+			</div>
+
+			<p>
+				Da bisher noch keine Dateien angelegt wurden, enthält das Repository
+				noch keine Änderungen. Git zeigt daher mit
+				<code>nothing to commit</code> an, dass momentan nichts gespeichert
+				werden kann.
+			</p>
+		</section>
+
+		<!-- ==================================================
+			Schritt 3: Einkaufszettel erstellen
+			===================================================-->
+<section>
+	<h2 id="einkaufszettel-erstellen">3. Einkaufszettel erstellen</h2>
+
+	<p>
+		Nun erstellen wir innerhalb unseres Projektordners die Datei für den
+		Einkaufszettel. Da Git Bash bereits geöffnet ist, können wir die Datei
+		direkt über das Terminal anlegen:
+	</p>
+
+	<div class="code-container">
+		<pre><code>touch einkaufsliste.md</code></pre>
+	</div>
+
+	<p>
+		Der Befehl <code>touch</code> erstellt eine neue, leere Datei mit dem
+		Namen <code>einkaufszettel.md</code>. Die Datei sollte anschließend
+		auch im Windows Explorer innerhalb unseres Ordners <code>organisation</code> sichtbar 
+		sein.
+	</p>
+
+	<div class="code-container">
+		<pre><code>~/organisation/einkaufszettel.md</code></pre>
+	</div>
+
+	<p>
+		Die Dateiendung <code>.md</code> steht für <strong>Markdown</strong>. 
+		Markdown ist ein einfaches Textformat, mit
+		dem Texte ohne spezielle Software formatiert werden können. GitHub kann
+		Markdown-Dateien direkt formatiert darstellen, weshalb sich dieser 
+		Dateityp anbietet. 
+	</p>
+
+	<p>
+		Um unseren Einkaufszettel zu bearbeiten, öffnen wir die Datei <code>
+		einkaufszettel.md</code> mit einem Texteditor. Dafür kann
+		beispielsweise der in Windows enthaltene <strong>Editor (Notepad)
+		</strong>, <strong>Notepad++</strong> oder <strong>Visual Studio Code (VS Code)
+		</strong> verwendet werden. VS Code bietet zusätzlich eine integrierte
+		Markdown-Vorschau, mit der sich die formatierte Darstellung der Datei
+		direkt anzeigen lässt.
+	</p>
+
+	<p>
+		Als Inhalt tragen wir unseren ersten Einkaufszettel ein:
+	</p>
+
+	<div class="code-container">
+		<pre><code># Einkaufszettel
+
+- [ ] Milch
+- [ ] Brot
+- [ ] Äpfel</code></pre>
+	</div>
+
+	<p>
+		Die Schreibweise <code># Einkaufszettel</code> erzeugt in Markdown eine
+		Überschrift. Mit <code>- [ ]</code> wird eine Checkliste angelegt.
+	</p>
+
+	<p>
+		Anschließend speichern wir die Datei. Damit ist unser erster
+		Einkaufszettel fertig und kann im nächsten Schritt mit Git verwaltet
+		werden.
+	</p>
+</section>
+
+		<!-- ==================================================
+			Schritt 4: Erste Version speichern
+			===================================================-->
+		<section>
+			<h2 id="erste-version-speichern">4. Erste Version speichern</h2>
+
+			<p>
+				Mit <code>git status</code> überprüfen wir zunächst, welche
+				Änderungen Git erkannt hat:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git status</code></pre>
+			</div>
+
+			<p>
+				Die neu erstellte Datei <code>einkaufszettel.md</code> wird
+				von Git zunächst als <strong>untracked</strong> angezeigt.
+			</p>
+
+			<p>
+				Wir fügen die Datei deshalb zur Staging Area hinzu:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git add einkaufszettel.md</code></pre>
+			</div>
+
+			<p>
+				Anschließend speichern wir den ersten Stand unseres Projekts
+				mit einem Commit:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git commit -m "feat: add shopping list"</code></pre>
+			</div>
+
+			<p>
+				Der erste Stand unseres Einkaufszettels ist damit lokal in Git
+				gespeichert. Die bisherigen Schritte und Ausgaben in Git Bash sollten
+				nun ungefähr wie folgt aussehen:
+			</p>
+
+			<div class="content-image">
+				<Image
+					class="git-first-commit-image"
+					src={GitFirstCommitImage}
+					alt="Git Bash mit den bisherigen Befehlen und dem ersten Commit"
+					loading="lazy"
+				/>
+			</div>
+		</section>
+
+		<!-- ==================================================
+			Schritt 5: GitHub Repository erstellen
+			===================================================-->
+		<section>
+			<h2 id="github-repository-erstellen">
+				5. Repository auf GitHub erstellen
+			</h2>
+
+			<p>
+				Bisher befindet sich unser Repository ausschließlich auf dem
+				lokalen Computer. Im nächsten Schritt erstellen wir deshalb
+				auf <strong>GitHub</strong> ein Remote Repository, auf dem unser
+				Projekt später über das Internet verfügbar ist.
+			</p>
+
+			<p>
+				Falls noch kein GitHub-Konto vorhanden ist, muss zunächst ein
+				<strong> kostenloses Benutzerkonto</strong> bei <a 
+					href="https://github.com/signup" target="_blank" rel="noopener noreferrer">
+					GitHub
+				</a> erstellt werden. 
+				Anschließend melden wir uns mit diesem Konto an.
+			</p>
+
+			<p>
+				Nach der Anmeldung erstellen wir über <strong>New repository</strong> ein 
+				neues Repository. Als Namen
+				verwenden wir ebenfalls <code>organisation</code>.
+			</p>
+
+			<p>
+				Da sich darin später persönliche Notizen, Termine oder andere private
+				Informationen befinden können, wählen wir unter
+				<strong> Visibility</strong> die Einstellung <strong>Private</strong>. 
+				aDadurch ist das Repository nur für uns
+				und gegebenenfalls ausdrücklich freigegebene Benutzer sichtbar.
+			</p>
+
+			<p>
+				Die Optionen zum automatischen Erstellen einer <code>README</code>-Datei, 
+				einer <code>.gitignore</code> und einer
+				Lizenz lassen wir zunächst deaktiviert. Die Einstellungen für unser
+				Repository sollten damit wie folgt aussehen:
+			</p>
+			
+			<div class="content-image">
+				<Image
+					class="git-create-repository"
+					src={GitCreateRepositoryImage}
+					alt="GitHub-Seite zum Erstellen eines neuen Repositorys"
+					loading="lazy"
+				/>
+			</div>
+
+		</section>
+
+		<!-- ==================================================
+			Schritt 6: Mit GitHub verbinden
+			===================================================-->
+		<section>
+			<h2 id="mit-github-verbinden">
+				6. Lokales Repository mit GitHub verbinden
+			</h2>
+
+			<p>
+				Nach dem Erstellen stellt GitHub die Adresse des neuen
+				Repositories bereit. Diese wird nun als sogenanntes
+				<strong> Remote Repository</strong> eingetragen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git remote add origin https://github.com/USERNAME/organisation.git</code></pre>
+			</div>
+
+			<p>
+				Anstelle von <code>USERNAME</code> wird der eigene
+				GitHub-Benutzername verwendet.
+			</p>
+
+			<p>
+				Mit folgendem Befehl lässt sich überprüfen, welches Remote
+				Repository hinterlegt wurde:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git remote -v</code></pre>
+			</div>
+		</section>
+
+		<!-- ==================================================
+			Schritt 7: Zu GitHub übertragen
+			===================================================-->
+		<section>
+			<h2 id="zu-github-uebertragen">
+				7. Einkaufszettel zu GitHub übertragen
+			</h2>
+
+			<p>
+				Zunächst stellen wir sicher, dass unser Hauptbranch
+				<code> main</code> heißt:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git branch -M main</code></pre>
+			</div>
+
+			<p>
+				Anschließend übertragen wir den bisherigen Projektstand zum
+				Remote Repository auf GitHub:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git push -u origin main</code></pre>
+			</div>
+
+			<p>
+				Unser Einkaufszettel befindet sich nun nicht mehr nur auf dem
+				lokalen Computer, sondern zusätzlich im privaten
+				GitHub-Repository. In Git Bash sollten die ausgeführten Befehle
+				und Ausgaben nun ungefähr wie folgt aussehen:
+			</p>
+
+			<div class="content-image">
+				<Image
+					class="git-push-repository"
+					src={GitPushRepositoryImage}
+					alt="Git Bash nach dem Verbinden und Übertragen des lokalen Repositorys zu GitHub"
+					loading="lazy"
+				/>
+			</div>
+
+			<p>
+				Nach dem erfolgreichen Upload ist unser Einkaufszettel nun auch auf
+				GitHub verfügbar. Da GitHub Markdown-Dateien direkt darstellen kann,
+				lässt sich der Einkaufszettel sowohl lokal in <strong>VS Code </strong>
+				(Bild: links), über <strong>GitHub</strong> im Browser (Bild: Mitte)
+				als auch über die <strong>GitHub-App</strong> auf dem Smartphone
+				(Bild: rechts) öffnen.
+			</p>
+
+			<div class="content-image">
+				<Image
+					class="git-shopping-list-devices"
+					src={GitShoppingListDevicesImage}
+					alt="Einkaufszettel in VS Code, auf GitHub und in der GitHub-App"
+					loading="lazy"
+				/>
+			</div>
+		</section>
+
+		<!-- ==================================================
+			Schritt 8: Im Alltag verwenden
+			===================================================-->
+		<section>
+			<h2 id="im-alltag-verwenden">8. Das Repository im Alltag verwenden</h2>
+
+			<p>
+				Das Repository kann nun von verschiedenen Geräten aus aufgerufen
+				werden. Auf einem weiteren Computer lässt es sich beispielsweise
+				mit <code>git clone</code> herunterladen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>git clone https://github.com/USERNAME/organisation.git</code></pre>
+			</div>
+
+			<p>
+				Auch unterwegs kann über GitHub auf die darin gespeicherten
+				Markdown-Dateien zugegriffen werden. Über die GitHub-App stehen
+				die Dateien beispielsweise auch auf dem Smartphone zur Verfügung.
+			</p>
+
+			<p>
+				Das Repository kann mit der Zeit um weitere Dateien ergänzt
+				werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>organisation/
+├── einkaufszettel.md
+├── notizen.md
+└── termine.md</code></pre>
+			</div>
+
+			<p>
+				So entsteht aus dem kleinen Git-Beispiel ein Repository, das
+				tatsächlich für die eigene Organisation verwendet werden kann.
+				Gleichzeitig lassen sich daran die grundlegenden Arbeitsabläufe
+				mit Git und GitHub üben.
+			</p>
+		</section>
+
+		<!-- ==================================================
+			Schritt 9: Änderungen synchronisieren
+			===================================================-->
+		<section>
+			<h2 id="aenderungen-synchronisieren">
+				9. Änderungen synchronisieren
+			</h2>
+
+			<p>
+				Wird der Einkaufszettel später verändert, läuft der grundlegende
+				Workflow immer wieder nach demselben Prinzip ab.
+			</p>
+
+			<div class="code-container">
+				<pre><code>git pull
+git add einkaufszettel.md
+git commit -m "docs: update shopping list"
+git push</code></pre>
+			</div>
+
+			<p>
+				Mit <code>git pull</code> werden zunächst Änderungen aus dem
+				GitHub-Repository abgerufen. Nach der Bearbeitung wird der neue
+				Stand mit <code>git add</code> und <code>git commit</code>
+				lokal gespeichert und anschließend mit <code>git push</code>
+				wieder zu GitHub übertragen.
+			</p>
+
+			<p>
+				In Git Bash sollte dieser Ablauf ungefähr wie folgt aussehen:
+			</p>
+
+			<div class="content-image">
+				<Image
+					class="git-sync-repository"
+					src={GitSyncRepositoryImage}
+					alt="Git Bash beim Abrufen, Speichern und Übertragen von Änderungen mit Git"
+					loading="lazy"
+				/>
+			</div>
+		</section>
+
+		<!-- ==================================================
+			Ergebnis
+			===================================================-->
+		<section>
+			<h2 id="ergebnis">Zusammenfassung</h2>
+
+			<p>
+				Mit wenigen Schritten ist aus einer einfachen Markdown-Datei
+				ein kleines Git-Projekt entstanden, das über GitHub zentral
+				gespeichert und von verschiedenen Geräten aus verwendet werden
+				kann.
+			</p>
+
+			<div class="code-container">
+				<pre><code>Computer
+		│
+		│ git push / git pull
+		▼
+		GitHub
+		▲
+		│
+		├── weiterer Computer
+		│
+		└── Smartphone / GitHub-App</code></pre>
+			</div>
+
+			<p>
+				Der eigentliche Nutzen von Git geht jedoch über das zentrale
+				Speichern unserer Dateien hinaus. Jede Änderung kann als eigener
+				<strong> Commit</strong> gespeichert werden. Dadurch bleibt
+				nachvollziehbar, wie sich eine Datei im Laufe der Zeit verändert
+				hat, und frühere Versionen können bei Bedarf wieder aufgerufen
+				werden.
+			</p>
+
+			<p>
+				Mit <strong>Branches</strong> können Änderungen unabhängig vom
+				aktuellen Stand ausprobiert und später wieder zusammengeführt
+				werden. Über GitHub lässt sich das Repository außerdem mit
+				<strong> anderen Benutzern</strong> teilen und gemeinsam bearbeiten.
+				Git hilft dabei, die Änderungen der verschiedenen Beteiligten
+				nachzuvollziehen und zu verwalten.
+			</p>
+
+			<p>
+				Unser Einkaufszettel ist bewusst ein sehr einfaches Beispiel.
+				Das Repository <code>organisation</code> kann nun nach eigenen
+				Vorstellungen erweitert werden - beispielsweise um Notizen,
+				Aufgaben oder Terminlisten.
+			</p>
+
+			<p>
+				Ab hier heißt es deshalb: <strong>selbst ausprobieren! </strong>
+				Neue Dateien anlegen, Änderungen vornehmen, Commits erstellen,
+				mit Branches experimentieren oder das Repository mit einer anderen
+				Person teilen. So lassen sich die zuvor behandelten Git-Grundlagen
+				an einem Projekt ausprobieren, das gleichzeitig im Alltag
+				tatsächlich genutzt werden kann.
+			</p>
+		</section>
+	</main>
+</BaseLayout>

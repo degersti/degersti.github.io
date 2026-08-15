@@ -1,5 +1,6 @@
 ---
 import HeaderLink from './HeaderLink.astro';
+import Navigation from './Navigation.astro';
 import { SITE_TITLE } from '../consts';
 import logo from '../assets/logo_white.ico';
 
@@ -7,15 +8,18 @@ const githubUrl = 'https://github.com/degersti';
 ---
 
 <header>
-	<nav>
+	<nav class="header-nav">
+
 		<!-- Logo + Seitentitel -->
+
 		<a class="brand" href="/">
 			<img src={logo} alt="degersti Logo" />
 			<h2>{SITE_TITLE}</h2>
 		</a>
 
-		<!-- Hauptnavigation -->
-		<div id="main-navigation" class="navigation-links">
+		<!-- Desktop-Navigation -->
+
+		<div class="navigation-links">
 			<HeaderLink href="/">Startseite</HeaderLink>
 			<HeaderLink href="/gateway">IoT Gateway</HeaderLink>
 			<HeaderLink href="/devops">DevOps</HeaderLink>
@@ -23,7 +27,9 @@ const githubUrl = 'https://github.com/degersti';
 		</div>
 
 		<!-- GitHub + mobiles Menü -->
+
 		<div class="header-actions">
+
 			<a
 				class="github-link"
 				href={githubUrl}
@@ -71,44 +77,65 @@ const githubUrl = 'https://github.com/degersti';
 				type="button"
 				aria-label="Navigation öffnen"
 				aria-expanded="false"
-				aria-controls="main-navigation"
+				aria-controls="mobile-navigation"
 			>
 				<span></span>
 				<span></span>
 				<span></span>
 			</button>
+
 		</div>
+
 	</nav>
+
+	<!-- Mobile Navigation -->
+
+	<div
+		id="mobile-navigation"
+		class="mobile-navigation"
+	>
+		<Navigation />
+	</div>
+
 </header>
 
 <script>
 	const menuButton =
 		document.querySelector<HTMLButtonElement>('.menu-toggle');
 
-	const navigation =
-		document.querySelector<HTMLElement>('.navigation-links');
+	const mobileNavigation =
+		document.querySelector<HTMLElement>('.mobile-navigation');
 
 	function closeMenu() {
 		menuButton?.setAttribute('aria-expanded', 'false');
 		menuButton?.setAttribute('aria-label', 'Navigation öffnen');
-		navigation?.classList.remove('is-open');
+
+		mobileNavigation?.classList.remove('is-open');
 	}
 
 	menuButton?.addEventListener('click', () => {
 		const isOpen =
 			menuButton.getAttribute('aria-expanded') === 'true';
 
-		menuButton.setAttribute('aria-expanded', String(!isOpen));
+		menuButton.setAttribute(
+			'aria-expanded',
+			String(!isOpen)
+		);
 
 		menuButton.setAttribute(
 			'aria-label',
-			isOpen ? 'Navigation öffnen' : 'Navigation schließen'
+			isOpen
+				? 'Navigation öffnen'
+				: 'Navigation schließen'
 		);
 
-		navigation?.classList.toggle('is-open', !isOpen);
+		mobileNavigation?.classList.toggle(
+			'is-open',
+			!isOpen
+		);
 	});
 
-	navigation?.querySelectorAll('a').forEach((link) => {
+	mobileNavigation?.querySelectorAll('a').forEach((link) => {
 		link.addEventListener('click', closeMenu);
 	});
 </script>
@@ -129,7 +156,7 @@ const githubUrl = 'https://github.com/degersti';
 		box-shadow: 0 6px 20px rgba(32, 42, 68, 0.18);
 	}
 
-	nav {
+	.header-nav {
 		font-family: "Space Grotesk", sans-serif;
 		position: relative;
 
@@ -144,8 +171,8 @@ const githubUrl = 'https://github.com/degersti';
 	}
 
 	/* --------------------------------------------------
-	Logo + Titel
-	-------------------------------------------------- */
+	   Logo + Titel
+	   -------------------------------------------------- */
 
 	.brand {
 		display: flex;
@@ -176,8 +203,8 @@ const githubUrl = 'https://github.com/degersti';
 	}
 
 	/* --------------------------------------------------
-	Navigation
-	-------------------------------------------------- */
+	   Desktop Navigation
+	   -------------------------------------------------- */
 
 	.navigation-links {
 		display: flex;
@@ -206,8 +233,8 @@ const githubUrl = 'https://github.com/degersti';
 	}
 
 	/* --------------------------------------------------
-	Rechter Bereich
-	-------------------------------------------------- */
+	   Rechter Bereich
+	   -------------------------------------------------- */
 
 	.header-actions {
 		display: flex;
@@ -217,13 +244,21 @@ const githubUrl = 'https://github.com/degersti';
 		justify-self: end;
 	}
 
+	.github-link {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		color: white;
+	}
+
 	.github-link svg {
 		width: 40px;
 		height: 40px;
 	}
 
 	/* --------------------------------------------------
-	   Hamburger Button
+	   Hamburger
 	   -------------------------------------------------- */
 
 	.menu-toggle {
@@ -265,8 +300,6 @@ const githubUrl = 'https://github.com/degersti';
 			opacity 0.2s ease;
 	}
 
-	/* Hamburger -> X */
-
 	.menu-toggle[aria-expanded='true'] span:nth-child(1) {
 		transform: translateY(7px) rotate(45deg);
 	}
@@ -280,19 +313,29 @@ const githubUrl = 'https://github.com/degersti';
 	}
 
 	/* --------------------------------------------------
-	   Mobile
+	   Mobile Navigation
 	   -------------------------------------------------- */
 
+	.mobile-navigation {
+		display: none;
+	}
+
 	@media (max-width: 720px) {
-		nav {
+
+		.header-nav {
+			grid-template-columns: 1fr auto;
+
 			width: 100%;
 			min-height: 60px;
 
 			padding-inline: 0.75rem;
 		}
 
+		/* Logo */
+
 		.brand {
 			padding: 0.5rem 0;
+			justify-self: start;
 		}
 
 		.brand img {
@@ -304,59 +347,56 @@ const githubUrl = 'https://github.com/degersti';
 			font-size: 0.95rem;
 		}
 
+		/* Desktop Navigation ausblenden */
+
+		.navigation-links {
+			display: none;
+		}
+
+		/* GitHub mobil ausblenden */
+
+		.github-link {
+			display: none;
+		}
+
 		/* Hamburger anzeigen */
+
+		.header-actions {
+			justify-self: end;
+		}
 
 		.menu-toggle {
 			display: flex;
 		}
 
-		/* Navigation verstecken */
+		/* --------------------------------------------------
+		   Vollständiges mobiles Menü
+		   -------------------------------------------------- */
 
-		.navigation-links {
+		.mobile-navigation {
+			display: none;
+
 			position: absolute;
 
 			top: 100%;
-			right: 0;
 			left: 0;
+			right: 0;
 
-			display: none;
-			flex-direction: column;
-			align-items: stretch;
+			max-height: calc(100vh - 60px);
 
-			padding: 0.5rem 1rem 1rem;
+			overflow-y: auto;
+
+			padding: 1rem;
 
 			background: #202a44;
+
+			color: white;
 
 			box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
 		}
 
-		/* Navigation geöffnet */
-
-		.navigation-links.is-open {
-			display: flex;
-		}
-
-		.navigation-links a {
-			width: 100%;
-
-			padding: 0.9rem 0.75rem;
-
-			border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-		}
-
-		.navigation-links a:last-child {
-			border-bottom: 0;
-		}
-
-		.navigation-links a.active {
-			border-bottom-color: rgba(255, 255, 255, 0.12);
-			border-left: 4px solid var(--accent);
-		}
-
-		/* GitHub bleibt auch mobil sichtbar */
-
-		.github-link {
-			display: flex;
+		.mobile-navigation.is-open {
+			display: block;
 		}
 	}
 </style>

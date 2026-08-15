@@ -25,10 +25,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 			</h2>
 
 			<p>
-				Willkommen auf der Dokumentation meines IoT-Gateway-Projekts.
-			</p>
-
-			<p>
 				Auf dieser Website zeige ich, wie ein vollständiges IoT-System
 				entsteht - von der Hard- und Software bis zur
 				Datenübertragung, Speicherung und Visualisierung.
@@ -93,41 +89,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 			<h2>Was kann das Gateway?</h2>
 
 			<p>
-				Das Gateway verfügt über zwei Eingänge zur Spannungsüberwachung,
-				zwei digitale Eingänge zur Auswertung von Schaltzuständen sowie über
-				einen fest verbauten Sensor zur Messung von Temperatur und
-				Luftfeuchtigkeit.
+				Das Gateway erfasst verschiedene Messwerte und Systemzustände und
+				überträgt diese je nach Verfügbarkeit über WLAN oder LTE an ein
+				zentrales Backend. Ist vorübergehend keine Verbindung verfügbar,
+				werden die Daten lokal gespeichert und später automatisch übertragen.
 			</p>
 
 			<p>
-				Im aktuellen Anwendungsfall werden damit die Spannungen von Starter-
-				und Bordbatterie sowie die Zustände eines Rauchmelders und eines
-				Bilgeschalters überwacht.
-			</p>
-
-			<p>
-				Die Kommunikation erfolgt je nach Verfügbarkeit über WLAN oder LTE.
-				Steht vorübergehend keine Verbindung zur Verfügung, werden die
-				Messwerte lokal gespeichert und automatisch übertragen, sobald die
-				Verbindung wiederhergestellt ist.
-			</p>
-
-			<p>
-				Ein energieeffizienter Betrieb wird durch die Nutzung eines
-				Deep-Sleep-Modus ermöglicht. Zusätzlich kommt eine SD-Karte zum
-				Einsatz, auf der Messdaten und Fehlermeldungen gespeichert werden
-				können. Die Konfiguration des Gateways erfolgt über eine
-				Bluetooth-Verbindung.
-			</p>
-
-			<p>
-				Zum Projekt gehört außerdem ein Backend, das die übertragenen Daten
-				in einer Datenbank speichert. Über eine Benutzeroberfläche lassen
-				sich sowohl die zuletzt empfangenen Messwerte als auch historische
-				Daten anzeigen und auswerten.
+				Neben der Sensorerfassung gehören ein energieeffizienter
+				Deep-Sleep-Betrieb, lokale Datenspeicherung und eine
+				Bluetooth-Konfiguration zum System. Im Backend werden die übertragenen
+				Daten gespeichert und über eine Benutzeroberfläche visualisiert.
 			</p>
 		</section>
-
 		<section>
 			<h2>Zum Nachbauen und Ausprobieren</h2>
 
@@ -145,12 +119,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 			</p>
 
 			<p>
+				Der vollständige Quellcode des Projekts ist auf <a
+					href="https://github.com/degersti/rv-monitoring-gateway"
+					target="_blank"
+					rel="noopener noreferrer"
+				>GitHub</a>	verfügbar und kann als Grundlage zum Nachbauen, 
+				Experimentieren und für eigene Erweiterungen verwendet werden.
+			</p>
+
+			<p>
 				Die Inhalte können außerdem als Ausgangspunkt für eigene Ideen
 				dienen. Das System lässt sich an andere Sensoren, Fahrzeuge,
 				Maschinen oder Anwendungsfälle anpassen.
 			</p>
 		</section>
-
 		<section>
 			<h2>Projektbereich</h2>
 

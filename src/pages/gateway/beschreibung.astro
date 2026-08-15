@@ -1,0 +1,433 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+	title="Beschreibung & Funktionen | IoT Gateway"
+	description="Aufbau und Funktionen des modularen IoT-Gateways für Boote und Wohnmobile."
+>
+	<main>
+		<!-- ==================================================
+			Einleitung
+			===================================================-->
+		<section>
+			<h1>Beschreibung & Funktionen</h1>
+
+			<p>
+				Auf dieser Seite werden das IoT-Gateway mit seinen Funktionen sowie das
+				Zusammenspiel der einzelnen Komponenten im Gesamtsystem beschrieben.
+			</p>
+
+			<div class="info-box">
+				<p>
+					<strong>Hinweis:</strong><br>
+					Das IoT-Gateway befindet sich noch in Entwicklung. Die folgenden
+					Abschnitte beschreiben deshalb den <b>vorgesehenen</b> vollständigen
+					Funktionsumfang des Systems.
+				</p>
+			</div>
+		</section>
+		<!-- ==================================================
+			Systemübersicht
+			===================================================-->
+
+		<section>
+			<h2 id="systemuebersicht">Systemübersicht</h2>
+
+			<p>
+				Das Gesamtsystem lässt sich in vier grundlegende Bereiche
+				unterteilen: die Sensoren und Eingänge, das eigentliche Gateway,
+				die Datenübertragung sowie das Backend mit Benutzeroberfläche.
+			</p>
+
+			<div class="code-container">
+				<pre><code>Sensoren & Eingänge
+        │
+        ▼
+   IoT-Gateway
+     ESP32-S3
+        │
+        ├── lokale Verarbeitung
+        ├── Datenspeicherung
+        └── Verbindungsmanagement
+        │
+        ▼
+    WLAN / LTE
+        │
+        ▼
+       MQTT
+        │
+        ▼
+      Backend
+        │
+        ├── Datenbank
+        └── Verarbeitung
+        │
+        ▼
+   Web-Dashboard</code></pre>
+			</div>
+
+			<p>
+				Diese Trennung ermöglicht es, die einzelnen Bestandteile des
+				Projekts unabhängig voneinander zu entwickeln und zu testen.
+				Beispielsweise kann zunächst nur die Sensorerfassung umgesetzt
+				werden, bevor später Datenübertragung und Backend hinzukommen.
+			</p>
+		</section>
+
+
+		<!-- ==================================================
+			Messwerte und Eingänge
+			===================================================-->
+
+		<section>
+			<h2 id="messwerte">Messwerte und Eingänge</h2>
+
+			<p>
+				Der aktuelle Aufbau konzentriert sich auf einige grundlegende
+				Messwerte und Zustände, die insbesondere bei einem unbeaufsichtigten
+				Boot oder Wohnmobil interessant sind.
+			</p>
+
+			<div class="table-container">
+				<table>
+					<thead>
+						<tr>
+							<th>Messgröße</th>
+							<th>Erfassung</th>
+							<th>Beispiel</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr>
+							<td>Spannung 1</td>
+							<td>Analoger Eingang</td>
+							<td>Bordbatterie</td>
+						</tr>
+
+						<tr>
+							<td>Spannung 2</td>
+							<td>Analoger Eingang</td>
+							<td>Starterbatterie</td>
+						</tr>
+
+						<tr>
+							<td>Temperatur</td>
+							<td>SHT31</td>
+							<td>Innenraum</td>
+						</tr>
+
+						<tr>
+							<td>Luftfeuchtigkeit</td>
+							<td>SHT31</td>
+							<td>Innenraum</td>
+						</tr>
+
+						<tr>
+							<td>Digitaler Eingang 1</td>
+							<td>Schaltkontakt</td>
+							<td>Bilgeschalter</td>
+						</tr>
+
+						<tr>
+							<td>Digitaler Eingang 2</td>
+							<td>Schaltkontakt</td>
+							<td>Rauchmelder</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<p>
+				Die Eingänge sind dabei nicht auf diese Anwendungen beschränkt.
+				Statt eines Bilgen- oder Rauchmelders können beispielsweise auch
+				andere Schaltkontakte ausgewertet werden.
+			</p>
+		</section>
+
+
+		<!-- ==================================================
+			Datenerfassung
+			===================================================-->
+
+		<section>
+			<h2 id="datenerfassung">Datenerfassung</h2>
+
+			<p>
+				Im normalen Betrieb wacht das Gateway in regelmäßigen Abständen
+				auf, erfasst die angeschlossenen Sensoren und bereitet die
+				Messwerte für die weitere Verarbeitung vor.
+			</p>
+
+			<div class="code-container">
+				<pre><code>Aufwachen
+   │
+   ▼
+Sensoren auslesen
+   │
+   ▼
+Messwerte verarbeiten
+   │
+   ▼
+Daten übertragen
+   │
+   ▼
+Deep Sleep</code></pre>
+			</div>
+
+			<p>
+				Dadurch muss der Mikrocontroller nicht dauerhaft aktiv bleiben.
+				Gerade bei Anwendungen, die längere Zeit ausschließlich aus einer
+				Batterie versorgt werden, lässt sich so der Energieverbrauch
+				deutlich reduzieren.
+			</p>
+		</section>
+
+
+		<!-- ==================================================
+			Telemetrie und Alarme
+			===================================================-->
+
+		<section>
+			<h2 id="telemetrie-und-alarme">Telemetrie und Alarme</h2>
+
+			<p>
+				Das Gateway unterscheidet grundsätzlich zwischen regelmäßig
+				übertragenen Messwerten und Ereignissen, die eine unmittelbare
+				Reaktion erfordern.
+			</p>
+
+			<h3>Regelmäßige Telemetrie</h3>
+
+			<p>
+				Spannungen, Temperatur, Luftfeuchtigkeit und weitere Messwerte
+				werden in regelmäßigen Abständen erfasst und an das Backend
+				übertragen. Dort können sie gespeichert und später als aktueller
+				Zustand oder als zeitlicher Verlauf dargestellt werden.
+			</p>
+
+			<h3>Ereignisbasierte Alarme</h3>
+
+			<p>
+				Bestimmte Zustände sollen dagegen nicht bis zum nächsten regulären
+				Messzyklus warten. Wird beispielsweise ein Bilgenschalter oder ein
+				angeschlossener Rauchmelder ausgelöst, kann das Gateway unmittelbar
+				auf dieses Ereignis reagieren und eine entsprechende Meldung
+				erzeugen.
+			</p>
+
+			<div class="code-container preserve-whitespace">
+				<pre><code>Regulärer Betrieb           Ereignis
+
+Messintervall               Alarmkontakt
+     │                           │
+     ▼                           ▼
+Messwerte erfassen          Gateway aufwecken
+     │                           │
+     ▼                           ▼
+Telemetrie senden           Alarm erzeugen
+     │                           │
+     ▼                           ▼
+   Backend                   Backend</code></pre>
+			</div>
+		</section>
+
+
+		<!-- ==================================================
+			Kommunikation
+			===================================================-->
+
+		<section>
+			<h2 id="kommunikation">Kommunikation</h2>
+
+			<p>
+				Für die Verbindung zum Backend kann das Gateway unterschiedliche
+				Netzwerkverbindungen verwenden. Befindet sich das Fahrzeug oder
+				Boot in Reichweite eines bekannten WLANs, kann dieses für die
+				Datenübertragung genutzt werden.
+			</p>
+
+			<p>
+				Für Standorte ohne verfügbares WLAN ist zusätzlich eine
+				Mobilfunkverbindung vorgesehen. Dadurch kann das Gateway auch
+				unabhängig von einer vorhandenen lokalen Netzwerkinfrastruktur
+				arbeiten.
+			</p>
+
+			<p>
+				Die Übertragung der Messdaten zwischen Gateway und Backend erfolgt
+				über MQTT. Das leichtgewichtige Nachrichtenprotokoll eignet sich
+				besonders für IoT-Anwendungen und ermöglicht eine klare Trennung
+				zwischen dem Gerät und der späteren Verarbeitung der Daten.
+			</p>
+		</section>
+
+
+		<!-- ==================================================
+			Offline-Betrieb
+			===================================================-->
+
+		<section>
+			<h2 id="offline-betrieb">Auch ohne Internetverbindung</h2>
+
+			<p>
+				Eine Netzwerkverbindung steht bei mobilen Anwendungen nicht immer
+				zuverlässig zur Verfügung. Das Gateway ist deshalb so aufgebaut,
+				dass Messwerte nicht verloren gehen müssen, wenn WLAN oder
+				Mobilfunk vorübergehend nicht erreichbar sind.
+			</p>
+
+			<div class="code-container">
+				<pre><code>Messwert
+   │
+   ▼
+Verbindung verfügbar?
+   │
+   ├── Ja ──► Backend
+   │
+   └── Nein
+        │
+        ▼
+   lokal speichern
+        │
+        ▼
+Verbindung wieder verfügbar
+        │
+        ▼
+      Backend</code></pre>
+			</div>
+
+			<p>
+				Nicht übertragene Daten werden lokal zwischengespeichert und können
+				nach Wiederherstellung der Verbindung nachträglich übertragen
+				werden. Für die dauerhafte lokale Speicherung kommt eine SD-Karte
+				zum Einsatz.
+			</p>
+		</section>
+
+
+		<!-- ==================================================
+			Konfiguration
+			===================================================-->
+
+		<section>
+			<h2 id="konfiguration">Konfiguration</h2>
+
+			<p>
+				Ein IoT-Gerät sollte sich konfigurieren lassen, ohne für jede
+				Änderung die Firmware neu kompilieren und auf den Mikrocontroller
+				übertragen zu müssen.
+			</p>
+
+			<p>
+				Das Gateway nutzt deshalb Bluetooth für die lokale Konfiguration.
+				Darüber können beispielsweise Zugangsdaten oder andere
+				Geräteeinstellungen an das Gateway übertragen werden.
+			</p>
+
+			<p>
+				Damit bleibt die eigentliche Firmware unabhängig von den
+				Einstellungen des jeweiligen Einsatzortes.
+			</p>
+		</section>
+
+
+		<!-- ==================================================
+			Backend
+			===================================================-->
+
+		<section>
+			<h2 id="backend">Backend und Visualisierung</h2>
+
+			<p>
+				Die Aufgabe des Gateways endet mit der Übertragung der Daten.
+				Anschließend übernimmt das Backend deren Verarbeitung und
+				Speicherung.
+			</p>
+
+			<div class="code-container">
+				<pre><code>Gateway
+   │
+   │ MQTT
+   ▼
+Backend
+   │
+   ├── Messwerte verarbeiten
+   ├── Daten speichern
+   └── Gerätestatus auswerten
+   │
+   ▼
+Datenbank
+   │
+   ▼
+Web-Dashboard</code></pre>
+			</div>
+
+			<p>
+				Über eine Benutzeroberfläche können sowohl die zuletzt empfangenen
+				Messwerte als auch historische Daten dargestellt werden. Dadurch
+				lassen sich beispielsweise Spannungsverläufe oder Veränderungen von
+				Temperatur und Luftfeuchtigkeit über einen längeren Zeitraum
+				beobachten.
+			</p>
+		</section>
+
+
+		<!-- ==================================================
+			Beispiel
+			===================================================-->
+
+		<section>
+			<h2 id="beispiel">Ein typischer Anwendungsfall</h2>
+
+			<p>
+				Ein Segelboot liegt für mehrere Wochen unbeaufsichtigt im Hafen.
+				Das Gateway erfasst regelmäßig Batteriespannung, Temperatur und
+				Luftfeuchtigkeit und überträgt die Daten an das Backend.
+			</p>
+
+			<p>
+				Der Besitzer kann dadurch aus der Ferne überprüfen, ob die
+				Batterieversorgung weiterhin funktioniert und wie sich die
+				Umgebungsbedingungen an Bord entwickeln.
+			</p>
+
+			<p>
+				Steigt durch eine Undichtigkeit Wasser in der Bilge und betätigt
+				den Bilgenschalter, erkennt das Gateway diesen Zustand unabhängig
+				vom regulären Messintervall und kann unmittelbar eine Alarmmeldung
+				erzeugen.
+			</p>
+		</section>
+
+
+		<!-- ==================================================
+			Modularer Aufbau
+			===================================================-->
+
+		<section>
+			<h2 id="modularer-aufbau">Schrittweise erweiterbar</h2>
+
+			<p>
+				Das Gateway ist nicht als abgeschlossenes Gerät konzipiert,
+				sondern als modulares Projekt, das schrittweise erweitert werden
+				kann.
+			</p>
+
+			<p>
+				Zukünftig lassen sich beispielsweise weitere Sensoren,
+				GPS-Funktionen oder Schnittstellen zu vorhandenen Systemen
+				ergänzen. Denkbar sind unter anderem die Einbindung von
+				Batteriemanagementsystemen, Solarladereglern oder Bussystemen.
+			</p>
+
+			<p>
+				Für das Verständnis des Projekts sind diese Erweiterungen jedoch
+				nicht notwendig. Die grundlegende Funktionsweise lässt sich bereits
+				mit wenigen Sensoren, einem ESP32 und einer einfachen
+				Backend-Anbindung nachvollziehen.
+			</p>
+		</section>
+	</main>
+</BaseLayout>

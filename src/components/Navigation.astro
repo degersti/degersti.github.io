@@ -10,13 +10,14 @@ const isGit = currentPath.startsWith('/devops/git');
 import {
 	House,
 	Cpu,
+		ListChecks,
 	Infinity,
-	GitBranch,
-	Terminal,
-	Container,
-	Boxes,
-	Network,
-	Cloud,
+		GitBranch,
+		Terminal,
+		Container,
+		Boxes,
+		Network,
+		Cloud,
 	UserRound
 } from '@lucide/astro';
 ---
@@ -49,8 +50,20 @@ import {
 					aria-label="IoT-Gateway-Menü ein- oder ausklappen"
 				></summary>
 
-				<!-- Gateway-Unterpunkte -->
+				<div class="sidebar-group">
+					<!-- ----------------------------------------------
+						Beschreibung und Funktionen
+						---------------------------------------------- -->
+					<div class="sidebar-section">
+						<div class="section-header">
 
+							<a	href="/gateway/beschreibung/"	class:list={["sidebar-link", { active: isActive("/gateway/beschreibung/") }]}>
+								<ListChecks size={18} />
+								<span>Beschreibung & Funktionen</span>
+							</a>
+						</div>
+					</div>
+				</div>
 			</details>
 
 		</div>
@@ -303,7 +316,7 @@ import {
 
 	.sidebar-link.active {
 		background: rgba(0, 0, 0, 0.08);
-		font-weight: 600;
+		font-weight: 500;
 	}
 
 	.section-header > details {

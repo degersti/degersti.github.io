@@ -768,9 +768,6 @@ footer {
 		margin: 2rem auto 0;
 	}
 
-	/* ... Rest wie bisher */
-}
-
 	.hero img {
 		width: 100%;
 		height: auto;
@@ -811,5 +808,6 @@ footer {
 		max-width: 100%;
 		height: auto;
 	}
+	
 }
 

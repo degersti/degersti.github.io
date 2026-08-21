@@ -6,6 +6,7 @@ const isActive = (path: string) => currentPath === path;
 const isGateway = currentPath.startsWith('/gateway');
 const isDevOps = currentPath.startsWith('/devops');
 const isGit = currentPath.startsWith('/devops/git');
+const isLinux = currentPath.startsWith('/devops/linux');
 
 import {
 	House,
@@ -106,15 +107,6 @@ import {
 								></summary>
 
 								<div class="sidebar-group nested">
-
-									<!-- Was ist Versionsverwaltung? -->
-
-									<a
-										href="/devops/git/#was-ist-versionsverwaltung"
-										class="sidebar-link"
-									>
-										Einführung
-									</a>
 
 									<!-- Wie funktioniert Git? -->
 
@@ -220,23 +212,186 @@ import {
 
 						</div>
 					</div>
-
 					<!-- -------- ENDE VERSIONSVERWALTUNG -------- -->
+
+					<!-- ----------------------------------------------
+						LINUX
+						---------------------------------------------- -->
+
+					<div class="sidebar-section">
+						<div class="section-header">
+
+							<a
+								href="/devops/linux/"
+								class:list={[
+									"sidebar-link",
+									{ active: isActive("/devops/linux/") }
+								]}
+							>
+								<Terminal size={18} />
+								<span>Linux</span>
+							</a>
+
+							<details open={isLinux}>
+								<summary
+									aria-label="Linux-Menü ein- oder ausklappen"
+								></summary>
+
+								<div class="sidebar-group nested">
+
+									<a
+										href="/devops/linux/#was-ist-linux"
+										class="sidebar-link"
+									>
+										Was ist Linux?
+									</a>
+
+									<a
+										href="/devops/linux/#terminal-und-shell"
+										class="sidebar-link"
+									>
+										Terminal und Shell
+									</a>
+
+									<a
+										href="/devops/linux/#linux-dateisystem"
+										class="sidebar-link"
+									>
+										Dateisystem
+									</a>
+
+									<a
+										href="/devops/linux/#navigation-und-dateiverwaltung"
+										class="sidebar-link"
+									>
+										Dateiverwaltung
+									</a>
+
+									<a
+										href="/devops/linux/#dateien-und-text"
+										class="sidebar-link"
+									>
+										Dateien und Text
+									</a>
+
+									<a
+										href="/devops/linux/#ein-und-ausgabe"
+										class="sidebar-link"
+									>
+										Ein- und Ausgabe
+									</a>
+
+									<a
+										href="/devops/linux/#pipelines"
+										class="sidebar-link"
+									>
+										Pipelines
+									</a>
+
+									<a
+										href="/devops/linux/#benutzer-und-gruppen"
+										class="sidebar-link"
+									>
+										Benutzer und Gruppen
+									</a>
+
+									<a
+										href="/devops/linux/#dateiberechtigungen"
+										class="sidebar-link"
+									>
+										Dateiberechtigungen
+									</a>
+
+									<a
+										href="/devops/linux/#paketverwaltung"
+										class="sidebar-link"
+									>
+										Paketverwaltung
+									</a>
+
+									<a
+										href="/devops/linux/#umgebungsvariablen"
+										class="sidebar-link"
+									>
+										Umgebungsvariablen
+									</a>
+
+									<a
+										href="/devops/linux/#prozess-und-dienstverwaltung"
+										class="sidebar-link"
+									>
+										Prozesse und Dienste
+									</a>
+
+									<a
+										href="/devops/linux/#datentraeger-und-speicherverwaltung"
+										class="sidebar-link"
+									>
+										Datenträger und Speicher
+									</a>
+
+									<a
+										href="/devops/linux/#netzwerk-und-ssh"
+										class="sidebar-link"
+									>
+										Netzwerk und SSH
+									</a>
+
+									<a
+										href="/devops/linux/#logs"
+										class="sidebar-link"
+									>
+										Logs
+									</a>
+
+									<a
+										href="/devops/linux/#automatisierung"
+										class="sidebar-link"
+									>
+										Automatisierung
+									</a>
+
+									<a
+										href="/devops/linux/#linux-sicherheit"
+										class="sidebar-link"
+									>
+										Sicherheit
+									</a>
+
+									<a
+										href="/devops/linux/#linux-befehlsuebersicht"
+										class="sidebar-link"
+									>
+										Befehlsübersicht
+									</a>
+
+									<a
+										href="/devops/linux/#linux-beispielprojekt"
+										class="sidebar-link"
+									>
+										Beispielprojekt
+									</a>
+
+									<a
+										href="/devops/linux/#linux-quellen"
+										class="sidebar-link"
+									>
+										Quellen
+									</a>
+
+								</div>
+							</details>
+
+						</div>
+					</div>
+
+					<!-- ---------------- ENDE LINUX ---------------- -->
 
 					<!-- ----------------------------------------------
 					     WEITERE DEVOPS-THEMEN
 					     ---------------------------------------------- -->
 
 					<!--
-					<a
-						href="/devops/linux/"
-						class:list={[
-							"sidebar-link",
-							{ active: isActive("/devops/linux/") }
-						]}
-					>
-						Linux
-					</a>
 
 					<a
 						href="/devops/docker/"

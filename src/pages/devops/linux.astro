@@ -1,0 +1,2913 @@
+---
+import { Image } from 'astro:assets';
+import ConeImage from '../../assets/utilities/traffic-cone-no-background.png';
+import LinuxHeroImage from '../../assets/devops/linux-hero.jpg';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout>
+	<main>
+		<section>
+			<h1>Linux</h1>
+		</section>
+
+		<div class="hero">
+			<Image
+				src={LinuxHeroImage}
+				alt="Linux Hero Image"
+				widths={[800, 1200, 1600]}
+				sizes="100vw"
+				loading="eager"
+			/>
+		</div>
+
+		<!-- ==================================================
+			 Kapitel: Linux im DevOps-Umfeld
+			 ==================================================-->
+		<section>
+
+			<p>
+				<strong>Linux</strong> bildet die Grundlage eines großen Teils moderner
+				Server-, Cloud- und Container-Infrastrukturen. Viele Werkzeuge aus dem
+				DevOps-Umfeld werden deshalb überwiegend auf Linux-Systemen eingesetzt
+				oder setzen grundlegende Kenntnisse im Umgang mit Linux voraus.
+			</p>
+
+			<p>
+				Für den Einstieg in DevOps ist es dabei nicht notwendig, jedes Detail
+				eines Linux-Systems zu kennen. Wichtig ist zunächst, die grundlegenden
+				Konzepte zu verstehen und sich sicher über die Kommandozeile auf einem
+				System bewegen zu können.
+			</p>
+
+			<p>
+				Die folgenden Abschnitte geben daher nur einen Überblick über die wichtigsten
+				Linux-Grundlagen, die beim Arbeiten im DevOps-Umfeld regelmäßig eine
+				Rolle spielen. Neben dem Umgang mit der Kommandozeile werden unter
+				anderem das Linux-Dateisystem, Benutzer und Berechtigungen, Prozesse
+				und Dienste, Paketverwaltung, Netzwerk und SSH sowie Logs und einfache
+				Automatisierung behandelt. Die wichtigsten Befehle werden zudem kompakt als
+				Übersicht zusammengefasst.
+			</p>
+
+			<p>
+				In einem abschließenden <strong>Beispielprojekt</strong> werden
+				anschließend mehrere der vorgestellten Grundlagen praktisch auf einem
+				Linux-System angewendet. Zur weiteren Vertiefung finden sich am Ende
+				der Seite Empfehlungen für weiterführende Literatur, Lernmaterialien
+				und Dokumentationen.
+			</p>
+			<!--
+			<p>
+				Die folgende Übersicht zeigt die auf dieser Seite behandelten
+				Themenbereiche und deren wichtigste Inhalte ohne Anspruch auf Vollständigkeit:
+			</p>
+
+			<table id="uebersicht-linux">
+				<thead>
+					<tr>
+						<th>Themenbereich</th>
+						<th>Inhalt</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<a href="#was-ist-linux">
+								<strong>Linux-Grundlagen</strong>
+							</a>
+						</td>
+						<td>Kernel, Distributionen und grundlegender Aufbau</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="#terminal-und-shell">
+								<strong>Terminal und Shell</strong>
+							</a>
+						</td>
+						<td>CLI, Terminal, Bash, Befehle, Optionen und Argumente</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="#linux-dateisystem">
+								<strong>Dateisystem</strong>
+							</a>
+						</td>
+						<td>Verzeichnisstruktur, Pfade und wichtige Systemverzeichnisse</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="#navigation-und-dateiverwaltung">
+								<strong>Dateien verwalten</strong>
+							</a>
+						</td>
+						<td>Navigieren, erstellen, kopieren, verschieben und suchen</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="#dateien-und-text">
+								<strong>Dateien und Text</strong>
+							</a>
+						</td>
+						<td>Dateiinhalte anzeigen, bearbeiten, durchsuchen und filtern</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="#ein-und-ausgabe">
+								<strong>Ein- und Ausgabe</strong>
+							</a>
+						</td>
+						<td>Standardeingabe, Standardausgabe und Umleitungen</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="#pipelines">
+								<strong>Pipelines</strong>
+							</a>
+						</td>
+						<td>Ausgaben zwischen Befehlen weitergeben und verarbeiten</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="#benutzer-und-gruppen">
+								<strong>Benutzer und Gruppen</strong>
+							</a>
+						</td>
+						<td>Benutzerkonten, Gruppen, Root, su und sudo</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="#dateiberechtigungen">
+								<strong>Dateiberechtigungen</strong>
+							</a>
+						</td>
+						<td>Besitzer, Zugriffsrechte, chmod, chown und chgrp</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="#paketverwaltung">
+								<strong>Paketverwaltung</strong>
+							</a>
+						</td>
+						<td>Software installieren, aktualisieren und entfernen</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="#umgebungsvariablen">
+								<strong>Umgebungsvariablen</strong>
+							</a>
+						</td>
+						<td>Environment, PATH und Shell-Konfiguration</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="#prozess-und-dienstverwaltung">
+								<strong>Prozess- und Dienstverwaltung</strong>
+							</a>
+						</td>
+						<td>Programme überwachen und Services mit systemd verwalten</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="#datentraeger-und-speicherverwaltung">
+								<strong>Datenträger- und Speicherverwaltung</strong>
+							</a>
+						</td>
+						<td>Datenträger, Partitionen, Mountpoints und Speicherplatz verwalten</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="#netzwerk-und-ssh">
+								<strong>Netzwerk und SSH</strong>
+							</a>
+						</td>
+						<td>IP-Adressen, Ports, DNS und Remote-Zugriff</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="#logs">
+								<strong>Mit Logs arbeiten</strong>
+							</a>
+						</td>
+						<td>Systemzustand prüfen und Fehler systematisch eingrenzen</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="#automatisierung">
+								<strong>Automatisierung</strong>
+							</a>
+						</td>
+						<td>Bash-Skripte, Exit Codes und zeitgesteuerte Aufgaben</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="#linux-sicherheit">
+								<strong>Sicherheit</strong>
+							</a>
+						</td>
+						<td>Updates, Rechte, SSH und grundlegende Absicherung</td>
+					</tr>
+				</tbody>
+			</table>
+			-->
+		</section>
+		<!-- ==================================================
+			 Kapitel: Was ist Linux
+			 ==================================================-->
+		<section class="chapter">
+			<details>
+				<summary>
+					<h2 id="was-ist-linux">Was ist Linux?</h2>
+
+					<span class="chapter-toggle">
+						<span class="show-text">Kapitel ausklappen</span>
+						<span class="hide-text">Kapitel einklappen</span>
+					</span>
+				</summary>
+			
+			<p>
+				Streng genommen bezeichnet <strong>Linux</strong> den Kernel eines
+				Betriebssystems. Der Kernel bildet die Verbindung zwischen Hardware und
+				Software und übernimmt unter anderem die Verwaltung von Prozessen,
+				Arbeitsspeicher, Geräten und Dateisystemen.
+			</p>
+
+			<p>
+				Ein vollständiges Linux-System besteht zusätzlich aus zahlreichen
+				Systemwerkzeugen, Bibliotheken und Anwendungen. Diese werden zusammen
+				mit dem Linux-Kernel als sogenannte <strong>Distribution</strong>&nbsp;
+				bereitgestellt. Der grundlegende Aufbau lässt sich vereinfacht als
+				Schichtenmodell darstellen, bei dem der Linux-Kernel die Schnittstelle
+				zwischen der Hardware und den darüberliegenden Komponenten des Systems
+				bildet.
+			</p>
+
+<div class="code-container preserve-whitespace">
+	<pre><code>┌──────────────────────────────────────┐
+│        Anwendungen & Dienste         │
+├──────────────────────────────────────┤
+│         Shell & Systemools           │
+├──────────────────────────────────────┤
+│         Systembibliotheken           │
+├──────────────────────────────────────┤
+│            Linux-Kernel              │
+├──────────────────────────────────────┤
+│              Hardware                │
+└──────────────────────────────────────┘</code></pre>
+</div>
+
+			<p>
+				Es existieren zahlreiche Linux-Distributionen, die sich unter anderem
+				bei Paketverwaltung, Standardsoftware und Zielgruppe unterscheiden.
+				Zu den bekanntesten gehören:
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Distribution</th>
+						<th>Typischer Einsatz</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><strong>Debian</strong></td>
+						<td>Stabile Server- und Desktop-Systeme</td>
+					</tr>
+					<tr>
+						<td><strong>Ubuntu</strong></td>
+						<td>Desktop, Server und Cloud</td>
+					</tr>
+					<tr>
+						<td><strong>Fedora</strong></td>
+						<td>Aktuelle Linux-Technologien und Entwicklung</td>
+					</tr>
+					<tr>
+						<td><strong>RHEL</strong></td>
+						<td>Enterprise-Server und Unternehmensumgebungen</td>
+					</tr>
+					<tr>
+						<td><strong>Arch Linux</strong></td>
+						<td>Minimaler und individuell aufgebauter Linux-Desktop</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<p>
+				Die Beispiele auf dieser Seite orientieren sich überwiegend an&nbsp;
+				<strong>Debian</strong> beziehungsweise&nbsp;
+				<strong>Ubuntu</strong>. Die grundlegenden Konzepte gelten 
+				jedoch unabhängig von der verwendeten Distribution.
+			</p>
+		
+			</details>
+        </section>
+		<!-- ==================================================
+			 Kapitel: Terminal und Shell
+			 ==================================================-->
+		<section class="chapter">
+			<details>
+				<summary>
+					<h2 id="terminal-und-shell">Terminal und Shell</h2>
+					
+					<span class="chapter-toggle">
+						<span class="show-text">Kapitel ausklappen</span>
+						<span class="hide-text">Kapitel einklappen</span>
+					</span>
+				</summary>
+
+			<p>
+				Linux kann sowohl über eine <strong>grafische Benutzeroberfläche
+				(GUI)</strong> als auch über eine <strong>textbasierte Kommandozeile
+				(Command Line Interface, CLI)</strong> bedient werden. Während bei einer
+				GUI Programme und Funktionen über Fenster, Menüs und Schaltflächen
+				aufgerufen werden, erfolgt die Bedienung mittels Kommandozeile durch
+				die Eingabe von Textbefehlen.
+			</p>
+
+			<p>
+				Zum Aufrufen der Kommandozeile gibt es unterschiedliche Möglichkeiten.
+				Auf einem Linux-System mit grafischer Benutzeroberfläche erfolgt der
+				Zugriff meist über einen <strong>Terminalemulator</strong>. Systeme ohne
+				grafische Oberfläche lassen sich direkt über eine textbasierte&nbsp;
+				<strong>Systemkonsole</strong> bedienen. Der Zugriff auf ein
+				entferntes Linux-Systems ist zudem über eine&nbsp;
+				<strong>SSH-Verbindung</strong> möglich. Unter Windows eignet
+				sich hierfür beispielsweise&nbsp;
+				<a
+					href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<strong>PuTTY</strong>
+				</a>.
+			</p>
+
+			<p>
+				Unabhängig von der Art des Zugriffs arbeitet der Benutzer
+				üblicherweise in einer <strong>Shell</strong>. Sie bildet die
+				textbasierte Benutzerschnittstelle, nimmt die eingegebenen Befehle
+				entgegen und steuert deren Ausführung. Eine der unter Linux am
+				häufigsten verwendeten Shells ist <strong>Bash</strong>. Die 
+				eigentliche Bedienung innerhalb der Shell erfolgt anschließend
+				durch die Eingabe von einzelne Befehlen, mit denen Programme aufgerufen
+				und verschiedene Funktionen des Systems ausgeführt werden.
+			</p>
+
+			<p>
+				Ein solcher Shell-Befehl besteht typischerweise aus dem eigentlichen&nbsp;
+				<strong>Befehl</strong> sowie optionalen <strong>Optionen</strong> und&nbsp;
+				<strong>Argumenten</strong>:
+			</p>
+
+			<div class="code-container preserve-whitespace">
+				<pre><code>ls        -la        /var/log
+│          │             │
+Befehl   Optionen      Argument</code></pre>
+			</div>
+
+			<p>
+				Einige grundlegende Befehle sind beispielsweise:
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Befehl</th>
+						<th>Zweck</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td><code>whoami</code></td><td>Aktuellen Benutzer anzeigen</td></tr>
+					<tr><td><code>pwd</code></td><td>Aktuelles Verzeichnis anzeigen</td></tr>
+					<tr><td><code>clear</code></td><td>Terminal leeren</td></tr>
+					<tr><td><code>history</code></td><td>Befehlshistorie anzeigen</td></tr>
+					<tr><td><code>man</code></td><td>Handbuchseite zu einem Befehl öffnen</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				Weitere Informationen zu einem Befehl lassen sich häufig über die
+				zugehörige Handbuchseite mit <code>man</code> oder über die 
+				Option <code>--help</code> aufrufen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>man ls
+			ls --help</code></pre>
+			</div>
+
+			<p>
+				Mithilfe der Shell kann somit über Befehle mit dem Linux-System
+				interagiert werden.
+			</p>
+
+
+			</details>
+        </section>
+		<!-- ==================================================
+			 Kapitel: Linux-Dateisystem
+			 ==================================================-->
+		<section class="chapter">
+			<details>
+				<summary>
+					<h2 id="linux-dateisystem">Das Linux-Dateisystem</h2>
+				<span class="chapter-toggle">
+						<span class="show-text">Kapitel ausklappen</span>
+						<span class="hide-text">Kapitel einklappen</span>
+					</span>
+				</summary>
+
+			<p>
+				Im Gegensatz zu Windows verwendet Linux keine Laufwerksbuchstaben
+				wie <code>C:</code> oder <code>D:</code>. Alle Dateien und Datenträger
+				werden innerhalb eines gemeinsamen Verzeichnisbaums eingebunden.
+				Der Ausgangspunkt ist das <strong>Wurzelverzeichnis /</strong>.
+			</p>
+
+			<p>
+				Der folgende vereinfachte Verzeichnisbaum zeigt einige der wichtigsten
+				Verzeichnisse direkt unterhalb des Wurzelverzeichnisses:
+			</p>
+
+			<div class="code-container">
+				<pre><code>/
+			├── dev
+			├── etc
+			├── home
+			├── mnt
+			├── opt
+			├── proc
+			├── tmp
+			├── usr
+			└── var
+				└── log</code></pre>
+			</div>
+
+			<p>
+				Die Verzeichnisse übernehmen dabei unterschiedliche Aufgaben innerhalb
+				des Linux-Systems. Die folgende Tabelle gibt einen kurzen Überblick über
+				ihre jeweilige Bedeutung:
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Verzeichnis</th>
+						<th>Bedeutung</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td><code>/</code></td><td>Wurzelverzeichnis des gesamten Systems</td></tr>
+					<tr><td><code>/home</code></td><td>Persönliche Verzeichnisse der Benutzer</td></tr>
+					<tr><td><code>/etc</code></td><td>Systemweite Konfigurationsdateien</td></tr>
+					<tr><td><code>/var</code></td><td>Veränderliche Daten wie Logs und Caches</td></tr>
+					<tr><td><code>/var/log</code></td><td>Logdateien vieler Programme und Dienste</td></tr>
+					<tr><td><code>/tmp</code></td><td>Temporäre Dateien</td></tr>
+					<tr><td><code>/usr</code></td><td>Programme, Bibliotheken und gemeinsam genutzte Daten</td></tr>
+					<tr><td><code>/opt</code></td><td>Zusätzlich installierte Anwendungen</td></tr>
+					<tr><td><code>/dev</code></td><td>Geräte werden als Dateien dargestellt</td></tr>
+					<tr><td><code>/proc</code></td><td>Virtuelles Dateisystem mit Prozess- und Kernelinformationen</td></tr>
+					<tr><td><code>/mnt</code></td><td>Typischer Einhängepunkt für Dateisysteme</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				Um Dateien und Verzeichnisse innerhalb dieses Verzeichnisbaums eindeutig
+				anzugeben, werden sogenannte <strong>Pfade</strong> verwendet. Ein Pfad
+				beschreibt den Weg durch die Verzeichnisstruktur bis zu einem bestimmten
+				Verzeichnis oder einer Datei. Die einzelnen Verzeichnisse werden dabei
+				durch einen Schrägstrich <code>/</code> voneinander getrennt.
+			</p>
+
+			<p>
+				Ein Pfad kann entweder <strong>absolut</strong> oder&nbsp;
+				<strong>relativ</strong> angegeben werden. Ein absoluter Pfad beschreibt
+				den vollständigen Weg ausgehend vom Wurzelverzeichnis <code>/</code>.
+				Ein relativer Pfad wird dagegen ausgehend von dem Verzeichnis interpretiert,
+				in dem sich der Benutzer aktuell befindet.
+			</p>
+
+			<div class="code-container preserve-whitespace">
+				<pre><code>/etc/ssh/sshd_config
+  │   │       │
+  │   │       └── Datei
+  │   └────────── Unterverzeichnis
+  └────────────── Verzeichnis unterhalb vom Wurzelverzeichnis /</code></pre>
+			</div>
+
+			<p>
+				Neben der vollständigen Angabe eines Pfades gibt es unter Linux einige
+				besondere Schreibweisen, die das Navigieren innerhalb des Dateisystems
+				erleichtern:
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Schreibweise</th>
+						<th>Bedeutung</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>/etc/ssh/sshd_config</code></td>
+						<td>Absoluter Pfad vom Wurzelverzeichnis aus</td>
+					</tr>
+					<tr>
+						<td><code>./script.sh</code></td>
+						<td>Datei <code>script.sh</code> im aktuellen Verzeichnis</td>
+					</tr>
+					<tr>
+						<td><code>../</code></td>
+						<td>Übergeordnetes Verzeichnis</td>
+					</tr>
+					<tr>
+						<td><code>~</code></td>
+						<td>Home-Verzeichnis des aktuellen Benutzers</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="info-box">
+				<p>
+					<strong>Hinweis:</strong> Dateien und Verzeichnisse, deren Name mit
+					einem Punkt beginnt, gelten unter Linux als <strong>versteckt</strong>.
+					Ein typisches Beispiel ist die Datei <code>.bashrc</code> im
+					Home-Verzeichnis eines Benutzers.
+				</p>
+			</div>
+
+			<p>
+				Zusammenfassend organisiert Dateien, Verzeichnisse und eingebundene
+				Datenträger in einem gemeinsamen Verzeichnisbaum ausgehend vom&nbsp;
+				<strong>Wurzelverzeichnis /</strong>. Über absolute und relative Pfade
+				lassen sich Dateien und Verzeichnisse innerhalb dieser Struktur eindeutig
+				angeben.
+			</p>
+
+			
+		
+			</details>
+        </section>
+		<!-- ==================================================
+			 Kapitel: Navigation und Dateiverwaltung
+			 ==================================================-->
+		<section class="chapter">
+			<details>
+				<summary>
+					<h2 id="navigation-und-dateiverwaltung">
+							In Verzeichnissen navigieren / Dateien verwalten</h2>
+
+					<span class="chapter-toggle">
+						<span class="show-text">Kapitel ausklappen</span>
+						<span class="hide-text">Kapitel einklappen</span>
+					</span>
+				</summary>
+
+		<p>
+			Die Navigation innerhalb des Dateisystems gehört zu den grundlegenden
+			Aufgaben bei der Arbeit mit Linux. Über die Kommandozeile lassen sich
+			Verzeichnisse wechseln und anzeigen sowie Dateien und Verzeichnisse
+			erstellen, kopieren, verschieben oder löschen.
+		</p>
+
+		<p>
+			Das Verzeichnis, in dem sich die Shell aktuell befindet, wird als&nbsp;
+			<strong>Arbeitsverzeichnis</strong> bezeichnet. Mit <code>pwd</code>&nbsp;
+			lässt sich dessen vollständiger Pfad anzeigen:
+		</p>
+
+		<div class="code-container">
+			<pre><code>pwd
+		/home/benutzer</code></pre>
+		</div>
+
+		<p>
+			Der Inhalt des aktuellen Verzeichnisses wird mit <code>ls</code>&nbsp;
+			angezeigt. Dem Wechsel zwischen Verzeichnissen dient der Befehl&nbsp;
+			<code>cd</code>:
+		</p>
+
+		<div class="code-container">
+			<pre><code>cd Dokumente</code></pre>
+		</div>
+
+		<p>
+			Dabei können sowohl relative als auch absolute Pfade verwendet werden.
+			Einige Schreibweisen werden bei der Navigation besonders häufig benötigt:
+		</p>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Befehl</th>
+					<th>Bedeutung</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>cd "verzeichnis_name"</code></td>
+					<td>Über einen relativen Pfad in ein Verzeichnis wechseln</td>
+				</tr>
+				<tr>
+					<td><code>cd /pfad/"verzeichnis_name"</code></td>
+					<td>Über einen absoluten Pfad in ein Verzeichnis wechseln</td>
+				</tr>
+				<tr>
+					<td><code>cd ..</code></td>
+					<td>Eine Verzeichnisebene nach oben wechseln</td>
+				</tr>
+				<tr>
+					<td><code>cd ~</code></td>
+					<td>In das eigene Home-Verzeichnis wechseln</td>
+				</tr>
+				<tr>
+					<td><code>cd /</code></td>
+					<td>In das Wurzelverzeichnis wechseln</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<p>
+			Die wichtigsten Befehle für die Navigation und Dateiverwaltung sind
+			damit:
+		</p>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Befehl</th>
+					<th>Zweck</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>pwd</code></td>
+					<td>Aktuelles Verzeichnis anzeigen</td>
+				</tr>
+				<tr>
+					<td><code>ls</code></td>
+					<td>Inhalt eines Verzeichnisses anzeigen</td>
+				</tr>
+				<tr>
+					<td><code>cd</code></td>
+					<td>Verzeichnis wechseln</td>
+				</tr>
+				<tr>
+					<td><code>mkdir</code></td>
+					<td>Verzeichnis erstellen</td>
+				</tr>
+				<tr>
+					<td><code>touch</code></td>
+					<td>Datei erstellen oder Zeitstempel aktualisieren</td>
+				</tr>
+				<tr>
+					<td><code>cp</code></td>
+					<td>Dateien oder Verzeichnisse kopieren</td>
+				</tr>
+				<tr>
+					<td><code>mv</code></td>
+					<td>Dateien oder Verzeichnisse verschieben oder umbenennen</td>
+				</tr>
+				<tr>
+					<td><code>rm</code></td>
+					<td>Dateien oder Verzeichnisse löschen</td>
+				</tr>
+				<tr>
+					<td><code>find</code></td>
+					<td>Dateien und Verzeichnisse suchen</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<p>
+			Damit stehen die grundlegenden Befehle zum Navigieren zwischen
+			Verzeichnissen sowie zum Anzeigen, Erstellen, Verschieben und Löschen
+			von Dateien und Verzeichnissen zur Verfügung.
+		</p>
+
+		
+		
+			</details>
+        </section>
+		<!-- ==================================================
+			 Kapitel: Dateien und Text
+			 ==================================================-->
+		<section class="chapter">
+			<details>
+				<summary>
+					<h2 id="dateien-und-text">Dateien anzeigen und bearbeiten</h2>
+					<span class="chapter-toggle">
+						<span class="show-text">Kapitel ausklappen</span>
+						<span class="hide-text">Kapitel einklappen</span>
+					</span>
+				</summary>
+
+			<p>
+				Neben der Verwaltung von Dateien ist auch das Anzeigen und Bearbeiten
+				ihrer Inhalte ein wichtiger Bestandteil der Arbeit mit Linux.
+				Insbesondere Konfigurationsdateien, Skripte und Logdateien werden
+				häufig direkt über die Kommandozeile betrachtet oder bearbeitet.
+			</p>
+
+			<p>
+				Für die Arbeit mit Textdateien stehen unter Linux zahlreiche
+				Werkzeuge zur Verfügung:
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Befehl</th>
+						<th>Zweck</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>cat</code></td>
+						<td>Dateiinhalt ausgeben</td>
+					</tr>
+					<tr>
+						<td><code>less</code></td>
+						<td>Längere Textdateien seitenweise anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>head</code></td>
+						<td>Anfang einer Datei anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>tail</code></td>
+						<td>Ende einer Datei anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>nano</code></td>
+						<td>Textdateien im Terminal bearbeiten</td>
+					</tr>
+					<tr>
+						<td><code>grep</code></td>
+						<td>Text nach bestimmten Mustern durchsuchen</td>
+					</tr>
+					<tr>
+						<td><code>sort</code></td>
+						<td>Textzeilen sortieren</td>
+					</tr>
+					<tr>
+						<td><code>wc</code></td>
+						<td>Zeilen, Wörter oder Zeichen zählen</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<p>
+				Einige dieser Befehle werden im weiteren Verlauf noch anhand konkreter
+				Beispiele verwendet und näher erläutert.
+			</p>
+
+			
+		
+			</details>
+        </section>
+		<!-- ==================================================
+			 Kapitel: Ein- und Ausgabe
+			 ==================================================-->
+		<section class="chapter">
+			<details>
+				<summary>
+					<h2 id="ein-und-ausgabe">Ein- und Ausgabe</h2>
+					<span class="chapter-toggle">
+						<span class="show-text">Kapitel ausklappen</span>
+						<span class="hide-text">Kapitel einklappen</span>
+					</span>
+				</summary>
+
+			<p>
+				Programme und Befehle unter Linux können Daten einlesen und Ergebnisse
+				ausgeben. Standardmäßig erfolgt die Eingabe über die Tastatur und die
+				Ausgabe über das Terminal. Linux unterscheidet dabei zwischen drei
+				Standard-Datenströmen:
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Datenstrom</th>
+						<th>Bezeichnung</th>
+						<th>Bedeutung</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>stdin</code></td>
+						<td>Standardeingabe</td>
+						<td>Eingabe eines Programms, standardmäßig über die Tastatur</td>
+					</tr>
+					<tr>
+						<td><code>stdout</code></td>
+						<td>Standardausgabe</td>
+						<td>Normale Ausgabe eines Programms im Terminal</td>
+					</tr>
+					<tr>
+						<td><code>stderr</code></td>
+						<td>Standardfehlerausgabe</td>
+						<td>Fehler- und Diagnosemeldungen eines Programms</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<p>
+				Ein einfaches Beispiel für eine Ausgabe liefert der Befehl&nbsp;
+				<code>echo</code>. Er gibt den übergebenen Text über die
+				Standardausgabe aus:
+			</p>
+
+			<div class="code-container">
+				<pre><code>echo "Hallo Linux"
+					Hello Linux</code></pre>
+			</div>
+
+			<p>
+				Die Ein- und Ausgaben eines Befehls müssen jedoch nicht zwangsläufig
+				über Tastatur und Terminal erfolgen. Mithilfe von&nbsp;
+				<strong>Umleitungen</strong> lassen sich die Datenströme beispielsweise
+				aus Dateien lesen oder in Dateien schreiben.
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Operator</th>
+						<th>Bedeutung</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>&gt;</code></td>
+						<td>Standardausgabe in eine Datei schreiben</td>
+					</tr>
+					<tr>
+						<td><code>&gt;&gt;</code></td>
+						<td>Standardausgabe an eine Datei anhängen</td>
+					</tr>
+					<tr>
+						<td><code>&lt;</code></td>
+						<td>Eingabe aus einer Datei lesen</td>
+					</tr>
+					<tr>
+						<td><code>2&gt;</code></td>
+						<td>Standardfehlerausgabe in eine Datei schreiben</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<p>
+				Mit <code>&gt;</code> und <code>&gt;&gt;</code> lässt sich die
+				Standardausgabe eines Befehls in eine Datei umleiten. Im folgenden
+				Beispiel wird zunächst eine Datei mit zwei Namen erstellt:
+			</p>
+
+			<div class="code-container">
+				<pre><code>echo "Lena" &gt; namen.txt
+			echo "Anna" &gt;&gt; namen.txt</code></pre>
+			</div>
+
+			<p>
+				Der Inhalt der Datei lässt sich anschließend beispielsweise mit&nbsp;
+				<code>less</code> anzeigen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>less namen.txt</code></pre>
+				<pre><code>Lena
+			Anna</code></pre>
+			</div>
+
+			<p>
+				Mit <code>&lt;</code> kann eine Datei als Standardeingabe für einen
+				Befehl verwendet werden. Der Befehl <code>sort</code> liest im folgenden
+				Beispiel den Inhalt von <code>namen.txt</code> ein und gibt die Namen
+				alphabetisch sortiert aus:
+			</p>
+
+			<div class="code-container">
+				<pre><code>sort &lt; namen.txt</code></pre>
+				<pre><code>Anna
+			Lena</code></pre>
+			</div>
+
+			<p>
+				Auch die Standardfehlerausgabe lässt sich umleiten. Wird beispielsweise
+				mit <code>less</code> versucht, eine nicht vorhandene Datei zu öffnen,
+				kann die dabei entstehende Fehlermeldung mit <code>2&gt;</code> in eine
+				Datei geschrieben werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>less namenXY.txt 2&gt; fehler.txt</code></pre>
+			</div>
+
+			<p>
+				Die Fehlermeldung erscheint dadurch nicht im Terminal, sondern wird in&nbsp;
+				<code>fehler.txt</code> gespeichert. Der Inhalt lässt sich anschließend
+				wieder mit <code>less</code> anzeigen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>less fehler.txt</code></pre>
+			</div>
+
+			<p>
+				Mit den vorgestellten Werkzeugen lassen sich die Ein- und Ausgaben
+				von Befehlen gezielt steuern. Umleitungen der Standard-Ein- und -Ausgabe
+				ermöglichen es zudem, in Dateien zu schreiben beziehungsweise aus diesen
+				zu lesen.
+			</p>
+
+			
+		
+			</details>
+        </section>
+		<!-- ==================================================
+			 Kapitel: Pipelines
+			 ==================================================-->
+		<section class="chapter">
+			<details>
+				<summary>
+					<h2 id="pipelines">Pipelines</h2>
+					<span class="chapter-toggle">
+						<span class="show-text">Kapitel ausklappen</span>
+						<span class="hide-text">Kapitel einklappen</span>
+					</span>
+				</summary>
+
+			<p>
+				Die Standardausgabe eines Befehls kann nicht nur im Terminal angezeigt
+				oder in eine Datei umgeleitet werden. Sie lässt sich auch direkt
+				an einen weiteren Befehl übergeben. Hierfür wird das&nbsp;
+				<strong>Pipe-Zeichen <code>|</code></strong> verwendet.
+			</p>
+
+			<p>
+				Im folgenden Beispiel gibt <code>cat</code> zunächst den Inhalt der
+				Datei <code>namen.txt</code> aus. Die Ausgabe wird über die Pipe direkt
+				an <code>sort</code> weitergegeben:
+			</p>
+
+			<div class="code-container">
+				<pre><code>cat namen.txt | sort</code></pre>
+			</div>
+
+			<p>
+				Enthält <code>namen.txt</code> weiterhin die Namen aus dem vorherigen
+				Beispiel, ergibt sich folgende Ausgabe:
+			</p>
+
+			<div class="code-container">
+				<pre><code>Anna
+		Lena</code></pre>
+			</div>
+
+			<p>
+				Mehrere auf diese Weise miteinander verbundene Befehle werden als&nbsp;
+				<strong>Pipeline</strong> bezeichnet. Dabei verarbeitet jeder Befehl
+				die Ausgabe des vorherigen Befehls und gibt sein Ergebnis wiederum
+				an den nächsten weiter.
+			</p>
+
+			<div class="code-container preserve-whitespace">
+				<pre><code>Befehl 1        Befehl 2        Befehl 3
+   │               │               │
+   └───────────────┴───────────────┘
+    stdout → stdin  stdout → stdin</code></pre>
+			</div>
+
+			<p>
+				Eine Pipeline lässt sich außerdem mit den zuvor beschriebenen
+				Ein- und Ausgabeumleitungen kombinieren. So kann das Ergebnis einer
+				Pipeline beispielsweise direkt in einer Datei gespeichert werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>cat namen.txt | sort &gt; namen_sorted.txt</code></pre>
+			</div>
+
+			<p>
+				<code>cat</code> gibt den Inhalt von <code>namen.txt</code> aus und&nbsp;
+				<code>sort</code> sortiert die über die Pipe übergebenen Namen. Die
+				Standardausgabe von <code>sort</code> wird anschließend mit&nbsp;
+				<code>&gt;</code> in die Datei <code>namen_sorted.txt</code> geschrieben.
+			</p>
+
+			<p>
+				In der Praxis lassen sich so besipeilsweise Logdateien einfach Filtern
+				und anschließend sortieren.
+			</p>
+
+			<div class="code-container">
+				<pre><code>cat server.log | grep ERROR | sort</code></pre>
+			</div>
+
+			<p>
+				<code>cat</code> liest zunächst die Logdatei ein. <code>grep</code>&nbsp;
+				filtert daraus alle Zeilen, die <code>ERROR</code> enthalten, und&nbsp;
+				<code>sort</code> sortiert anschließend die verbleibenden Zeilen.
+			</p>
+
+			<p>
+				Pipelines sind also ein nützliches Werkzeug für die direkte Weitergabe
+				der Standardausgabe eines Befehls als Standardeingabe an einen weiteren
+				Befehl. Dadurch lassen sich mehrere Befehle miteinander verknüpfen und
+				Daten schrittweise filtern, sortieren oder anderweitig verarbeiten.
+			</p>
+
+			
+		
+			</details>
+        </section>
+		<!-- ==================================================
+			 Kapitel: Benutzer und Gruppen
+			 ==================================================-->
+		<section class="chapter">
+			<details>
+				<summary>
+					<h2 id="benutzer-und-gruppen">Benutzer und Gruppen</h2>
+					<span class="chapter-toggle">
+						<span class="show-text">Kapitel ausklappen</span>
+						<span class="hide-text">Kapitel einklappen</span>
+					</span>
+				</summary>
+
+			<p>
+				Linux ist als <strong>Mehrbenutzersystem</strong> aufgebaut. Dadurch
+				können mehrere Benutzer mit eigenen Konten, Einstellungen und
+				Berechtigungen auf demselben System arbeiten. Jeder Benutzer besitzt
+				einen eindeutigen Benutzernamen sowie eine numerische Benutzer-ID
+				(<strong>UID</strong>).
+			</p>
+
+			<p>
+				Benutzer können außerdem einer oder mehreren <strong>Gruppen</strong>&nbsp;
+				angehören. Gruppen besitzen ebenfalls eine eindeutige Gruppen-ID
+				(<strong>GID</strong>) und ermöglichen es, mehreren Benutzern
+				gemeinsame Berechtigungen zuzuweisen.
+			</p>
+
+			<p>
+				Informationen über den aktuell angemeldeten Benutzer und dessen
+				Gruppenzugehörigkeiten lassen sich beispielsweise mit <code>id</code>&nbsp;
+				anzeigen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>id</code></pre>
+				<pre><code>uid=1000(degersti) gid=1000(degersti)) groups=1000(degersti),27(sudo)</code></pre>
+			</div>
+
+			<p>
+				Neben normalen Benutzerkonten existieren unter Linux auch&nbsp;
+				<strong>Systembenutzer</strong>, die beispielsweise zum Ausführen
+				bestimmter Dienste verwendet werden. Eine besondere Stellung nimmt
+				der Benutzer <strong>root</strong> ein. Er besitzt umfassende
+				Berechtigungen zur Administration des gesamten Systems.
+			</p>
+
+			<p>
+				Die wichtigsten Befehle zur Verwaltung von Benutzern und Gruppen
+				sind:
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Befehl</th>
+						<th>Zweck</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>whoami</code></td>
+						<td>Aktuell verwendeten Benutzer anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>id</code></td>
+						<td>UID, GID und Gruppenzugehörigkeiten anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>groups</code></td>
+						<td>Gruppenzugehörigkeiten anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>useradd</code></td>
+						<td>Benutzer erstellen</td>
+					</tr>
+					<tr>
+						<td><code>usermod</code></td>
+						<td>Benutzer und Gruppenzugehörigkeiten ändern</td>
+					</tr>
+					<tr>
+						<td><code>userdel</code></td>
+						<td>Benutzer löschen</td>
+					</tr>
+					<tr>
+						<td><code>passwd</code></td>
+						<td>Passwort eines Benutzers setzen oder ändern</td>
+					</tr>
+					<tr>
+						<td><code>groupadd</code></td>
+						<td>Gruppe erstellen</td>
+					</tr>
+					<tr>
+						<td><code>groupdel</code></td>
+						<td>Gruppe löschen</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<p>
+				Mit <code>su</code> lässt sich zu einem anderen Benutzer wechseln.
+				Für administrative Aufgaben wird dagegen häufig <code>sudo</code>&nbsp;
+				verwendet. Ein entsprechend berechtigter Benutzer kann damit einzelne
+				Befehle mit den Rechten des <strong>Root-Benutzers</strong> ausführen,
+				ohne selbst dauerhaft als Root-Benutzer angemeldet zu sein.
+			</p>
+
+			<div class="code-container">
+				<pre><code>su benutzer
+					sudo apt update</code></pre>
+			</div>
+
+			<p>
+				Benutzer und Gruppen bilden damit die Grundlage für die Verwaltung von
+				Zugriffen und Berechtigungen auf einem Linux-System. Sie ermöglichen es,
+				Benutzer eindeutig zu identifizieren, gemeinsame Berechtigungen über
+				Gruppen zu vergeben und administrative Zugriffe gezielt zu steuern.
+			</p>
+
+			
+		
+			</details>
+        </section>
+		<!-- ==================================================
+			 Kapitel: Dateiberechtigungen
+		 	 ==================================================-->
+		<section class="chapter">
+			<details>
+				<summary>
+					<h2 id="dateiberechtigungen">Dateiberechtigungen</h2>
+					<span class="chapter-toggle">
+						<span class="show-text">Kapitel ausklappen</span>
+						<span class="hide-text">Kapitel einklappen</span>
+					</span>
+				</summary>
+
+			<p>
+				Benutzer und Gruppen bilden zugleich die Grundlage für die
+				Zugriffsrechte auf Dateien und Verzeichnisse. Jede Datei ist einem&nbsp;
+				<strong>Besitzer</strong> und einer <strong>Gruppe</strong> zugeordnet.
+				Über die Dateiberechtigungen wird festgelegt, wer eine Datei lesen,
+				verändern oder ausführen darf.
+			</p>
+
+			<p>
+				Die Berechtigungen einer Datei lassen sich mit <code>ls -l</code>&nbsp;
+				anzeigen. Für eine Datei <code>script.sh</code> könnte die Ausgabe
+				beispielsweise folgendermaßen aussehen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>ls -l</code></pre>
+			</div>
+
+			<p>
+				Die Berechtigungen einer Datei lassen sich mit <code>ls -l</code>&nbsp;
+				anzeigen. Für eine Datei <code>script.sh</code> könnte die Ausgabe
+				beispielsweise folgendermaßen aussehen.
+			</p>
+
+			<div class="code-container preserve-whitespace">
+				<pre><code>ls -l script.sh
+-rwxr-xr--  1  markus  developers  1240  Aug 19 12:30  script.sh
+│└┬┘└┬┘└┬┘     │       │
+│ │  │  │      │       └── Gruppe
+│ │  │  │      └────────── Besitzer
+│ │  │  └───────────────── Andere Benutzer
+│ │  └──────────────────── Gruppe
+│ └─────────────────────── Besitzer
+└───────────────────────── Dateityp</code></pre>
+			</div>
+
+			<p>
+				Die ersten zehn Zeichen beschreiben den Dateityp und die
+				Zugriffsrechte.	Daneben zeigt die Ausgabe den Besitzer,
+				die zugeordnete Gruppe und das Änderungsdatum.
+			</p>
+			<p>
+				Das erste Zeichen kennzeichnet dabei den <strong>Dateityp</strong>. Ein
+				<code>-</code> steht für eine reguläre Datei, ein&nbsp;
+				<code>d</code> für ein Verzeichnis und ein <code>l</code> für einen
+				symbolischen Link. Die folgenden neun Zeichen stellen die Zugriffsrechte
+				dar und sind in drei Gruppen für <strong>Besitzer</strong>,&nbsp;
+				<strong>Gruppe</strong> und <strong>andere Benutzer</strong> unterteilt.
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Recht</th>
+						<th>Bedeutung</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>r</code></td>
+						<td>Read - lesen</td>
+					</tr>
+					<tr>
+						<td><code>w</code></td>
+						<td>Write - schreiben bzw. verändern</td>
+					</tr>
+					<tr>
+						<td><code>x</code></td>
+						<td>Execute - ausführen</td>
+					</tr>
+					<tr>
+						<td><code>-</code></td>
+						<td>Das entsprechende Recht ist nicht vergeben</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<p>
+				Im Beispiel <code>-rwxr-xr--</code> darf der Besitzer die Datei
+				lesen, verändern und ausführen. Mitglieder der zugeordneten Gruppe
+				dürfen sie lesen und ausführen, während alle anderen Benutzer die
+				Datei lediglich lesen dürfen.
+			</p>
+
+			<p>
+				Die Berechtigungen einer Datei lassen sich mit <code>chmod</code>&nbsp;
+				ändern. Neben der symbolischen Schreibweise können die Rechte auch
+				numerisch angegeben werden. Dabei entspricht <code>r</code> dem
+				Wert <code>4</code>, <code>w</code> dem Wert <code>2</code> und&nbsp;
+				<code>x</code> dem Wert <code>1</code>. Die gewünschten Rechte werden
+				für Besitzer, Gruppe und andere Benutzer jeweils addiert.
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Wert</th>
+						<th>Rechte</th>
+						<th>Bedeutung</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td><code>7</code></td><td><code>rwx</code></td><td>Lesen, schreiben und ausführen</td></tr>
+					<tr><td><code>6</code></td><td><code>rw-</code></td><td>Lesen und schreiben</td></tr>
+					<tr><td><code>5</code></td><td><code>r-x</code></td><td>Lesen und ausführen</td></tr>
+					<tr><td><code>4</code></td><td><code>r--</code></td><td>Nur lesen</td></tr>
+				</tbody>
+			</table>
+
+			<p>
+				So weist beispielsweise <code>chmod 755 script.sh</code> dem Besitzer
+				alle Rechte zu, während Gruppe und andere Benutzer die Datei lediglich
+				lesen und ausführen dürfen:
+			</p>
+
+			<div class="code-container preserve-whitespace">
+				<pre><code>chmod 755 script.sh
+
+		7        5        5
+		rwx      r-x      r-x
+		│        │        │
+		Besitzer Gruppe   Andere</code></pre>
+			</div>
+
+			<p>
+				Neben den Zugriffsrechten lassen sich auch Besitzer und Gruppe einer
+				Datei ändern. Die wichtigsten Befehle für die Benutzer- und
+				Berechtigungsverwaltung sind:
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Befehl</th>
+						<th>Zweck</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>chmod</code></td>
+						<td>Zugriffsrechte ändern</td>
+					</tr>
+					<tr>
+						<td><code>chown</code></td>
+						<td>Besitzer ändern</td>
+					</tr>
+					<tr>
+						<td><code>chgrp</code></td>
+						<td>Gruppe ändern</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<p>
+				Dateiberechtigungen legen damit fest, welche Benutzer auf Dateien und
+				Verzeichnisse zugreifen und welche Aktionen sie darauf ausführen dürfen.
+				Über Besitzer, Gruppe und die jeweiligen Lese-, Schreib- und
+				Ausführungsrechte lässt sich der Zugriff gezielt steuern.
+			</p>
+
+			
+		
+			</details>
+		</section>
+		<!-- ==================================================
+			 Kapitel: Paketverwaltung
+			 ==================================================-->
+		<section class="chapter">
+			<details>
+				<summary>
+					<h2 id="paketverwaltung">Paketverwaltung</h2>
+					<span class="chapter-toggle">
+						<span class="show-text">Kapitel ausklappen</span>
+						<span class="hide-text">Kapitel einklappen</span>
+					</span>
+				</summary>
+
+			<p>
+				Software wird unter Linux üblicherweise über einen&nbsp;
+				<strong>Paketmanager</strong> installiert, aktualisiert und entfernt.
+				Dabei werden Programme zusammen mit den benötigten Abhängigkeiten als
+				Pakete verwaltet. Diese werden in der Regel aus definierten
+				Softwarequellen, den sogenannten <strong>Repositories</strong>, bezogen.
+			</p>
+
+			<p>
+				Welcher Paketmanager verwendet wird, hängt von der jeweiligen
+				Linux-Distribution ab. Unter Debian und Ubuntu kommt hauptsächlich&nbsp;
+				<code>apt</code> zum Einsatz. Andere Distributionen verwenden
+				beispielsweise <code>dnf</code> oder <code>pacman</code>.
+			</p>
+
+			<p>
+				Die wichtigsten Befehle am Beispiel von <code>apt</code> sind:
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Befehl</th>
+						<th>Zweck</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>sudo apt update</code></td>
+						<td>Informationen über verfügbare Pakete aktualisieren</td>
+					</tr>
+					<tr>
+						<td><code>sudo apt upgrade</code></td>
+						<td>Installierte Pakete aktualisieren</td>
+					</tr>
+					<tr>
+						<td><code>sudo apt install "paket_name"</code></td>
+						<td>Paket installieren</td>
+					</tr>
+					<tr>
+						<td><code>sudo apt remove "paket_name"</code></td>
+						<td>Paket entfernen</td>
+					</tr>
+					<tr>
+						<td><code>apt search "paket_name"</code></td>
+						<td>Nach einem Paket suchen</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<p>
+				Ein typischer Ablauf besteht zunächst darin, die lokalen Informationen
+				über die verfügbaren Pakete zu aktualisieren:
+			</p>
+
+			<div class="code-container">
+				<pre><code>sudo apt update</code></pre>
+			</div>
+
+			<p>
+				Der Befehl installiert noch keine neuen Versionen. Stattdessen werden
+				die aktuellen Paketinformationen aus den konfigurierten Repositories
+				abgerufen. Anschließend können bereits installierte Pakete auf die
+				verfügbaren Versionen aktualisiert werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>sudo apt upgrade</code></pre>
+			</div>
+
+			<p>
+				Soll beispielsweise der Webserver <code>nginx</code> installiert
+				werden, kann das entsprechende Paket direkt über <code>apt</code>&nbsp;
+				bezogen und installiert werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>sudo apt install nginx</code></pre>
+			</div>
+
+			<p>
+				Der Paketmanager lädt dabei das benötigte Paket sowie gegebenenfalls
+				weitere Abhängigkeiten aus den konfigurierten Repositories herunter
+				und installiert sie auf dem System.
+			</p>
+
+			<p>
+				Wird ein Programm nicht mehr benötigt, kann das entsprechende Paket
+				wieder entfernt werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>sudo apt remove nginx</code></pre>
+			</div>
+
+			<p>
+				Der Paketmanager übernimmt damit einen großen Teil der
+				Softwareverwaltung und stellt sicher, dass Pakete und deren
+				Abhängigkeiten kontrolliert installiert und aktualisiert werden.
+			</p>
+			
+		
+			</details>
+        </section>
+		<!-- ==================================================
+			 Kapitel: Umgebungsvariablen
+			 ==================================================-->
+		<section class="chapter">
+			<details>
+				<summary>
+					<h2 id="umgebungsvariablen">Umgebungsvariablen</h2>
+					<span class="chapter-toggle">
+						<span class="show-text">Kapitel ausklappen</span>
+						<span class="hide-text">Kapitel einklappen</span>
+					</span>
+				</summary>
+
+			<p>
+				<strong>Umgebungsvariablen</strong> speichern Informationen, die
+				Programmen und Prozessen während ihrer Ausführung zur Verfügung stehen.
+				Sie werden beispielsweise verwendet, um Benutzerinformationen, Pfade
+				oder Einstellungen an Programme weiterzugeben.
+			</p>
+
+			<p>
+				Typische Umgebungsvariablen sind <code>HOME</code> für das
+				Home-Verzeichnis des Benutzers, <code>USER</code> für den aktuellen
+				Benutzernamen und <code>PATH</code> für die Verzeichnisse, in denen
+				nach ausführbaren Programmen gesucht wird.
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Variable</th>
+						<th>Bedeutung</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>HOME</code></td>
+						<td>Home-Verzeichnis des aktuellen Benutzers</td>
+					</tr>
+					<tr>
+						<td><code>USER</code></td>
+						<td>Name des aktuellen Benutzers</td>
+					</tr>
+					<tr>
+						<td><code>PATH</code></td>
+						<td>Verzeichnisse, in denen nach ausführbaren Programmen gesucht wird</td>
+					</tr>
+					<tr>
+						<td><code>SHELL</code></td>
+						<td>Pfad zur verwendeten Login-Shell</td>
+					</tr>
+					<tr>
+						<td><code>LANG</code></td>
+						<td>Sprache und regionale Einstellungen</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<p>
+				Die aktuell gesetzten Umgebungsvariablen können mit <code>env</code>&nbsp;
+				angezeigt werden. Der Wert einer einzelnen Variable lässt sich in der
+				Shell ausgeben, indem ihrem Namen ein <code>$</code> vorangestellt wird:
+			</p>
+
+			<div class="code-container">
+				<pre><code>env
+			echo $HOME
+			echo $PATH</code></pre>
+			</div>
+
+			<p>
+				Eine Umgebungsvariable kann mit <code>export</code> für die aktuelle
+				Shell-Sitzung gesetzt oder verändert werden. Die Variable steht dann
+				auch Programmen zur Verfügung, die aus dieser Shell heraus gestartet
+				werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>export APP_ENV="development"
+			echo $APP_ENV</code></pre>
+			</div>
+
+			<p>
+				Auf diese Weise gesetzte Variablen gelten jedoch nur für die aktuelle
+				Shell-Sitzung. Wird die Shell beendet, geht die Einstellung wieder
+				verloren. Soll eine Variable auch in zukünftigen Bash-Sitzungen
+				automatisch gesetzt werden, muss die entsprechende Anweisung
+				in einer Shell-Konfigurationsdatei wie beispielsweise <code>~/.bashrc</code>&nbsp;
+				hinterlegt werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>export APP_ENV="development"</code></pre>
+			</div>
+
+			<p>
+				Die Datei <code>~/.bashrc</code> wird standardmäßig beim Start einer interaktiven
+				Bash-Shell eingelesen. Änderungen werden daher spätestens beim Öffnen
+				einer neuen Sitzung wirksam. Mit <code>source</code> kann die Datei auch
+				in der aktuellen Sitzung erneut eingelesen werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>source ~/.bashrc</code></pre>
+			</div>
+
+			<p>
+				Eine besonders wichtige Umgebungsvariable ist <code>PATH</code>. Sie
+				enthält eine durch Doppelpunkte getrennte Liste von Verzeichnissen, in
+				denen die Shell nach ausführbaren Programmen sucht. Der aktuelle Inhalt
+				kann wie bei anderen Umgebungsvariablen mit <code>echo</code> angezeigt
+				werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>echo $PATH</code></pre>
+				<pre><code>/usr/local/bin:/usr/bin:/bin</code></pre>
+			</div>
+
+			<p>
+				Wird beispielsweise der Befehl <code>python3</code> eingegeben,
+				durchsucht die Shell die in <code>PATH</code> aufgeführten Verzeichnisse
+				nach einem entsprechenden ausführbaren Programm. Mit <code>which</code>&nbsp;
+				lässt sich der gefundene Pfad ausgeben:
+			</p>
+
+			<div class="code-container">
+				<pre><code>which python3
+			/usr/bin/python3</code></pre>
+			</div>
+
+			<p>
+				Für die aktuelle Shell-Sitzung lässt sich ein zusätzliches Verzeichnis
+				temporär an <code>PATH</code> anhängen. Wichtig ist dabei die Verwendung
+				von <code>$PATH</code>, wodurch der aktuelle Wert der Variable übernommen
+				und um das zusätzliche Verzeichnis erweitert wird. Die bereits vorhandenen
+				Einträge bleiben dadurch erhalten.
+			</p>
+
+			<div class="code-container">
+				<pre><code>export PATH="$PATH:/opt/mein-programm/bin"</code></pre>
+			</div>
+
+			<p>
+				Soll das zusätzliche Verzeichnis auch in zukünftigen Sitzungen
+				verfügbar sein, muss dieselbe Anweisung in <code>~/.bashrc</code>&nbsp;
+				eingetragen werden. Zum Entfernen des Verzeichnisses wird
+				der Eintrag dort entsprechend wieder gelöscht.
+			</p>
+
+			<p>
+				Umgebungsvariablen ermöglichen es somit, Informationen und Einstellungen
+				an Programme und Prozesse weiterzugeben. Sie können für eine einzelne
+				Shell-Sitzung oder dauerhaft über entsprechende Konfigurationsdateien
+				gesetzt werden. Eine besondere Bedeutung besitzt dabei <code>PATH</code>,
+				über den die Shell ausführbare Programme findet.
+			</p>
+
+				
+		
+			</details>
+        </section>
+		<!-- ==================================================
+			Kapitel: Prozesse und Dienste
+			==================================================-->
+		<section class="chapter">
+			<details>
+				<summary>
+					<h2 id="prozess-und-dienstverwaltung">Prozess- und Dienstverwaltung</h2>
+					<span class="chapter-toggle">
+						<span class="show-text">Kapitel ausklappen</span>
+						<span class="hide-text">Kapitel einklappen</span>
+					</span>
+				</summary>
+
+			<p>
+				Jedes ausgeführte Programm läuft unter Linux als&nbsp;
+				<strong>Prozess</strong>. Jeder Prozess erhält dabei eine eindeutige
+				Prozess-ID (<strong>PID</strong>), über die er vom Betriebssystem
+				identifiziert und verwaltet wird.
+			</p>
+
+			<p>
+				Laufende Prozesse lassen sich mit <code>ps</code>&nbsp;
+				anzeigen. Häufig wird der Befehl mit den Optionen <code>aux</code>&nbsp;
+				verwendet, um eine ausführliche Übersicht über die laufenden Prozesse
+				des Systems auszugeben:
+			</p>
+
+			<div class="code-container">
+				<pre><code>ps aux</code></pre>
+			</div>
+
+			<p>
+				Soll gezielt nach einem bestimmten Prozess gesucht werden, kann die
+				Ausgabe über eine Pipeline mit <code>grep</code> gefiltert werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>ps aux | grep nginx</code></pre>
+			</div>
+
+			<p>
+				Für eine fortlaufende Übersicht über Prozesse und die aktuelle
+				Systemauslastung eignet sich <code>top</code>. Zum Beenden eines
+				laufenden Prozesses wird mit <code>kill</code> unter Angabe seiner
+				PID ein entsprechendes Signal gesendet:
+			</p>
+
+			<div class="code-container">
+				<pre><code>kill 1234</code></pre>
+			</div>
+
+			<p>
+				Neben Prozessen kennt die Shell sogenannte <strong>Jobs</strong>. Dabei
+				handelt es sich um Befehle oder Programme, die aus der aktuellen Shell
+				heraus gestartet und von dieser verwaltet werden. 
+			</p>
+
+			<p>
+				Normalerweise läuft ein gestarteter Befehl im Vordergrund.
+				Mit <code>&</code> am Ende eines Befehls wird
+				dieser dagegen im Hintergrund ausgeführt, sodass die Kommandozeile direkt
+				wieder für weitere Eingaben zur Verfügung steht.
+			</p>
+
+			<p>
+				Im folgenden Beispiel wird mit <code>sleep</code> ein Job gestartet,
+				der für <strong>300 Sekunden</strong> wartet und sich anschließend beendet.
+				Das angehängte <code>&</code> sorgt dafür, dass der Job im Hintergrund
+				ausgeführt wird:
+			</p>
+
+			<div class="code-container">
+				<pre><code>sleep 300 &</code></pre>
+			</div>
+
+			<p>
+				Der gestartete Job lässt sich anschließend mit <code>jobs</code>&nbsp;
+				anzeigen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>jobs
+			[1]+  Running    sleep 300 &</code></pre>
+			</div>
+
+			<p>
+				Eine besondere Rolle spielen Programme, die dauerhaft im Hintergrund
+				laufen und bestimmte Funktionen des Systems bereitstellen. Solche
+				Programme werden auch <strong>Dienste</strong> beziehungsweise
+				Services genannt. Beispiele hierfür sind Webserver, Datenbanken
+				oder der SSH-Server.
+			</p>
+
+			<p>
+				Auf vielen aktuellen Linux-Distributionen übernimmt&nbsp;
+				<strong>systemd</strong> die Verwaltung solcher Dienste. Mit Hilfe des
+				Befehls <code>systemctl</code> werden Dienste gestartet,
+				gestoppt und neu gestartet. Außerdem kann der aktuelle Status überprüft
+				werden.
+			</p>
+			<p>
+				Ein einfaches Beispiel zeigt die Verwaltung eines Dienstes anhand des
+				Webservers <code>nginx</code>. Nach der Installation lässt sich zunächst
+				der aktuelle Status des Dienstes überprüfen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>systemctl status nginx</code></pre>
+			</div>
+
+			<p>
+				Soll der Dienst nach einer Änderung der Konfiguration
+				neu gestartet werden, erfolgt dies mit <code>restart</code>. Da hierfür
+				administrative Rechte erforderlich sind, wird der Befehl mit&nbsp;
+				<code>sudo</code> ausgeführt:
+			</p>
+
+			<div class="code-container">
+				<pre><code>sudo systemctl restart nginx</code></pre>
+			</div>
+
+			<p>
+				Anschließend wird mit <code>enable</code> festgelegt, dass der Dienst
+				automatisch beim Systemstart mit gestartet wird:
+			</p>
+
+			<div class="code-container">
+				<pre><code>sudo systemctl enable nginx</code></pre>
+			</div>
+
+			<p>
+				Die folgende Tabelle fasst die wichtigsten Befehle zur Verwaltung von
+				Prozessen, Jobs und Diensten noch einmal zusammen:
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Befehl</th>
+						<th>Zweck</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>ps aux</code></td>
+						<td>Laufende Prozesse anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>top</code></td>
+						<td>Prozesse und Systemauslastung überwachen</td>
+					</tr>
+					<tr>
+						<td><code>kill PID</code></td>
+						<td>Signal an einen Prozess senden</td>
+					</tr>
+					<tr>
+						<td><code>jobs</code></td>
+						<td>Jobs der aktuellen Shell anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>systemctl status "dienst_name"</code></td>
+						<td>Status eines Dienstes anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>sudo systemctl start "dienst_name"</code></td>
+						<td>Dienst starten</td>
+					</tr>
+					<tr>
+						<td><code>sudo systemctl stop "dienst_name"</code></td>
+						<td>Dienst stoppen</td>
+					</tr>
+					<tr>
+						<td><code>sudo systemctl restart "dienst_name"</code></td>
+						<td>Dienst neu starten</td>
+					</tr>
+					<tr>
+						<td><code>sudo systemctl enable "dienst_name"</code></td>
+						<td>Automatischen Start beim Systemstart aktivieren</td>
+					</tr>
+					<tr>
+						<td><code>sudo systemctl disable "dienst_name"</code></td>
+						<td>Automatischen Start beim Systemstart deaktivieren</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<p>
+				Prozesse, Jobs und Dienste bilden unter Linux unterschiedliche Ebenen der
+				Programmausführung und <span class="kein-umbruch">-verwaltung</span>.
+				Während Prozesse die aktuell laufenden Programme darstellen und Jobs
+				beispielsweise deren Verwaltung innerhalb einer Shell ermöglichen,
+				arbeiten Dienste dauerhaft im Hintergrund. Der Umgang mit diesen
+				Mechanismen gehört zu den grundlegenden Aufgaben bei der Administration
+				eines Linux-Systems.
+			</p>
+
+			
+		
+			</details>
+		</section>
+		<!-- ==================================================
+			 Kapitel: Datenträger- und Speicherverwaltung
+			==================================================-->
+		<section class="chapter">
+			<details>
+				<summary>
+					<h2 id="datentraeger-und-speicherverwaltung">Datenträger- und Speicherverwaltung</h2>
+					<span class="chapter-toggle">
+						<span class="show-text">Kapitel ausklappen</span>
+						<span class="hide-text">Kapitel einklappen</span>
+					</span>
+				</summary>
+
+			<p>
+				Linux unterscheidet zwischen verschiedenen Arten von Speicher. Daten
+				werden dauerhaft auf <strong>Datenträgern</strong> wie Festplatten,
+				SSDs oder USB-Speichern abgelegt. Der <strong>Arbeitsspeicher
+				(RAM)</strong> dient dagegen als temporärer Speicher für laufende
+				Programme und das Betriebssystem.
+			</p>
+
+			<p>
+				Die vorhandenen Datenträger und deren Partitionen lassen sich mit&nbsp;
+				<code>lsblk</code> anzeigen:
+			</p>
+
+			<div class="code-container preserve-whitespace">
+				<pre><code>lsblk
+NAME   SIZE TYPE MOUNTPOINT
+sda    100G disk
+├─sda1   1G part /boot
+└─sda2  99G part /
+sdb     32G disk
+└─sdb1  32G part /mnt/usb</code></pre>
+			</div>
+
+			<p>
+				Ein Datenträger kann dabei in mehrere <strong>Partitionen</strong>
+				&nbsp;unterteilt sein. Für die Speicherung und Organisation von Dateien
+				wird auf einer Partition üblicherweise ein <strong>Dateisystem</strong>,
+				beispielsweise ext4, eingerichtet.
+			</p>
+
+			<p>
+				Im Gegensatz zu Systemen mit Laufwerksbuchstaben werden Datenträger
+				und Partitionen unter Linux in den bestehenden Verzeichnisbaum
+				eingebunden. Dieser Vorgang wird als <strong>Mounten</strong>
+				&nbsp;bezeichnet. Das Verzeichnis, unter dem das Dateisystem erreichbar
+				ist, wird als <strong>Mountpoint</strong> bezeichnet.
+			</p>
+
+			<p>
+				Im vorherigen Beispiel ist die Partition <code>sdb1</code> unter&nbsp;
+				<code>/mnt/usb</code> eingebunden. Die Inhalte können mit dem bereits bekannten
+				Befehl <code>ls</code> aufgelistet werden.
+			</p>
+
+			<div class="code-container">
+				<pre><code>ls /mnt/usb</code></pre>
+			</div>
+
+			<p>
+				Belegter und verfügbarer Speicherplatz der eingebundenen
+				Dateisysteme lässt sich mit <code>df -h</code> anzeigen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>df -h</code></pre>
+			</div>
+
+			<p>
+				Der von einem bestimmten Verzeichnis belegte Speicherplatz
+				lässt sich mit <code>du</code> ermitteln. Beispielsweise zeigt der folgende 
+				Befehl, wie viel Speicherplatz <code>/var/log</code> einschließlich seiner
+				Unterverzeichnisse belegt:
+			</p>
+
+			<div class="code-container">
+				<pre><code>du -sh /var/log</code></pre>
+			</div>
+
+			<p>
+				Der aktuell verwendete und verfügbare Arbeitsspeicher wird mit&nbsp;
+				<code>free -h</code> angezeigt:
+			</p>
+
+			<div class="code-container">
+				<pre><code>free -h</code></pre>
+			</div>
+
+			<p>
+				Die wichtigsten Befehle zur Übersicht über Datenträger, Speicherplatz
+				und Arbeitsspeicher sind damit:
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Befehl</th>
+						<th>Zweck</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>lsblk</code></td>
+						<td>Datenträger, Partitionen und Mountpoints anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>df -h</code></td>
+						<td>Belegten und freien Speicherplatz aller Dateisysteme anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>du -sh "pfad"</code></td>
+						<td>Speicherbedarf einer Datei oder eines Verzeichnisses anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>mount</code></td>
+						<td>Dateisysteme einhängen oder vorhandene Mounts anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>umount</code></td>
+						<td>Dateisystem aushängen</td>
+					</tr>
+					<tr>
+						<td><code>free -h</code></td>
+						<td>Belegten und verfügbaren Arbeitsspeicher anzeigen</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<p>
+				Mit den vorgestellten Befehlen lassen sich Datenträger und Partitionen
+				anzeigen sowie deren Speicherbelegung und Einbindung in das Dateisystem
+				überprüfen.
+			</p>
+
+			<p>
+				Themen wie <code>/etc/fstab</code>, LVM, RAID und die detaillierte
+				Verwaltung von Partitionen und Dateisystemen gehören ebenfalls zur
+				Linux-Administration, werden an dieser Stelle jedoch nicht weiter
+				vertieft.
+			</p>
+
+			
+		
+			</details>
+		</section>
+		<!-- ==================================================
+			Kapitel: Netzwerk und SSH
+			==================================================-->
+		<section class="chapter">
+			<details>
+				<summary>
+					<h2 id="netzwerk-und-ssh">Netzwerk und SSH</h2>
+					<span class="chapter-toggle">
+						<span class="show-text">Kapitel ausklappen</span>
+						<span class="hide-text">Kapitel einklappen</span>
+					</span>
+				</summary>
+
+			<p>
+				Für die Administration von Linux-Systemen sind Grundkenntnisse der
+				Netzwerkadministration unverzichtbar. Dazu gehören insbesondere
+				Netzwerkschnittstellen, IP-Adressen, Routing und Ports. Mit wenigen
+				Befehlen lassen sich die aktuelle Netzwerkkonfiguration überprüfen und
+				Verbindungen sowie Netzwerkdienste untersuchen.
+			</p>
+
+			<p>
+				Die vorhandenen <strong>Netzwerkschnittstellen</strong> und die
+				zugeordneten IP-Adressen können mit <code>ip addr</code>
+				&nbsp;angezeigt werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>ip addr</code></pre>
+			</div>
+
+			<p>
+				Eine Routing-Tabelle legt fest, über welche Netzwerkverbindungen
+				Zieladressen erreicht werden. Mit dem Befehl <code>ip route</code>
+				&nbsp;wird die aktuelle Routing-Tabelle angezeigt:
+			</p>
+
+			<div class="code-container">
+				<pre><code>ip route</code></pre>
+			</div>
+
+			<p> 
+				Zur Überprüfung, ob ein anderes System über das Netzwerk grundsätzlich 
+				erreichbar ist, wird der Befehl <code>ping</code> verwendet: 
+			</p>
+
+			<div class="code-container">
+				<pre><code>ping 192.168.1.1</code></pre>
+			</div>
+
+			<p>
+				Netzwerkdienste werden über sogenannte <strong>Ports</strong>
+				&nbsp;angesprochen. Ein Webserver verwendet zum Beispiel üblicherweise
+				Port <code>80</code> für HTTP oder Port <code>443</code> für HTTPS.
+			</p>
+
+			<p>
+				Welche Ports auf dem eigenen System verwendet werden, lässt sich
+				beispielsweise mit <code>ss -tulpn</code> überprüfen. Die verwendeten
+				Optionen beschränken die Ausgabe auf lauschende TCP- und UDP-Verbindungen,
+				zeigen die zugehörigen Prozesse und geben Adressen sowie Ports numerisch
+				aus:
+			</p>
+
+			<div class="code-container preserve-whitespace">
+				<pre><code>ss -tulpn
+Netid  State   Local Address:Port   Process
+tcp    LISTEN  0.0.0.0:80          nginx
+tcp    LISTEN  0.0.0.0:22          sshd</code></pre>
+			</div>
+
+			<p>
+				In der beispielhaften Ausgabe ist auch unser bereits bekannter Webserver&nbsp;
+				<code>nginx</code> zu sehen. Der Zustand <code>LISTEN</code> zeigt,
+				dass der Dienst auf eingehende Verbindungen wartet. Die Angabe&nbsp;
+				<code>0.0.0.0:80</code> bedeutet, dass nginx auf Port <code>80</code>
+				&nbsp;über alle IPv4-Netzwerkschnittstellen erreichbar ist.
+			</p>
+
+			<p>
+				Da nun bekannt ist, dass der Webserver auf Port <code>80</code>&nbsp;
+				auf eingehende Verbindungen wartet, lässt sich die Verbindung mit&nbsp;
+				<code>curl</code> testen. Dazu wird eine HTTP-Anfrage an den lokal
+				ausgeführten Webserver gesendet:
+			</p>
+
+			<div class="code-container">
+				<pre><code>curl http://localhost</code></pre>
+			</div>
+
+			<p>
+				Um zu erfahren, mit welchem Hostnamen das eigene Linux-System im
+				Netzwerk bezeichnet wird, kann der Befehl <code>hostname</code>&nbsp;
+				verwendet werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>hostname
+					my-linux-server</code></pre>
+			</div>
+
+			<p>
+				Die Administration eines entfernten Linux-Servers erfolgt üblicherweise
+				per Remote-Zugriff. Verwendet wird dabei das&nbsp;
+				<strong>Secure Shell Protocol (SSH)</strong>. Es stellt eine
+				verschlüsselte Verbindung zum entfernten System her und ermöglicht dort
+				den Zugriff auf die Kommandozeile.
+			</p>
+
+			<p>
+				Für den Aufbau einer SSH-Verbindung werden der Benutzername sowie die
+				IP-Adresse oder der Hostname des entfernten Systems angegeben:
+			</p>
+
+			<div class="code-container">
+				<pre><code>ssh benutzer@192.168.1.100</code></pre>
+			</div>
+
+			<p>
+				Beim Verbindungsaufbau erfolgt die Anmeldung am entfernten System.
+				Hierzu muss sich der angegebene Benutzer authentifizieren,
+				beispielsweise mit dem zugehörigen Passwort. Nach erfolgreicher
+				Anmeldung steht dessen Shell zur Verfügung und Befehle können auf
+				dem entfernten Linux-System ausgeführt werden.
+			</p>
+
+			<div class="info-box">
+				<strong>Hinweis:</strong> Die Verschlüsselung der Verbindung und die
+				Authentifizierung des Benutzers erfüllen unterschiedliche Aufgaben. SSH
+				sorgt für eine verschlüsselte Kommunikation zwischen den Systemen. Für
+				die Anmeldung muss sich der Benutzer zusätzlich authentifizieren. Anstelle
+				eines Passworts werden hierfür insbesondere bei Servern häufig&nbsp;
+				<strong>SSH-Schlüssel</strong> verwendet.
+			</div>
+
+			<p>
+				Neben dem Zugriff auf die Kommandozeile ermöglicht SSH auch die sichere
+				Übertragung von Dateien. Eine Möglichkeit ist die Nutzung von&nbsp;
+				<code>scp</code>:
+			</p>
+
+			<div class="code-container">
+				<pre><code>scp datei.txt benutzer@192.168.1.100:/home/benutzer/</code></pre>
+			</div>
+
+			<p>
+				Die wichtigsten Befehle zur Überprüfung der Netzwerkkonfiguration und
+				für den Remote-Zugriff sind damit:
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Befehl</th>
+						<th>Zweck</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>ip addr</code></td>
+						<td>Netzwerkschnittstellen und IP-Adressen anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>ip route</code></td>
+						<td>Routing-Tabelle anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>ping</code></td>
+						<td>Erreichbarkeit eines Systems überprüfen</td>
+					</tr>
+					<tr>
+						<td><code>ss -tulpn</code></td>
+						<td>Lauschende Netzwerkverbindungen und Ports anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>curl</code></td>
+						<td>Anfragen an Netzwerkdienste senden</td>
+					</tr>
+					<tr>
+						<td><code>hostname</code></td>
+						<td>Hostname des Systems anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>ssh</code></td>
+						<td>Kommandozeile eines entfernten Systems aufrufen</td>
+					</tr>
+					<tr>
+						<td><code>scp</code></td>
+						<td>Dateien über SSH übertragen</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<p>
+				Mit den vorgestellten Werkzeugen lassen sich damit grundlegende
+				Netzwerkeinstellungen überprüfen, die Erreichbarkeit und bereitgestellte
+				Netzwerkdienste untersuchen sowie entfernte Linux-Systeme über SSH
+				administrieren.
+			</p>
+
+			
+		
+			</details>
+		</section>
+		<!-- ==================================================
+			 Kapitel: Mit Logs arbeiten
+			 ==================================================-->
+		<section class="chapter">
+			<details>
+				<summary>
+					<h2 id="logs">Mit Logs arbeiten</h2>
+					<span class="chapter-toggle">
+						<span class="show-text">Kapitel ausklappen</span>
+						<span class="hide-text">Kapitel einklappen</span>
+					</span>
+				</summary>
+
+			<p>
+				<strong>Logs</strong> sind Aufzeichnungen über Ereignisse, die während
+				des Betriebs eines Systems oder einer Anwendung entstehen. Sie enthalten
+				beispielsweise Informationen über Programmstarts, Zugriffe, Warnungen
+				oder aufgetretene Fehler und gehören damit zu den wichtigsten
+				Informationsquellen bei der Administration eines Linux-Systems.
+			</p>
+
+			<p>
+				Viele klassische Logdateien befinden sich unter Linux im Verzeichnis&nbsp;
+				<code>/var/log</code>. Welche Logs dort vorhanden sind, hängt von der
+				Distribution und den installierten Anwendungen ab. Eine auflistung erfolgt
+				wie üblich mit dem Befehl <code>ls</code>.
+			</p>
+
+			<div class="code-container">
+				<pre><code>ls /var/log</code></pre>
+			</div>
+
+			<p>
+				Für die Untersuchung von Logdateien stehen die bereits bekannten Werkzuege
+				zur Textverarbeitung zur Verfügung. <code>less</code> eignet sich um
+				durch eine längere Logdatei zu navigieren, während <code>tail</code>&nbsp;
+				nur die letzten Zeilen einer Datei ausgibt.
+			</p>
+
+			<div class="code-container">
+				<pre><code>less /var/log/nginx/access.log
+					tail /var/log/nginx/access.log
+					</code></pre>
+			</div>
+
+			<div class="info-box">
+				<strong>Hinweis:</strong> Mit der Option <code>-f</code> bleibt&nbsp;
+				<code>tail</code> aktiv und zeigt neu hinzukommende Einträge einer Datei
+				direkt an. Dies ist besonders hilfreich, um Logausgaben während des
+				laufenden Betriebs zu beobachten.
+			</div>
+
+			<p>
+				Neben klassischen Logdateien verwenden viele aktuelle
+				Linux-Distributionen das von <code>systemd</code> bereitgestellte&nbsp;
+				<strong>Journal</strong>. Die darin gespeicherten Meldungen lassen sich
+				mit <code>journalctl</code> anzeigen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>journalctl</code></pre>
+			</div>
+
+			<p>
+				Mit der Option <code>-u</code> kann die Ausgabe zusätzlich auf einen
+				bestimmten systemd-Dienst beschränkt werden. Die Meldungen unseres
+				nginx-Dienstes lassen sich beispielsweise folgendermaßen anzeigen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>journalctl -u nginx</code></pre>
+			</div>
+
+			<div class="info-box">
+				<strong>Hinweis:</strong> Logs spielen insbesondere bei der Fehlersuche
+				eine wichtige Rolle. Funktioniert beispielsweise ein Dienst nicht wie
+				erwartet, ist es sinnvoll, zunächst dessen Status und anschließend die
+				zugehörigen Logmeldungen zu überprüfen. Zusammen mit den bereits
+				behandelten Werkzeugen ergibt sich so ein einfacher Leitfaden zur
+				Fehlersuche:
+			</div>
+
+			<div class="code-container preserve-whitespace">
+				<pre><code>Problem
+   │
+   ├── Läuft der Prozess oder Dienst?
+   │      └── systemctl / ps
+   │
+   ├── Sind genügend Ressourcen vorhanden?
+   │      └── df / free / top
+   │
+   ├── Funktioniert die Netzwerkverbindung?
+   │      └── ping / curl / ss
+   │
+   └── Was sagen die Logs?
+          └── journalctl / tail</code></pre>
+			</div>
+
+			<p>
+				Die wichtigsten Befehle für die Arbeit mit Logs sind damit:
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Befehl</th>
+						<th>Zweck</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>less "datei_name"</code></td>
+						<td>Längere Logdateien durchsuchen und anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>tail "datei_name"</code></td>
+						<td>Letzte Zeilen einer Logdatei anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>tail -f "datei_name"</code></td>
+						<td>Neue Einträge einer Logdatei fortlaufend anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>journalctl</code></td>
+						<td>Meldungen des systemd-Journals anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>journalctl -u "dienst_name"</code></td>
+						<td>Meldungen eines bestimmten Dienstes anzeigen</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<p>
+				Durch die Kombination von Logdateien, dem systemd-Journal und den
+				bereits bekannten Werkzeugen zur Systemüberwachung lassen sich viele
+				Probleme auf einem Linux-System systematisch untersuchen und
+				eingrenzen.
+			</p>
+		
+			</details>
+		</section>
+		<!-- ==================================================
+			 Kapitel: Automatisierung
+			 ==================================================-->
+		<section class="chapter">
+			<details>
+				<summary>
+					<h2 id="automatisierung">Automatisierung</h2>
+					<span class="chapter-toggle">
+						<span class="show-text">Kapitel ausklappen</span>
+						<span class="hide-text">Kapitel einklappen</span>
+					</span>
+				</summary>
+
+			<p>
+				Wiederkehrende Aufgaben lassen sich unter Linux hervorragend mit&nbsp;
+				<strong>Skripten</strong> automatisieren. Ein Bash-Skript
+				besteht im einfachsten Fall aus mehreren Shell-Befehlen, die in einer
+				Datei gespeichert und nacheinander ausgeführt werden.
+			</p>
+
+			<p>
+				Das folgende Skript fasst einige bereits bekannte Befehle zusammen
+				und führt diese nacheinander aus:
+			</p>
+
+			<div class="code-container">
+				<pre><code>#!/bin/bash
+				echo "Systemstatus"
+				uptime
+				df -h
+				free -h</code></pre>
+			</div>
+
+			<p>
+				Die erste Zeile <code>#!/bin/bash</code> wird als&nbsp;
+				<strong>Shebang</strong> bezeichnet. Sie gibt an, mit welchem Interpreter
+				das Skript ausgeführt werden soll. Die folgenden Zeilen enthalten die
+				nacheinander auszuführenden Shell-Befehle.
+			</p>
+
+			<p>
+				Ist das Skript beispielsweise unter dem Namen&nbsp;
+				<code>systemstatus.sh</code> gespeichert, lässt es sich mit&nbsp;
+				<code>bash</code> ausführen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>bash systemstatus.sh</code></pre>
+			</div>
+
+			<p>
+				Alternativ kann die Datei mit <code>chmod +x</code> als ausführbar
+				markiert und anschließend direkt gestartet werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>chmod +x systemstatus.sh
+		./systemstatus.sh</code></pre>
+			</div>
+
+			<p>
+				Shell-Skripte können neben einfachen Befehlsfolgen auch&nbsp;
+				<strong>Variablen</strong>, Bedingungen und Schleifen enthalten.
+				Dadurch lassen sich Abläufe abhängig von bestimmten Werten oder
+				Ergebnissen steuern.
+			</p>
+
+			<div class="code-container">
+				<pre><code>#!/bin/bash
+
+		name="Linux-Server"
+		echo "Prüfe $name"</code></pre>
+			</div>
+
+			<p>
+				Eine wichtige Rolle bei der Automatisierung spielen außerdem&nbsp;
+				<strong>Exit Codes</strong>. Jeder ausgeführte Befehl liefert nach
+				seiner Beendigung einen numerischen Status zurück. Der Wert&nbsp;
+				<code>0</code> steht üblicherweise für eine erfolgreiche Ausführung,
+				während ein anderer Wert auf einen Fehler oder besonderen Zustand
+				hinweist.
+			</p>
+
+			<p>
+				Der Exit Code des zuletzt ausgeführten Befehls befindet sich in der
+				Variable <code>$?</code>:
+			</p>
+
+			<div class="code-container">
+				<pre><code>ls /var/log
+		echo $?</code></pre>
+			</div>
+
+			<p>
+				Ein Skript kann diesen Rückgabewert auswerten und abhängig vom
+				Ergebnis unterschiedliche Aktionen ausführen:
+			</p>
+
+			<div class="code-container">
+				<pre><code>#!/bin/bash
+
+		systemctl is-active --quiet nginx
+
+		if [ $? -eq 0 ]; then
+			echo "nginx läuft"
+		else
+			echo "nginx läuft nicht"
+		fi</code></pre>
+			</div>
+
+			<p>
+				Die hier gezeigten Grundlagen geben nur einen ersten Einblick in die
+				Shell-Programmierung, die weit über die dargestellten Möglichkeiten
+				hinausgeht. Für viele wiederkehrende Aufgaben der Linux-Administration
+				reichen jedoch bereits einfache Skripte aus.
+			</p>
+
+			<p>
+				Sollen Skripte oder Befehle regelmäßig zu bestimmten Zeiten
+				ausgeführt werden, steht unter Linux unter anderem&nbsp;
+				<strong>cron</strong> zur Verfügung. Die Cronjobs des aktuellen
+				Benutzers werden mit <code>crontab</code> verwaltet. Mit der Option&nbsp;
+				<code>-e</code> wird die eigene Crontab zur Bearbeitung geöffnet:
+			</p>
+
+			<div class="code-container">
+				<pre><code>crontab -e</code></pre>
+			</div>
+
+			<p>
+				Ein Eintrag in der Crontab besteht aus fünf Angaben für den
+				Ausführungszeitpunkt und dem anschließend auszuführenden Befehl:
+			</p>
+
+			<div class="code-container preserve-whitespace">
+				<pre><code>┌── Minute
+│ ┌── Stunde
+│ │ ┌── Tag
+│ │ │ ┌── Monat
+│ │ │ │ ┌── Wochentag
+│ │ │ │ │
+* * * * * Befehl</code></pre>
+			</div>
+
+			<p>
+				Das zuvor erstellte Skript könnte beispielsweise jeden Tag um&nbsp;
+				<code>08:00 Uhr</code> ausgeführt werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>0 8 * * * /home/benutzer/systemstatus.sh</code></pre>
+			</div>
+
+			<p>
+				Die wichtigsten Befehle für eine erste Automatisierungen sind damit:
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Befehl</th>
+						<th>Zweck</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>bash script.sh</code></td>
+						<td>Bash-Skript ausführen</td>
+					</tr>
+					<tr>
+						<td><code>chmod +x datei</code></td>
+						<td>Datei als ausführbar markieren</td>
+					</tr>
+					<tr>
+						<td><code>echo $?</code></td>
+						<td>Exit Code des letzten Befehls anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>crontab -e</code></td>
+						<td>Cronjobs des aktuellen Benutzers bearbeiten</td>
+					</tr>
+					<tr>
+						<td><code>crontab -l</code></td>
+						<td>Cronjobs des aktuellen Benutzers anzeigen</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<p>
+				Zusammenfassend ermöglichen es Shell-Skripte somit, wiederkehrende
+				Aufgaben unter Linux zu automatisieren und mehrere Befehle zu einem
+				gemeinsamen Ablauf zusammenzufassen. Exit Codes ermöglichen zudem die
+				Auswertung von Erfolg oder Misserfolg und Cronjobs eine zeitgesteuerte 
+				Ausführung. 
+			</p>
+			</details>
+		</section>
+		<!-- ==================================================
+			 Kapitel: Sicherheit
+			 ==================================================-->
+		<section class="chapter">
+			<details>
+				<summary>
+					<h2 id="linux-sicherheit">Grundlagen der Linux-Sicherheit</h2>
+					<span class="chapter-toggle">
+						<span class="show-text">Kapitel ausklappen</span>
+						<span class="hide-text">Kapitel einklappen</span>
+					</span>
+				</summary>
+
+			<p>
+				Die Absicherung eines Linux-Systems ist sehr komplex.
+				Bereits mit einigen grundlegenden Maßnahmen lässt sich jedoch
+				die Angriffsfläche eines Systems erheblich reduzieren. Dazu gehören insbesondere
+				aktuelle Software sowie die gezielte Begrenzung von Benutzer- und
+				Zugriffsrechten.
+			</p>
+
+			<p>
+				Einige der wichtigsten Sicherheitsmaßnahmen wurden bereits in den
+				vorangegangenen Kapiteln behandelt und werden nun noch einmal
+				zusammengefasst:
+			</p>
+
+			<ul>
+				<li>System und installierte Pakete regelmäßig aktualisieren.</li>
+				<li>Administrative Rechte nur gezielt mit <code>sudo</code> verwenden.</li>
+				<li>Datei- und Verzeichnisrechte möglichst restriktiv vergeben.</li>
+				<li>Für Remote-Zugriffe bevorzugt SSH-Schlüssel verwenden.</li>
+				<li>Nicht benötigte Dienste deaktivieren.</li>
+				<li>Offene Netzwerkports regelmäßig überprüfen.</li>
+				<li>Nur benötigte Netzwerkverbindungen über eine Firewall erlauben.</li>
+			</ul>
+
+			<p>
+				Die Aufgabe einer <strong>Firewall</strong> ist es, den Netzwerkverkehr
+				anhand definierter Regeln zu kontrollieren und eingehende
+				Verbindungen auf nicht benötigte Ports zu blockieren. Unter Ubuntu steht
+				hierfür mit <code>ufw</code> eine vergleichsweise einfache
+				Firewall-Verwaltung zur Verfügung.
+			</p>
+
+			<p>
+				Der aktuelle Status und die vorhandenen Regeln können mit&nbsp;
+				<code>ufw status</code> angezeigt werden:
+			</p>
+
+			<div class="code-container">
+				<pre><code>sudo ufw status</code></pre>
+			</div>
+
+			<div class="info-box">
+				<strong>Hinweis:</strong> Bei der Konfiguration einer Firewall auf
+				einem entfernten Server sollte der benötigte SSH-Zugriff freigegeben
+				sein, bevor die Firewall aktiviert wird. Andernfalls kann der eigene
+				Remote-Zugriff blockiert werden.
+			</div>
+
+			<p>
+				Neben <code>ufw</code> existieren weitere Werkzeuge zur Verwaltung
+				von Firewall-Regeln, darunter <code>firewalld</code> und&nbsp;
+				<code>nftables</code>. Welche Lösung verwendet wird, hängt unter
+				anderem von der eingesetzten Distribution und Systemkonfiguration ab.
+			</p>
+
+			<p>
+				Die wichtigsten Befehle zur Überprüfung und Absicherung eines
+				Linux-Systems lassen sich damit wie folgt zusammenfassen:
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Befehl</th>
+						<th>Zweck</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>sudo apt update</code></td>
+						<td>Aktuelle Paketinformationen abrufen</td>
+					</tr>
+					<tr>
+						<td><code>sudo apt upgrade</code></td>
+						<td>Installierte Pakete aktualisieren</td>
+					</tr>
+					<tr>
+						<td><code>chmod</code></td>
+						<td>Zugriffsrechte von Dateien und Verzeichnissen ändern</td>
+					</tr>
+					<tr>
+						<td><code>chown</code></td>
+						<td>Besitzer von Dateien und Verzeichnissen ändern</td>
+					</tr>
+					<tr>
+						<td><code>systemctl</code></td>
+						<td>Dienste überprüfen, starten oder deaktivieren</td>
+					</tr>
+					<tr>
+						<td><code>ss -tulpn</code></td>
+						<td>Lauschende Netzwerkverbindungen und Ports anzeigen</td>
+					</tr>
+					<tr>
+						<td><code>sudo ufw status</code></td>
+						<td>Status und Regeln der Firewall anzeigen</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<p>
+				Die zuvor beschriebenen Maßnahmen zeigen, dass sich bereits mit wenigen
+				Befehlen wichtige sicherheitsrelevante Einstellungen eines Linux-Systems
+				überprüfen und grundlegende Maßnahmen zu dessen Absicherung vornehmen
+				lassen.
+			</p>
+
+			
+		
+			</details>
+		</section>
+		<!-- ==================================================
+			 Kapitel: Befehlsübersicht
+			 ==================================================-->
+		<section class="chapter">
+			<details>
+				<summary>
+					<h2 id="linux-befehlsuebersicht">Befehlsübersicht</h2>
+					<span class="chapter-toggle">
+						<span class="show-text">Kapitel ausklappen</span>
+						<span class="hide-text">Kapitel einklappen</span>
+					</span>
+				</summary>
+
+			<p>
+				Zum Abschluss werden die in den vorangegangenen Kapiteln beschriebenen
+				Befehle noch einmal nach Themenbereichen zusammengefasst. Die Übersicht
+				dient als kompakte Nachschlagehilfe und erhebt keinen Anspruch auf
+				Vollständigkeit.
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Bereich</th>
+						<th>Befehle</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><strong>Navigation</strong></td>
+						<td><code>pwd</code>, <code>ls</code>, <code>cd</code></td>
+					</tr>
+					<tr>
+						<td><strong>Dateien</strong></td>
+						<td><code>touch</code>, <code>mkdir</code>, <code>cp</code>, <code>mv</code>, <code>rm</code></td>
+					</tr>
+					<tr>
+						<td><strong>Text</strong></td>
+						<td><code>cat</code>, <code>less</code>, <code>head</code>, <code>tail</code>, <code>grep</code>, <code>sort</code>, <code>wc</code></td>
+					</tr>
+					<tr>
+						<td><strong>Suche</strong></td>
+						<td><code>find</code>, <code>grep</code></td>
+					</tr>
+					<tr>
+						<td><strong>Benutzer</strong></td>
+						<td><code>whoami</code>, <code>id</code>, <code>su</code>, <code>sudo</code></td>
+					</tr>
+					<tr>
+						<td><strong>Berechtigungen</strong></td>
+						<td><code>chmod</code>, <code>chown</code>, <code>chgrp</code></td>
+					</tr>
+					<tr>
+						<td><strong>Prozesse und Jobs</strong></td>
+						<td><code>ps</code>, <code>top</code>, <code>kill</code>, <code>jobs</code></td>
+					</tr>
+					<tr>
+						<td><strong>Dienste</strong></td>
+						<td><code>systemctl</code></td>
+					</tr>
+					<tr>
+						<td><strong>Paketverwaltung</strong></td>
+						<td><code>apt</code></td>
+					</tr>
+					<tr>
+						<td><strong>Umgebungsvariablen</strong></td>
+						<td><code>env</code>, <code>export</code>, <code>echo</code>, <code>source</code>, <code>which</code></td>
+					</tr>
+					<tr>
+						<td><strong>Datenträger und Speicher</strong></td>
+						<td><code>df</code>, <code>du</code>, <code>free</code>, <code>lsblk</code>, <code>mount</code>, <code>umount</code></td>
+					</tr>
+					<tr>
+						<td><strong>Netzwerk</strong></td>
+						<td><code>ip</code>, <code>ping</code>, <code>ss</code>, <code>curl</code>, <code>hostname</code></td>
+					</tr>
+					<tr>
+						<td><strong>Remote-Zugriff</strong></td>
+						<td><code>ssh</code>, <code>scp</code></td>
+					</tr>
+					<tr>
+						<td><strong>Logs</strong></td>
+						<td><code>less</code>, <code>tail</code>, <code>journalctl</code></td>
+					</tr>
+					<tr>
+						<td><strong>Automatisierung</strong></td>
+						<td><code>bash</code>, <code>chmod +x</code>, <code>echo $?</code>, <code>crontab</code></td>
+					</tr>
+					<tr>
+						<td><strong>Sicherheit</strong></td>
+						<td><code>sudo</code>, <code>chmod</code>, <code>chown</code>, <code>ss</code>, <code>ufw</code></td>
+					</tr>
+					<tr>
+						<td><strong>Hilfe</strong></td>
+						<td><code>man</code>, <code>--help</code></td>
+					</tr>
+				</tbody>
+			</table>
+
+			
+		
+			</details>
+		</section>
+		<!-- ==================================================
+			 Kapitel: Beispielprojekt
+			 ==================================================-->
+		<section>
+			<h2 id="linux-beispielprojekt">Beispielprojekt</h2>
+
+			<div class="topic-grid">
+				<div class="topic-card">
+					<div class="in-progress">
+							<h3>Einen Linux-Server einrichten und administrieren</h3>
+						<Image
+							src={ConeImage}
+							alt="Baustelle"
+							width={100}
+						/><br>
+						<span>In Bearbeitung</span>
+					</div>
+				</div>
+			</div>
+			<!--
+			<div class="topic-grid">
+				<a class="topic-card" href="/devops/linux-beispielprojekt">
+
+					<h3>Einen Linux-Server einrichten und administrieren</h3>
+
+					<p>
+						Das Gelernte praktisch anwenden: Einen Linux-Rechner über
+						<strong>SSH</strong> verwalten, Software installieren,
+						<strong>Dienste</strong> prüfen und erste Schritte bei der
+						Fehlersuche durchführen.
+					</p>
+
+					<span>LOS →</span>
+				</a>
+			</div>
+			-->
+			
+	
+		</section>
+		<!-- ==================================================
+			Kapitel: Zum Nachschlagen
+			==================================================-->
+		<section>
+			<br>
+			<h2 id="linux-quellen">Zum Nachschlagen</h2>
+
+			<p>
+				Diese Seite gibt einen Überblick über die wichtigsten Linux-Grundlagen
+				mit besonderem Fokus auf Themen, die im DevOps-Umfeld regelmäßig
+				benötigt werden. Eine vollständige Einführung in Linux und die
+				Kommandozeile würde den Umfang dieser Übersicht deutlich überschreiten.
+			</p>
+
+			<p>
+				Wer sich ausführlicher mit Linux, der Kommandozeile und der Shell
+				beschäftigen möchte, findet unter <strong>LinuxCommand.org</strong>
+				&nbsp;einen umfangreichen weiterführenden Lehrgang.
+			</p>
+
+			<ul>
+				<li>
+					<a
+						href="https://linuxcommand.org/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						LinuxCommand.org
+					</a>
+				</li>
+
+				<li>
+					<a
+						href="https://www.debian.org/doc/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Debian – Dokumentation
+					</a>
+				</li>
+
+				<li>
+					<a
+						href="https://ubuntu.com/server/docs"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Ubuntu Server – Dokumentation
+					</a>
+				</li>
+
+				<li>
+					<a
+						href="https://www.freedesktop.org/wiki/Software/systemd/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						systemd – Dokumentation
+					</a>
+				</li>
+			</ul>
+		</section>
+	</main>
+
+<style>
+	.chapter > details > summary {
+		cursor: pointer;
+	}
+
+	.chapter > details > summary h2 {
+		display: inline-block;
+	}
+</style>
+
+</BaseLayout>
+
+<script>
+	function closeOtherChapters(currentDetails: HTMLDetailsElement) {
+		document
+			.querySelectorAll<HTMLDetailsElement>(".chapter details")
+			.forEach((details) => {
+				if (details !== currentDetails) {
+					details.open = false;
+				}
+			});
+	}
+
+	// --------------------------------------------------
+	// Kapitel per Klick öffnen
+	// --------------------------------------------------
+
+	document
+		.querySelectorAll<HTMLDetailsElement>(".chapter details")
+		.forEach((details) => {
+			const summary = details.querySelector("summary");
+
+			if (!summary) return;
+
+			summary.addEventListener("click", () => {
+				// Nur relevant, wenn das Kapitel gerade geschlossen ist
+				if (details.open) return;
+
+				// Position des Kapitels im sichtbaren Bereich merken
+				const oldTop = details.getBoundingClientRect().top;
+
+				requestAnimationFrame(() => {
+					closeOtherChapters(details);
+
+					requestAnimationFrame(() => {
+						const newTop = details.getBoundingClientRect().top;
+
+						// Verschiebung durch das Einklappen ausgleichen
+						window.scrollBy({
+							top: newTop - oldTop,
+							behavior: "instant"
+						});
+					});
+				});
+			});
+		});
+
+	// --------------------------------------------------
+	// Kapitel über #anker öffnen
+	// --------------------------------------------------
+
+	function openTargetChapter() {
+		if (!window.location.hash) return;
+
+		const target = document.querySelector(window.location.hash);
+
+		if (!target) return;
+
+		const details = target.closest<HTMLDetailsElement>("details");
+
+		if (!details) return;
+
+		closeOtherChapters(details);
+		details.open = true;
+
+		requestAnimationFrame(() => {
+			target.scrollIntoView({
+				behavior: "smooth",
+				block: "start"
+			});
+		});
+	}
+
+	// Direkter Seitenaufruf mit #anker
+	openTargetChapter();
+
+	// Wechsel zu einem anderen #anker
+	window.addEventListener("hashchange", openTargetChapter);
+</script>

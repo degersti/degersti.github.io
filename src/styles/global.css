@@ -731,6 +731,35 @@ footer {
 		padding: 1em;
 	}
 
+	main h1 {
+		font-size: 1.8em;
+	}
+
+	main h2 {
+		font-size: 1.45em;
+	}
+
+	main h3 {
+		font-size: 1.25em;
+	}
+
+	main h4 {
+		font-size: 1.1em;
+	}
+
+	.chapter .show-text,
+	.chapter .hide-text {
+		display: none !important;
+	}
+
+	.chapter-toggle {
+		gap: 0;
+	}
+
+	.chapter-toggle::after {
+		font-size: 1.8rem;
+	}
+
 	.hero {
 		width: calc(100% - 2rem);
 		max-width: 100%;
@@ -738,6 +767,9 @@ footer {
 
 		margin: 2rem auto 0;
 	}
+
+	/* ... Rest wie bisher */
+}
 
 	.hero img {
 		width: 100%;
